@@ -10,12 +10,23 @@ import jsPDF from "jspdf";
 const TIMES = "times";
 
 const TYPE_STYLES = {
-  heading:           { bg: "#e8eaf6", border: "#5c6bc0", dot: "#3949ab" },
-  subheading:         { bg: "#e3f2fd", border: "#42a5f5", dot: "#1976d2" },
-  normal:             { bg: "#f1f8e9", border: "#aed581", dot: "#558b2f" },
-  "normal-list":      { bg: "#fff8e1", border: "#ffd54f", dot: "#f57f17" },
-  "small-italic":     { bg: "#fce4ec", border: "#f48fb1", dot: "#c2185b" },
-  "underline-center": { bg: "#f3e5f5", border: "#ce93d8", dot: "#7b1fa2" },
+  heading:            { bg: "#f5f0e8", border: "#8b7355", dot: "#5c4a32" },
+  subheading:         { bg: "#eef1f5", border: "#2c4a6e", dot: "#1e3a5f" },
+  normal:             { bg: "#faf8f5", border: "#c9bfb0", dot: "#6b6358" },
+  "normal-list":      { bg: "#f8f6f2", border: "#a89880", dot: "#5c4a32" },
+  "small-italic":     { bg: "#f5f3ef", border: "#b8a99a", dot: "#756b5f" },
+  "underline-center": { bg: "#eef1f5", border: "#1e3a5f", dot: "#1e3a5f" },
+};
+
+const UI = {
+  navy: "#1e3a5f",
+  navyDark: "#0f2744",
+  navyMid: "#2c4a6e",
+  cream: "#f5f0e8",
+  creamLight: "#fffdf9",
+  creamBorder: "#d4cfc4",
+  gold: "#8b7355",
+  textMuted: "#6b6358",
 };
 
 const DEFAULT_SECTIONS = [
@@ -304,37 +315,29 @@ function EditCard({ section, isActive, onActivate, onChange }) {
     <div
       onClick={handleCardClick}
       style={{
-        background: isActive ? ts.bg : "#fff",
-        border: `2px solid ${isActive ? ts.border : "#e2e8f0"}`,
-        borderRadius: 14,
+        background: isActive ? ts.bg : UI.creamLight,
+        border: `1px solid ${isActive ? ts.border : UI.creamBorder}`,
+        borderLeft: `3px solid ${isActive ? ts.border : UI.creamBorder}`,
+        borderRadius: 6,
         padding: "14px 16px",
         marginBottom: 10,
         cursor: "pointer",
         transition: "all 0.15s",
         boxShadow: isActive
-          ? `0 4px 16px ${ts.border}44`
-          : "0 1px 4px rgba(0,0,0,0.06)",
+          ? "0 2px 8px rgba(30, 58, 95, 0.12)"
+          : "0 1px 3px rgba(15, 39, 68, 0.06)",
       }}
     >
       {/* Label row */}
-      <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 8 }}>
-        <div
-          style={{
-            width: 8,
-            height: 8,
-            borderRadius: "50%",
-            background: ts.dot,
-            flexShrink: 0,
-          }}
-        />
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
         <span
           style={{
             fontSize: 10,
-            fontWeight: 700,
+            fontWeight: 600,
             color: ts.dot,
             textTransform: "uppercase",
-            letterSpacing: "0.06em",
-            fontFamily: "sans-serif",
+            letterSpacing: "0.08em",
+            fontFamily: "Georgia, 'Times New Roman', serif",
           }}
         >
           {section.label}
@@ -343,16 +346,18 @@ function EditCard({ section, isActive, onActivate, onChange }) {
           <span
             style={{
               marginLeft: "auto",
-              fontSize: 10,
-              color: ts.dot,
-              border: `1px solid ${ts.border}`,
-              background: ts.bg,
-              borderRadius: 20,
-              padding: "1px 8px",
-              fontFamily: "sans-serif",
+              fontSize: 9,
+              color: UI.navy,
+              border: `1px solid ${UI.navyMid}`,
+              background: "#eef1f5",
+              borderRadius: 3,
+              padding: "2px 8px",
+              fontFamily: "system-ui, sans-serif",
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
             }}
           >
-            editing
+            Editing
           </span>
         )}
       </div>
@@ -377,7 +382,7 @@ function EditCard({ section, isActive, onActivate, onChange }) {
           border: "none",
           outline: "none",
           resize: "none",
-          color: "#1a1a2e",
+          color: "#1a1a1a",
           boxSizing: "border-box",
           padding: 0,
         }}
@@ -409,13 +414,14 @@ function PreviewDoc({ sections }) {
   return (
     <div
       style={{
-        background: "#fff",
-        padding: "32px 28px",
+        background: UI.creamLight,
+        padding: "40px 36px",
         fontFamily: TNR,
-        color: "#111",
+        color: "#1a1a1a",
         fontSize: 12,
-        lineHeight: 1.7,
-        minHeight: "297mm", // A4 height hint
+        lineHeight: 1.75,
+        minHeight: "297mm",
+        boxShadow: "inset 0 0 0 1px #e8e2d8",
       }}
     >
       {sections.map((s) => {
@@ -505,17 +511,17 @@ export default function VakalatnamaEditor() {
   const handleReset = () => {
     setSections(JSON.parse(JSON.stringify(DEFAULT_SECTIONS)));
     setActiveId(null);
-    showToast("🔄 Reset done", "#1565c0");
+    showToast("Document reset to defaults", UI.navy);
   };
 
   const handleExport = async () => {
     setExporting(true);
     try {
       generatePDF(sections);
-      showToast("✅ PDF downloaded!");
+      showToast("PDF downloaded successfully", "#2e5a3e");
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Unknown error";
-      showToast("❌ " + msg, "#c62828");
+      showToast("Export failed: " + msg, "#8b2e2e");
     } finally {
       setExporting(false);
     }
@@ -525,10 +531,10 @@ export default function VakalatnamaEditor() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#f0f4ff",
-        maxWidth: 520,
+        background: UI.cream,
+        maxWidth: 720,
         margin: "0 auto",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "system-ui, -apple-system, sans-serif",
         position: "relative",
       }}
     >
@@ -542,14 +548,15 @@ export default function VakalatnamaEditor() {
             transform: "translateX(-50%)",
             background: toast.color,
             color: "#fff",
-            padding: "10px 22px",
-            borderRadius: 20,
+            padding: "10px 20px",
+            borderRadius: 4,
             fontSize: 13,
-            fontWeight: 600,
+            fontWeight: 500,
             zIndex: 9999,
             pointerEvents: "none",
             whiteSpace: "nowrap",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
+            boxShadow: "0 4px 12px rgba(15, 39, 68, 0.2)",
+            letterSpacing: "0.01em",
           }}
         >
           {toast.msg}
@@ -559,94 +566,106 @@ export default function VakalatnamaEditor() {
       {/* ── Header ── */}
       <div
         style={{
-          background: "linear-gradient(135deg,#1a237e,#283593)",
-          padding: "16px 18px 12px",
+          background: `linear-gradient(180deg, ${UI.navyDark}, ${UI.navy})`,
+          padding: "20px 24px 0",
           position: "sticky",
           top: 0,
           zIndex: 100,
-          boxShadow: "0 2px 12px rgba(0,0,0,0.25)",
+          boxShadow: "0 2px 8px rgba(15, 39, 68, 0.3)",
+          borderBottom: `2px solid ${UI.gold}`,
         }}
       >
         {/* Title row */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-          <span style={{ fontSize: 22 }}>⚖️</span>
-          <div>
-            <div style={{ color: "#fff", fontWeight: 700, fontSize: 15 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+          <div
+            style={{
+              width: 3,
+              height: 36,
+              background: UI.gold,
+              flexShrink: 0,
+            }}
+          />
+          <div style={{ flex: 1 }}>
+            <div
+              style={{
+                color: "#fff",
+                fontWeight: 600,
+                fontSize: 17,
+                fontFamily: "Georgia, 'Times New Roman', serif",
+                letterSpacing: "0.02em",
+              }}
+            >
               Vakalatnama Editor
             </div>
-            <div style={{ color: "#9fa8da", fontSize: 11 }}>Session Judge Kolhapur</div>
+            <div style={{ color: "#b8c5d4", fontSize: 11, marginTop: 2, letterSpacing: "0.04em" }}>
+              Session Judge, Kolhapur
+            </div>
           </div>
           <button
             onClick={handleExport}
             disabled={exporting}
             style={{
-              marginLeft: "auto",
-              background: exporting ? "#666" : "#43a047",
+              background: exporting ? "#5a6a7a" : "transparent",
               color: "#fff",
-              border: "none",
-              borderRadius: 20,
-              padding: "7px 14px",
-              fontWeight: 700,
+              border: "1px solid rgba(255,255,255,0.4)",
+              borderRadius: 4,
+              padding: "7px 16px",
+              fontWeight: 500,
               fontSize: 12,
               cursor: exporting ? "not-allowed" : "pointer",
+              letterSpacing: "0.03em",
             }}
           >
-            {exporting ? "⏳" : "⬇ PDF"}
+            {exporting ? "Exporting…" : "Export PDF"}
           </button>
         </div>
 
         {/* Tabs */}
-        <div
-          style={{
-            background: "rgba(255,255,255,0.15)",
-            borderRadius: 10,
-            display: "flex",
-            padding: 3,
-          }}
-        >
+        <div style={{ display: "flex", gap: 0 }}>
           {["edit", "preview"].map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
               style={{
                 flex: 1,
-                background: tab === t ? "#fff" : "transparent",
-                color: tab === t ? "#1a237e" : "#9fa8da",
+                background: "transparent",
+                color: tab === t ? "#fff" : "#8a9bb0",
                 border: "none",
-                borderRadius: 8,
-                padding: "8px 0",
-                fontWeight: 700,
+                borderBottom: tab === t ? `2px solid ${UI.gold}` : "2px solid transparent",
+                padding: "10px 0",
+                fontWeight: tab === t ? 600 : 400,
                 fontSize: 13,
                 cursor: "pointer",
                 transition: "all 0.15s",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
               }}
             >
-              {t === "edit" ? "✏️ Edit" : "👁 Preview"}
+              {t === "edit" ? "Edit" : "Preview"}
             </button>
           ))}
         </div>
       </div>
 
       {/* ── Body ── */}
-      <div style={{ padding: "16px 14px 110px" }}>
+      <div style={{ padding: "20px 24px 110px" }}>
         {tab === "edit" ? (
           <>
             {/* Hint */}
             <div
               style={{
-                background: "#e8eaf6",
-                border: "1px solid #c5cae9",
-                borderRadius: 10,
-                padding: "10px 14px",
-                marginBottom: 14,
+                background: UI.creamLight,
+                border: `1px solid ${UI.creamBorder}`,
+                borderLeft: `3px solid ${UI.navy}`,
+                borderRadius: 4,
+                padding: "12px 16px",
+                marginBottom: 16,
                 fontSize: 12,
-                color: "#3949ab",
-                display: "flex",
-                gap: 8,
+                color: UI.textMuted,
+                lineHeight: 1.5,
               }}
             >
-              <span>💡</span>
-              <span>Tap any card to edit. Font &amp; formatting stay unchanged.</span>
+              Select any section below to edit. Document formatting is preserved in the exported PDF.
             </div>
 
             {/* Cards */}
@@ -663,43 +682,42 @@ export default function VakalatnamaEditor() {
             {/* Warning */}
             <div
               style={{
-                background: "#fff3e0",
-                border: "1px solid #ffcc80",
-                borderRadius: 10,
-                padding: "10px 14px",
+                background: "#faf6ef",
+                border: `1px solid ${UI.creamBorder}`,
+                borderLeft: `3px solid ${UI.gold}`,
+                borderRadius: 4,
+                padding: "12px 16px",
                 marginTop: 4,
                 fontSize: 11,
-                color: "#e65100",
-                display: "flex",
-                gap: 8,
+                color: UI.textMuted,
+                lineHeight: 1.5,
               }}
             >
-              <span>🖊️</span>
-              <span>Signature lines are auto-generated. Physical signatures go on the printout.</span>
+              Signature lines are generated automatically. Physical signatures must be added on the printed document.
             </div>
           </>
         ) : (
           <div
             style={{
-              background: "#fff",
-              borderRadius: 14,
+              background: UI.creamLight,
+              borderRadius: 4,
               overflow: "hidden",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+              boxShadow: "0 2px 12px rgba(15, 39, 68, 0.1)",
+              border: `1px solid ${UI.creamBorder}`,
             }}
           >
             <div
               style={{
-                background: "#1a237e",
-                padding: "10px 18px",
-                color: "#fff",
+                background: UI.navy,
+                padding: "10px 20px",
+                color: "#d4dde8",
                 fontSize: 11,
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
+                fontWeight: 500,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
               }}
             >
-              📄 DOCUMENT PREVIEW — A4
+              Document Preview — A4
             </div>
             <PreviewDoc sections={sections} />
           </div>
@@ -714,52 +732,51 @@ export default function VakalatnamaEditor() {
           left: "50%",
           transform: "translateX(-50%)",
           width: "100%",
-          maxWidth: 520,
-          background: "#fff",
-          borderTop: "1px solid #e2e8f0",
-          padding: "12px 18px",
+          maxWidth: 720,
+          background: UI.creamLight,
+          borderTop: `1px solid ${UI.creamBorder}`,
+          padding: "14px 24px",
           boxSizing: "border-box",
           display: "flex",
-          gap: 10,
+          gap: 12,
           zIndex: 200,
-          boxShadow: "0 -4px 16px rgba(0,0,0,0.06)",
+          boxShadow: "0 -2px 12px rgba(15, 39, 68, 0.08)",
         }}
       >
         <button
           onClick={handleReset}
           style={{
             flex: 1,
-            background: "#f5f5f5",
-            color: "#555",
-            border: "1px solid #ddd",
-            borderRadius: 10,
+            background: UI.cream,
+            color: UI.textMuted,
+            border: `1px solid ${UI.creamBorder}`,
+            borderRadius: 4,
             padding: "12px 0",
-            fontWeight: 600,
+            fontWeight: 500,
             fontSize: 13,
             cursor: "pointer",
+            letterSpacing: "0.02em",
           }}
         >
-          🔄 Reset
+          Reset
         </button>
         <button
           onClick={handleExport}
           disabled={exporting}
           style={{
             flex: 2,
-            background: exporting
-              ? "#9e9e9e"
-              : "linear-gradient(135deg,#1a237e,#3949ab)",
+            background: exporting ? "#8a9bb0" : UI.navy,
             color: "#fff",
             border: "none",
-            borderRadius: 10,
+            borderRadius: 4,
             padding: "12px 0",
-            fontWeight: 700,
+            fontWeight: 600,
             fontSize: 14,
             cursor: exporting ? "not-allowed" : "pointer",
-            boxShadow: exporting ? "none" : "0 4px 14px rgba(26,35,126,0.3)",
+            letterSpacing: "0.02em",
           }}
         >
-          {exporting ? "⏳ Generating..." : "⬇ Export PDF"}
+          {exporting ? "Generating PDF…" : "Export PDF"}
         </button>
       </div>
     </div>
