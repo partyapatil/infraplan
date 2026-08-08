@@ -181,7 +181,7 @@ export default function TrustedBySection() {
           }
         }
         .animate-marquee {
-          animation: marquee 25s linear infinite;
+          animation: marquee 5s linear infinite;
         }
         
         @media (prefers-reduced-motion: reduce) {
