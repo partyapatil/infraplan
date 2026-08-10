@@ -29,17 +29,17 @@ export default function HeroSection() {
     },
     {
       icon: Shield,
-      value: "300+",
+      value: "100+",
       label: "Projects Delivered",
     },
     {
       icon: Globe,
-      value: "20+",
+      value: "4+",
       label: "Countries Served",
     },
     {
       icon: Users,
-      value: "150+",
+      value: "50+",
       label: "Happy Clients",
     },
   ];
