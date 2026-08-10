@@ -28,6 +28,7 @@ import {
   Zap,
   ChevronUp,
 } from "lucide-react";
+import HydraulicCTA from "../components/CTA/HydraulicCTA";
 
 // Consistent navigation
 const nav = [
@@ -885,87 +886,9 @@ export default function HydraulicLabPage() {
         </div>
       </section>
 
-      {/* CTA Section - New Modern Design */}
-<section className="relative overflow-hidden">
-  {/* Wave Divider at Top */}
-  <div className="absolute top-0 left-0 right-0 z-10 leading-none">
-    <svg viewBox="0 0 1440 80" className="w-full h-16 sm:h-20" preserveAspectRatio="none">
-      <path
-        d="M0,32 C240,80 480,0 720,24 C960,48 1200,96 1440,40 L1440,0 L0,0 Z"
-        fill="white"
-      />
-    </svg>
-  </div>
 
-  {/* Background Gradient */}
-  <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800" />
-  
-  {/* Animated Background Elements */}
-  <div className="absolute inset-0 overflow-hidden">
-    <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse" />
-    <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl animate-pulse delay-1000" />
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl animate-pulse delay-500" />
-    
-    {/* Floating Particles */}
-    <div className="absolute inset-0">
-      {[...Array(6)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
-          style={{
-            top: `${10 + i * 15}%`,
-            left: `${5 + i * 15}%`,
-            animationDelay: `${i * 0.5}s`,
-            animationDuration: `${4 + i}s`,
-          }}
-        />
-      ))}
-    </div>
-  </div>
 
-  {/* Content */}
-  <div className="relative px-5 sm:px-8 lg:px-12 py-20 lg:py-28 max-w-4xl mx-auto text-center text-white">
-    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 text-xs font-semibold tracking-wider uppercase mb-6 border border-white/20">
-      <Zap size={14} />
-      Get Started
-    </div>
-    
-    <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-      Need Hydraulic <span className="text-blue-200">Model Studies?</span>
-    </h2>
-    
-    <p className="text-lg text-blue-100 max-w-2xl mx-auto mb-8 leading-relaxed">
-      Get in touch with our expert team for comprehensive physical, mathematical, and CFD modelling services.
-    </p>
-    
-    <div className="flex flex-wrap justify-center gap-4">
-      <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-blue-700 font-semibold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 text-sm sm:text-base group">
-        Contact Laboratory
-        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-      </button>
-      <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300 text-sm sm:text-base">
-        View Case Studies
-      </button>
-    </div>
-
-    {/* Trust Indicators */}
-    <div className="flex flex-wrap justify-center gap-6 mt-8 pt-8 border-t border-white/20">
-      <div className="flex items-center gap-2 text-sm text-blue-100">
-        <Shield size={16} />
-        <span>ISO Certified</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-blue-100">
-        <Users size={16} />
-        <span>50+ Projects</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-blue-100">
-        <Orbit size={16} />
-        <span>Global Expertise</span>
-      </div>
-    </div>
-  </div>
-</section>
-
+<HydraulicCTA/>
       {/* Footer - Consistent with other pages */}
   
 

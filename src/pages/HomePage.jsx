@@ -237,8 +237,7 @@ export default function InfraplanPage() {
 </section> */}
 <HeroSection />
 
-      <JourneySection />
-      <TrustedBySection />
+    
 
       {/* Business Verticals */}
       <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-b from-white to-slate-50/50 border-y border-slate-100">
@@ -286,6 +285,8 @@ export default function InfraplanPage() {
           </div>
         </div>
       </section>
+        <JourneySection />
+      <TrustedBySection />
 
       {/* Featured Projects */}
       <section className="px-5 sm:px-8 lg:px-12 py-16 bg-white">

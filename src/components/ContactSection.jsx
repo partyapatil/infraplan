@@ -1011,7 +1011,7 @@ export default function ContactSection() {
           BOTTOM CURVE
       ========================================================= */}
 
-      <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
+      {/* <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
         <svg
           viewBox="0 0 1440 100"
           className="w-full h-[70px] sm:h-[90px] lg:h-[110px]"
@@ -1030,7 +1030,7 @@ export default function ContactSection() {
             fill="#ffffff"
           />
         </svg>
-      </div>
+      </div> */}
 
       {/* =========================================================
           ANIMATIONS

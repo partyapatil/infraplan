@@ -217,79 +217,298 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section - Matches home page CTA styling */}
-   <section className="relative overflow-hidden">
-  {/* Wave Divider at Top */}
-  <div className="absolute top-0 left-0 right-0 z-10 leading-none">
-    <svg viewBox="0 0 1440 80" className="w-full h-16 sm:h-20" preserveAspectRatio="none">
+{/* =========================================================
+    CTA SECTION
+========================================================= */}
+
+<section className="relative overflow-hidden">
+
+  {/* =======================================================
+      TOP CURVED WAVE
+  ======================================================= */}
+
+  <div className="absolute top-0 left-0 right-0 z-20 pointer-events-none leading-none">
+    <svg
+      viewBox="0 0 1440 120"
+      className="w-full h-16 sm:h-20 md:h-24"
+      preserveAspectRatio="none"
+    >
       <path
-        d="M0,32 C240,80 480,0 720,24 C960,48 1200,96 1440,40 L1440,0 L0,0 Z"
+        d="
+          M0,45
+          C180,105 360,105 540,55
+          C720,5 900,5 1080,55
+          C1260,105 1350,105 1440,55
+          L1440,0
+          L0,0
+          Z
+        "
         fill="white"
       />
     </svg>
   </div>
 
-  {/* Background Gradient */}
-  <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800" />
-  
-  {/* Animated Background Elements */}
-  <div className="absolute inset-0 overflow-hidden">
-    <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse" />
-    <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl animate-pulse delay-1000" />
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl animate-pulse delay-500" />
-    
-    {/* Floating Particles */}
-    <div className="absolute inset-0">
-      {[...Array(6)].map((_, i) => (
+
+  {/* =======================================================
+      MAIN BACKGROUND
+  ======================================================= */}
+
+  <div className="relative bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 pt-28 sm:pt-32 pb-16 sm:pb-20">
+
+    {/* =====================================================
+        BACKGROUND GLOW / MESH
+    ===================================================== */}
+
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+
+      {/* Blue glow */}
+      <div className="absolute -top-32 -left-32 w-[420px] h-[420px] rounded-full bg-blue-400/20 blur-3xl" />
+
+      {/* Indigo glow */}
+      <div className="absolute top-1/3 -right-32 w-[420px] h-[420px] rounded-full bg-indigo-400/20 blur-3xl" />
+
+      {/* Cyan glow */}
+      <div className="absolute -bottom-40 left-1/3 w-[400px] h-[400px] rounded-full bg-cyan-400/10 blur-3xl" />
+
+      {/* Small glow */}
+      <div className="absolute top-1/2 left-1/2 w-[250px] h-[250px] rounded-full bg-blue-300/10 blur-3xl" />
+
+    </div>
+
+
+    {/* =====================================================
+        ENGINEERING GRID
+    ===================================================== */}
+
+    <div
+      className="absolute inset-0 opacity-[0.06] pointer-events-none"
+      style={{
+        backgroundImage: `
+          linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
+        `,
+        backgroundSize: "45px 45px",
+      }}
+    />
+
+
+    {/* =====================================================
+        FLOATING PARTICLES
+    ===================================================== */}
+
+    <div className="absolute inset-0 pointer-events-none">
+
+      {[...Array(8)].map((_, i) => (
         <div
           key={i}
-          className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
+          className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white/20 rounded-full animate-float"
           style={{
-            top: `${10 + i * 15}%`,
-            left: `${5 + i * 15}%`,
-            animationDelay: `${i * 0.5}s`,
-            animationDuration: `${4 + i}s`,
+            top: `${8 + (i * 13) % 82}%`,
+            left: `${5 + (i * 17) % 90}%`,
+            animationDelay: `${i * 0.6}s`,
+            animationDuration: `${4 + (i % 4)}s`,
           }}
         />
       ))}
+
     </div>
+
+
+    {/* =====================================================
+        DECORATIVE CIRCLES
+    ===================================================== */}
+
+    <div className="absolute top-1/3 right-8 sm:right-16 w-32 h-32 sm:w-44 sm:h-44 rounded-full border border-white/10 pointer-events-none" />
+
+    <div className="absolute top-1/3 right-16 sm:right-24 w-20 h-20 sm:w-28 sm:h-28 rounded-full border border-white/10 pointer-events-none" />
+
+    <div className="absolute bottom-10 left-8 sm:left-16 w-20 h-20 rounded-full border border-white/10 pointer-events-none" />
+
+
+    {/* =====================================================
+        CONTENT
+    ===================================================== */}
+
+    <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 text-center">
+
+      {/* Badge */}
+
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-blue-100 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] mb-5">
+
+        <span className="relative flex w-2 h-2">
+          <span className="absolute inline-flex w-full h-full rounded-full bg-cyan-300 opacity-75 animate-ping" />
+          <span className="relative inline-flex w-2 h-2 rounded-full bg-cyan-300" />
+        </span>
+
+        Let's Build Together
+
+      </div>
+
+
+      {/* Heading */}
+
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+
+        Ready to Build{" "}
+
+        <span className="bg-gradient-to-r from-cyan-200 via-blue-100 to-white bg-clip-text text-transparent">
+          Together?
+        </span>
+
+      </h2>
+
+
+      {/* Description */}
+
+      <p className="text-sm sm:text-base md:text-lg text-blue-100/90 max-w-2xl mx-auto leading-relaxed mb-8">
+
+        Let's create sustainable water infrastructure solutions
+        that make a difference.
+
+      </p>
+
+
+      {/* ===================================================
+          CTA BUTTON
+      =================================================== */}
+
+      <button
+        className="
+          group
+          inline-flex
+          items-center
+          gap-2
+          px-7
+          sm:px-8
+          py-3
+          sm:py-3.5
+          bg-white
+          text-blue-700
+          font-semibold
+          rounded-xl
+          shadow-xl
+          shadow-blue-950/20
+          hover:shadow-2xl
+          hover:shadow-white/10
+          hover:scale-105
+          transition-all
+          duration-300
+          text-sm
+          sm:text-base
+        "
+      >
+
+        Get in Touch
+
+        <ArrowRight
+          size={18}
+          className="group-hover:translate-x-1 transition-transform duration-300"
+        />
+
+      </button>
+
+
+      {/* ===================================================
+          TRUST INDICATORS
+      =================================================== */}
+
+      <div className="flex flex-wrap justify-center gap-x-6 gap-y-4 mt-9 pt-7 border-t border-white/15">
+
+        {/* ISO */}
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-blue-100">
+
+          <div className="w-7 h-7 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center">
+
+            <Shield size={15} />
+
+          </div>
+
+          <span>ISO Certified</span>
+
+        </div>
+
+
+        {/* Experience */}
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-blue-100">
+
+          <div className="w-7 h-7 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center">
+
+            <Award size={15} />
+
+          </div>
+
+          <span>15+ Years Experience</span>
+
+        </div>
+
+
+        {/* Global */}
+
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-blue-100">
+
+          <div className="w-7 h-7 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center">
+
+            <Globe size={15} />
+
+          </div>
+
+          <span>Global Reach</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
-  {/* Content */}
-  <div className="relative px-5 sm:px-8 lg:px-12 py-20 lg:py-28 max-w-4xl mx-auto text-center text-white">
-    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 text-xs font-semibold tracking-wider uppercase mb-6 border border-white/20">
-      <Users size={14} />
-      Let's Connect
-    </div>
-    
-    <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-      Ready to Build <span className="text-blue-200">Together?</span>
-    </h2>
-    
-    <p className="text-lg text-blue-100 max-w-2xl mx-auto mb-8 leading-relaxed">
-      Let's create sustainable water infrastructure solutions that make a difference.
-    </p>
-    
-    <button className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-blue-700 font-semibold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 text-sm sm:text-base group">
-      Get in Touch
-      <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-    </button>
 
-    {/* Trust Indicators */}
-    <div className="flex flex-wrap justify-center gap-6 mt-8 pt-8 border-t border-white/20">
-      <div className="flex items-center gap-2 text-sm text-blue-100">
-        <Shield size={16} />
-        <span>ISO Certified</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-blue-100">
-        <Award size={16} />
-        <span>15+ Years Experience</span>
-      </div>
-      <div className="flex items-center gap-2 text-sm text-blue-100">
-        <Globe size={16} />
-        <span>Global Reach</span>
-      </div>
-    </div>
-  </div>
+  {/* =======================================================
+      ANIMATION
+  ======================================================= */}
+
+  <style>{`
+
+    @keyframes float {
+
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.25;
+      }
+
+      25% {
+        transform: translateY(-15px) translateX(8px);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translateY(-5px) translateX(-5px);
+        opacity: 0.35;
+      }
+
+      75% {
+        transform: translateY(12px) translateX(5px);
+        opacity: 0.55;
+      }
+
+    }
+
+    .animate-float {
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .animate-float {
+        animation: none;
+      }
+
+    }
+
+  `}</style>
+
 </section>
 
       {/* Footer - IDENTICAL to home page footer */}
