@@ -48,10 +48,10 @@ const navItems = [
     label: "Sigma ToolBox",
     path: "/toolbox",
   },
-  {
-    label: "Contact",
-    path: "/contact",
-  },
+  // {
+  //   label: "Contact",
+  //   path: "/contact",
+  // },
 ];
 
 export default function Navigation({

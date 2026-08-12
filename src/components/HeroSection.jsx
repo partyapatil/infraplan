@@ -399,7 +399,7 @@ export default function HeroSection() {
 
                   <div className="h-2 w-2 animate-pulse rounded-full bg-red-500" />
 
-                  Featured Video
+                  Infraplan Group
 
                 </div>
 

@@ -27,8 +27,17 @@ import {
   Shield,
   Zap,
   ChevronUp,
+  FlaskConical,
+  ExternalLink,
+  Wind,
 } from "lucide-react";
+
 import HydraulicCTA from "../components/CTA/HydraulicCTA";
+
+import physical1 from "../assets/phy1.png";
+import physical2 from "../assets/phy2.png";
+import physical3 from "../assets/phy3.png";
+import math1 from "../assets/math1.png";
 
 // Consistent navigation
 const nav = [
@@ -40,156 +49,250 @@ const nav = [
   { label: "Resources", dropdown: true },
   { label: "Careers" },
 ];
+const projectShowcase = [
+  {
+    title: "Physical Model Studies",
+    description:
+      "Laboratory-based physical modelling for hydraulic structures, spillways, energy dissipation and flow behaviour.",
+    icon: FlaskConical,
+    gradient: "from-blue-600 to-cyan-600",
+    images: [
+      physical1,
+      physical2,
+      physical3,
+    ],
+  },
+  {
+    title: "Mathematical Model Studies",
+    description:
+      "Advanced mathematical and numerical modelling for hydraulic systems, river behaviour and water infrastructure.",
+    icon: Cpu,
+    gradient: "from-indigo-600 to-blue-700",
+    images: [
+      math1,
+      math1,
+      math1,
+    ],
+  },
+];
 
-// Model studies data with expanded details
 const modelStudies = {
   physicalModels: [
     {
       id: 1,
-      title: "Two-Dimensional Sectional Physical Model for Spillway",
-      purpose: "To evaluate the hydraulic performance of a single, representative spillway block, bay or section under various flow conditions.",
-      application: "Used for verifying discharge capacity, rating curves, pressure distribution along the chute, identifying cavitation potential, and testing the efficiency of energy dissipators (e.g., Flip / ski jump bucket, stilling basins, baffle blocks, end sills).",
+      title: "Two-Dimensional Scaled Physical Model for Spillway",
+      purpose:
+        "To investigate flow behaviour, pressure distribution, energy dissipation and hydraulic performance of spillway systems.",
+      application:
+        "Used for spillway design validation, flow optimisation and energy dissipation analysis.",
       features: [
-        "Scale physical model",
-        "Flow visualization",
-        "Pressure measurements",
-        "Discharge verification",
+        "Spillway flow analysis",
+        "Energy dissipation",
+        "Pressure distribution",
+        "Flow optimisation",
       ],
-      detailedDescription: "This model is constructed at a reduced scale to replicate the hydraulic behavior of a specific spillway section. It allows engineers to observe flow patterns, measure pressures, and verify design parameters before construction. The model can be used to test various operational scenarios and optimize the spillway design for maximum efficiency and safety.",
-      methodology: "The model is built using transparent materials to allow flow visualization. Measurements are taken using pressure transducers, flow meters, and velocity probes. Dye injection techniques may be used to study flow patterns and turbulence.",
+      detailedDescription:
+        "Physical scale models allow engineers to observe complex hydraulic behaviour and validate the performance of hydraulic structures before construction.",
+      methodology:
+        "A geometrically scaled physical model is constructed and tested under controlled laboratory conditions. Flow conditions and hydraulic parameters are measured and compared with design requirements.",
     },
+
     {
       id: 2,
-      title: "Three-Dimensional Comprehensive Model for Spillway / Barrage & Intake",
-      purpose: "To evaluate three-dimensional flow interactions for a complete spillway / barrage and intake structure.",
-      application: "Assessing discharging capacity, essential for assessing complex flow patterns such as flow concentration, asymmetric approach conditions, interactions between intake structures and spillways during combined operations, and downstream river morphology/plunge pool formation.",
+      title:
+        "Three-Dimensional Comprehensive Model for Spillway / Barrage and Intake",
+      purpose:
+        "To study complex three-dimensional flow interactions around spillways, barrages and intake structures.",
+      application:
+        "Used to analyse approach flow, flow concentration, hydraulic interactions and downstream conditions.",
       features: [
-        "Complete hydraulic system",
-        "Energy dissipation",
-        "Flow optimization",
-        "Performance validation",
+        "3D flow analysis",
+        "Approach flow studies",
+        "Intake hydraulics",
+        "Barrage interaction",
       ],
-      detailedDescription: "A comprehensive 3D model that represents the entire hydraulic structure including approach channels, spillway bays, gates, and downstream stilling basins. This model is crucial for understanding complex flow interactions that cannot be captured in 2D models.",
-      methodology: "The model is built at a suitable scale to represent the entire structure. It includes all major components and allows for testing of various operational scenarios. Advanced measurement techniques are used to capture 3D flow patterns and pressures.",
+      detailedDescription:
+        "Three-dimensional physical models provide detailed understanding of complex flow patterns around major hydraulic structures.",
+      methodology:
+        "A scaled model is constructed based on prototype geometry and tested under different discharge and operating conditions.",
     },
+
     {
       id: 3,
       title: "Physical Model for Aeration Studies",
-      purpose: "To study air entrainment and the prevention of cavitation damage on spillway surfaces.",
-      application: "Used to design and optimize aeration ramps or offsets to introduce air into the flow, thereby protecting concrete surfaces from cavitation at high velocities.",
+      purpose:
+        "To evaluate air entrainment and aeration performance in high-velocity hydraulic structures.",
+      application:
+        "Used for spillway aerators, chute systems and energy dissipation structures.",
       features: [
-        "Aerator optimization",
         "Air entrainment",
-        "Cavitation control",
+        "Cavitation protection",
+        "Aerator performance",
         "High velocity flow",
       ],
-      detailedDescription: "This model focuses on studying the air entrainment process and its effectiveness in reducing cavitation damage. Aeration devices are designed and tested to ensure adequate air supply to the flow, creating a protective air layer that prevents cavitation on concrete surfaces.",
-      methodology: "The model is equipped with air injection systems and measurement devices to quantify air entrainment. High-speed cameras are used to visualize the air-water interface. Pressure sensors monitor cavitation potential.",
+      detailedDescription:
+        "Physical modelling helps determine suitable aerator geometry and operating conditions to reduce cavitation risk.",
+      methodology:
+        "Scaled hydraulic models are tested under representative flow conditions and aeration behaviour is measured.",
     },
+
     {
       id: 4,
-      title: "Physical Model for Evaluating Hydro-Dynamic Forces on Gates (Uplift & Downpull)",
-      purpose: "To measure the hydro-dynamic forces acting on gates during operation.",
-      application: "Used to assess hydrodynamic uplift and downpull forces to verify corresponding hoist capacities, and flow conditions within gate wells. It may also be used in some cases to assess suitability of aeration provisions.",
+      title: "Physical Model for Evaluating Hydro-Dynamic Forces on Gates",
+      purpose:
+        "To evaluate hydraulic forces acting on gates under different operating conditions.",
+      application:
+        "Used for gate design, structural assessment and safe operating conditions.",
       features: [
-        "Uplift forces",
-        "Downpull forces",
-        "Gate stability",
-        "Structural validation",
+        "Hydrodynamic forces",
+        "Gate operation",
+        "Pressure distribution",
+        "Structural assessment",
       ],
-      detailedDescription: "This model evaluates the dynamic forces that act on hydraulic gates during operation. Understanding these forces is critical for designing gate hoist systems that can safely operate the gates under all conditions.",
-      methodology: "Force measurement devices are installed on the gate model to measure uplift and downpull forces. Flow conditions are varied to simulate different operational scenarios. Results are used to validate hoist capacity and structural design.",
+      detailedDescription:
+        "Physical model testing provides realistic information about hydraulic forces acting on gates and related structures.",
+      methodology:
+        "Pressure measurements and flow observations are performed on a scaled model under multiple operating scenarios.",
     },
+
     {
       id: 5,
-      title: "Physical Model Combined with Mathematical Model for Sediment Flushing",
-      purpose: "To utilize the strengths of both methods—numerical models for long-term sediment deposition predictions and physical models for visualization and operational optimization.",
-      application: "Mathematical models establish the timing and frequency of flushing based on deposition rates; physical models are then used to optimize flushing methodology (e.g., drawdown flushing), flushing discharge, and the efficacy of flushing tunnels or sediment outlets.",
+      title:
+        "Physical Model Combined With Mathematical Model for Sediment Flushing",
+      purpose:
+        "To study sediment deposition and optimise reservoir flushing operations.",
+      application:
+        "Used for reservoir sediment management and flushing strategy development.",
       features: [
         "Sediment transport",
         "Reservoir flushing",
         "Hybrid modelling",
-        "Operational optimization",
+        "Operational optimisation",
       ],
-      detailedDescription: "This combined approach leverages the predictive power of mathematical models with the visual realism of physical models. The mathematical model predicts long-term sediment deposition patterns, while the physical model allows engineers to visualize and optimize the flushing process in real-time.",
-      methodology: "Mathematical models are calibrated using field data. Physical models are constructed at appropriate scales to represent the reservoir and flushing system. Both models are iteratively refined to achieve optimal flushing efficiency.",
+      detailedDescription:
+        "This combined approach uses mathematical modelling for prediction and physical modelling for visualisation and validation.",
+      methodology:
+        "Mathematical models are calibrated using field data and physical models are used to validate and optimise flushing operations.",
     },
   ],
+
   mathematicalModels: [
     {
-      id: 1,
+      id: 101,
       title: "Mathematical Model for Sediment Studies (2D)",
-      purpose: "To perform one-dimensional or advanced 2D hydraulic simulations, such as water surface profile computation and transient analysis.",
-      application: "Used for flood propagation studies, dam breach analysis, and transient analysis for load rejection/acceptance scenarios to predict water levels and Manning's n values across river reaches.",
+      purpose:
+        "To perform advanced two-dimensional hydraulic and sediment transport simulations.",
+      application:
+        "Used for flood propagation, sediment transport, river morphology and deposition studies.",
       features: [
         "2D sediment modelling",
         "River morphology",
         "Erosion analysis",
         "Deposition studies",
       ],
-      detailedDescription: "2D mathematical models are powerful tools for simulating sediment transport and deposition patterns in rivers and reservoirs. They provide insights into long-term morphological changes and help in planning sediment management strategies.",
-      methodology: "The model is developed using specialized software that solves the sediment transport equations. It is calibrated using field measurements and validated against observed data. Sensitivity analysis is performed to understand the impact of various parameters.",
+      detailedDescription:
+        "2D mathematical models provide detailed predictions of sediment transport and long-term morphological changes.",
+      methodology:
+        "The model is developed using specialised hydraulic modelling software, calibrated with field measurements and validated against observed conditions.",
     },
+
     {
-      id: 2,
+      id: 102,
       title: "HEC-RAS Models for Specific Hydraulic Analysis",
-      purpose: "To evaluate three-dimensional flow interactions for a complete spillway / barrage.",
-      application: "Assessing discharging capacity, essential for assessing complex flow patterns such as flow concentration, asymmetric approach conditions, interactions between intake structures and spillways during combined operations, and downstream river morphology/plunge pool formation.",
+      purpose:
+        "To analyse river hydraulics, water surface profiles and complex hydraulic structures.",
+      application:
+        "Used for flood studies, bridge hydraulics, spillway analysis and river modelling.",
       features: [
         "Flood simulation",
         "River hydraulics",
         "Bridge analysis",
-        "Water profiles",
+        "Water surface profiles",
       ],
-      detailedDescription: "HEC-RAS models are industry-standard tools for analyzing river hydraulics, flood propagation, and bridge hydraulics. They provide reliable predictions of water surface profiles and can be used for flood risk assessment and infrastructure design.",
-      methodology: "The model is built using HEC-RAS software with accurate cross-sectional data. Boundary conditions are specified based on flow measurements. The model is calibrated using observed water levels and validated against historical flood events.",
+      detailedDescription:
+        "HEC-RAS modelling provides reliable predictions of water levels, flow behaviour and hydraulic performance.",
+      methodology:
+        "The model is developed using cross-sectional and field data, calibrated using observed water levels and validated against historical events.",
     },
+
     {
-      id: 3,
+      id: 103,
       title: "Transient Studies",
-      purpose: "Transient studies are conducted to evaluate the hydraulic performance of the water conductor system—including the surge tank, headrace/tailrace tunnels and intake structures—during abrupt changes in operating conditions. The primary goal is to ensure that pressure fluctuations, water level oscillations, and mass surges remain within safe design limits during transitions between different operational modes (generations, pumping, and load changes).",
-      application: "These studies confirm the design adequacy of the surge tank and water conductor tunnels, ensuring that neither high-pressure transients nor deep vacuum conditions threaten the structural integrity of the project during routine or emergency operations.",
+      purpose:
+        "To evaluate hydraulic transients caused by rapid changes in operating conditions.",
+      application:
+        "Used for surge tanks, tunnels, intakes, pumping systems and hydropower systems.",
       features: [
+        "Pressure transients",
         "Water hammer",
-        "Pressure surge",
-        "Surge tank analysis",
-        "Pipeline safety",
+        "Surge analysis",
+        "System protection",
       ],
-      detailedDescription: "Transient studies analyze the dynamic behavior of water conveyance systems during rapid changes in flow conditions. These studies are crucial for ensuring the safety and reliability of hydropower and water supply systems.",
-      methodology: "The study involves solving the water hammer equations using specialized software. The model includes all major components of the water conductor system, including tunnels, surge tanks, and valves. Various operational scenarios are simulated to evaluate worst-case conditions.",
+      detailedDescription:
+        "Transient studies ensure pressure fluctuations and water level oscillations remain within safe design limits.",
+      methodology:
+        "Mathematical simulations are performed for different operating scenarios including start-up, shutdown and emergency conditions.",
     },
   ],
+
   cfdStudies: [
     {
-      id: 1,
-      title: "CFD Studies for Spillway, Aerator & Energy Dissipator",
-      purpose: "To provide high-resolution visualization of flow fields, pressure distribution, and velocity vectors.",
-      application: "Used for preliminary hydraulic optimization, cavitation risk assessment, and detailed analysis of flow behavior over spillway piers, gate bays, and within energy dissipation basins without the immediate need for physical model construction.",
+      id: 201,
+      title: "CFD Studies for Spillway, Aerator, Energy Dissipator, etc.",
+      purpose:
+        "To investigate detailed three-dimensional flow behaviour using Computational Fluid Dynamics.",
+      application:
+        "Used for spillways, aerators, energy dissipators and other complex hydraulic structures.",
       features: [
         "3D flow simulation",
-        "Velocity contours",
+        "Velocity analysis",
         "Pressure distribution",
-        "Flow optimization",
+        "Turbulence modelling",
       ],
-      detailedDescription: "CFD (Computational Fluid Dynamics) studies provide detailed insights into flow behavior that cannot be captured by traditional methods. They allow engineers to visualize flow patterns, identify potential issues, and optimize designs before physical model testing.",
-      methodology: "The CFD model is developed using specialized software that solves the Navier-Stokes equations. The model includes detailed geometry of the structure and uses appropriate boundary conditions. Results are validated against physical model data or field measurements.",
+      detailedDescription:
+        "CFD simulations provide detailed insight into velocity fields, pressure zones, turbulence and complex flow interactions.",
+      methodology:
+        "A computational mesh is generated and appropriate turbulence and multiphase models are applied to simulate hydraulic conditions.",
     },
+
     {
-      id: 2,
-      title: "CFD Studies for Vibration Analysis of Gates Coupled with Finite Element Analysis (FEA)",
-      purpose: "To perform fluid-structure interaction (FSI) analysis by combining fluid dynamic results (CFD) with structural response simulations (FEA).",
-      application: "Used to determine the structural integrity of gates under operational loads, assessing fatigue, stress, and vibration responses caused by hydrodynamic pressure fluctuations.",
+      id: 202,
+      title:
+        "CFD Studies for Vibration Analysis of Gates Coupled With Finite Element Analysis (FEA)",
+      purpose:
+        "To analyse flow-induced vibration and structural response of hydraulic gates.",
+      application:
+        "Used for gate systems subjected to complex hydraulic loading conditions.",
       features: [
-        "Fluid-structure interaction",
-        "Gate vibration",
-        "Finite Element Analysis",
-        "Structural safety",
+        "Flow-induced vibration",
+        "Structural response",
+        "CFD analysis",
+        "FEA coupling",
       ],
-      detailedDescription: "This combined approach (CFD+FEA) provides a comprehensive understanding of gate behavior under hydrodynamic loads. It helps in identifying potential vibration issues and designing gates that are structurally sound and reliable.",
-      methodology: "The CFD analysis provides pressure distributions on the gate surface, which are then used as boundary conditions for the FEA. The FEA calculates stresses, deformations, and vibration characteristics. The results are validated against field measurements.",
+      detailedDescription:
+        "Coupled CFD and FEA analysis helps assess the interaction between hydraulic forces and structural behaviour.",
+      methodology:
+        "Hydraulic loads generated through CFD simulations are transferred to structural models for vibration and stress analysis.",
     },
   ],
 };
+const modelStudyCategories = [
+  {
+    title: "Physical Models",
+    icon: Waves,
+    items: modelStudies.physicalModels,
+  },
+  {
+    title: "Mathematical Models",
+    icon: Calculator,
+    items: modelStudies.mathematicalModels,
+  },
+  {
+    title: "CFD Studies",
+    icon: Cpu,
+    items: modelStudies.cfdStudies,
+  },
+];
 
 // Hydraulic structures data
 const structures = [
@@ -226,6 +329,7 @@ const structures = [
     image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600&q=80",
   },
 ];
+
 
 const designStudies = [
   {
@@ -264,9 +368,9 @@ const designStudies = [
 
 export default function HydraulicLabPage() {
   const [expandedSections, setExpandedSections] = useState({
-    physical: true,
-    mathematical: true,
-    cfd: true,
+    physical: false,
+    mathematical: false,
+    cfd: false,
   });
   const [expandedCards, setExpandedCards] = useState({});
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
@@ -412,7 +516,7 @@ export default function HydraulicLabPage() {
             {/* Video Badge */}
             <div className="absolute top-4 left-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs text-white/80 border border-white/10 flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              LIVE DEMO
+              Infraplan Hydraulic Laboratory
             </div>
           </div>
         </div>
@@ -826,6 +930,256 @@ export default function HydraulicLabPage() {
           </div>
         </div>
       </section>
+      {/* =========================================================
+    PROJECT SHOWCASE
+========================================================= */}
+
+<section className="relative overflow-hidden border-y border-slate-100 bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+
+  {/* Background Decoration */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+
+    <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
+
+    <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
+
+    <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.025] blur-3xl" />
+
+  </div>
+
+  <div className="relative mx-auto max-w-7xl">
+
+    {/* =====================================================
+        SECTION HEADER
+    ====================================================== */}
+
+    <div className="mx-auto mb-12 max-w-3xl text-center">
+
+      <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-700">
+
+        <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+
+        Project Showcase
+
+      </span>
+
+      <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+
+        Hydraulic{" "}
+
+        <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          Model Studies
+        </span>
+
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
+        Explore our physical, mathematical and computational modelling
+        capabilities developed for complex hydraulic and water infrastructure
+        projects.
+      </p>
+
+    </div>
+
+
+    {/* =====================================================
+        FEATURED PROJECT CARDS
+    ====================================================== */}
+
+    <div className="grid gap-6 md:grid-cols-2">
+
+      {projectShowcase.map(
+        ({
+          title,
+          description,
+          icon: Icon,
+          gradient,
+          images,
+        }) => (
+
+          <div
+            key={title}
+            className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10"
+          >
+
+            {/* Image Grid */}
+
+            <div className="grid h-52 grid-cols-3 gap-2 overflow-hidden rounded-2xl bg-slate-100">
+
+              {images.map((image, index) => (
+
+                <div
+                  key={image}
+                  className="relative overflow-hidden"
+                >
+
+                  <img
+                    src={image}
+                    alt={`${title} ${index + 1}`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
+
+                </div>
+
+              ))}
+
+            </div>
+
+
+            {/* Card Content */}
+
+            <div className="px-2 pb-2 pt-5">
+
+              <div className="flex items-start justify-between gap-4">
+
+                <div className="flex items-start gap-3">
+
+                  <div
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-lg`}
+                  >
+                    <Icon size={20} />
+                  </div>
+
+                  <div>
+
+                    <h3 className="text-lg font-bold text-slate-900">
+                      {title}
+                    </h3>
+
+                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                      {description}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              {/* CTA */}
+
+              <button
+                type="button"
+                className="group/btn mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-blue-700"
+              >
+
+                Explore Studies
+
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-300 group-hover/btn:translate-x-1"
+                />
+
+              </button>
+
+            </div>
+
+          </div>
+
+        )
+      )}
+
+    </div>
+
+
+    {/* =====================================================
+        DIVIDER / INTRO
+    ====================================================== */}
+
+    <div className="mx-auto mt-14 max-w-3xl text-center">
+
+      <div className="mx-auto mb-5 h-px w-16 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+
+      <p className="text-sm font-semibold leading-6 text-slate-700 sm:text-base">
+
+        Model Studies Conducted at{" "}
+
+        <span className="text-blue-700">
+          Infraplan Hydraulic Laboratory, Pune, India
+        </span>
+
+        {" "}for Various Aspects of Design Parameters
+
+      </p>
+
+    </div>
+
+
+    {/* =====================================================
+        MODEL STUDY CATEGORIES
+    ====================================================== */}
+
+ 
+
+
+    {/* =====================================================
+        LOCATION / LABORATORY CTA
+    ====================================================== */}
+
+    <div className="mx-auto mt-12 max-w-2xl">
+
+      <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 p-7 text-center shadow-xl shadow-blue-900/15 sm:p-9">
+
+        {/* Glow */}
+
+        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-cyan-400/15 blur-3xl" />
+
+        <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-blue-400/15 blur-3xl" />
+
+
+        <div className="relative z-10">
+
+          {/* Icon */}
+
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-blue-100 ring-1 ring-white/20 backdrop-blur-sm">
+
+            <MapPin size={21} />
+
+          </div>
+
+
+          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-200">
+            Infraplan Hydraulic Laboratory
+          </p>
+
+
+          <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">
+            Pune, Maharashtra
+          </h3>
+
+
+          <p className="mx-auto mt-2 max-w-md text-xs leading-5 text-blue-100/75">
+            Chandkhed Village, Tal-Maval, Dist. Pune,
+            Maharashtra, India.
+          </p>
+
+
+          <button
+            type="button"
+            className="group/map mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-xs font-semibold text-blue-700 shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50 hover:shadow-xl"
+          >
+
+            View Location
+
+            <ExternalLink
+              size={13}
+              className="transition-transform group-hover/map:translate-x-0.5"
+            />
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* Location Map - Modern Design */}
       <section className="px-5 sm:px-8 lg:px-12 py-16 bg-white border-b border-slate-100">

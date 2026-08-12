@@ -23,7 +23,11 @@ import ContactSection from "../components/ContactSection";
 import JourneySection from "../components/JourneySection";
 import FeaturesStrip from "../components/FeaturesStrip";
 import HeroSection from "../components/HeroSection";
-
+import contImage from "../assets/cont.png";
+import laboImage from "../assets/labo.png";
+import Tank from "../assets/tank.png";
+import Lab from "../assets/lab.png";
+import toolboxImage from "../assets/toolbox.png";
 const nav = [
   { label: "Home", active: true },
   { label: "About Us" },
@@ -49,39 +53,40 @@ const footerLinks = {
 
 const verticals = [
   {
-    title: "SigmaToolBox",
-    desc: "Digital platform for water utilities to manage billing, assets, operations and analytics.",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-    icon: Droplets,
-    color: "from-blue-600 to-blue-800",
+    title: "Engineering Contractors",
+    desc: "Execution of water supply, sewerage, irrigation and industrial infrastructure projects.",
+    img: contImage,
+    icon: Sun,
+    color: "from-amber-600 to-orange-700",
   },
   {
     title: "Hydraulic Laboratory",
     desc: "State-of-the-art testing of pipes, valves, meters and hydraulic structures.",
-    img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&h=400&fit=crop",
+    img: laboImage,
     icon: Wind,
     color: "from-cyan-600 to-teal-700",
   },
-  {
-    title: "Engineering & Construction",
-    desc: "Execution of water supply, sewerage, irrigation and industrial infrastructure projects.",
-    img: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=600&h=400&fit=crop",
-    icon: Sun,
-    color: "from-amber-600 to-orange-700",
+ 
+   {
+    title: "SigmaToolBox",
+    desc: "Digital platform for water utilities to manage billing, assets, operations and analytics.",
+    img: toolboxImage,
+    icon: Droplets,
+    color: "from-blue-600 to-blue-800",
   },
 ];
-
 const projects = [
   {
     title: "24x7 Water Supply Project",
     location: "Balrampur, Karnataka",
-    img: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&h=400&fit=crop",
-    status: "Completed",
+    img: Tank,
+        status: "Completed",
+
   },
   {
     title: "XONI MLD STP Project",
     location: "Pune, Maharashtra",
-    img: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=600&h=400&fit=crop",
+    img: Lab,
     status: "In Progress",
   },
   {

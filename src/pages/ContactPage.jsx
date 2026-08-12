@@ -156,49 +156,155 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden border-t border-slate-100 bg-gradient-to-br from-slate-50 via-white to-blue-50/40 px-5 py-16 sm:px-8 lg:px-12 lg:py-20"
+      className="relative overflow-hidden bg-gradient-to-br from-blue-800 via-blue-900 to-indigo-950 px-5 pb-16 pt-24 sm:px-8 sm:pb-20 sm:pt-28 lg:px-12 lg:pb-24 lg:pt-32"
     >
       {/* =====================================================
-          BACKGROUND DECORATION
+          TOP WAVE
+      ====================================================== */}
+
+      <div className="absolute left-0 right-0 top-0 z-20 overflow-hidden leading-none">
+        <svg
+          viewBox="0 0 1440 100"
+          className="h-16 w-full sm:h-20 lg:h-24"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="
+              M0,0
+              L1440,0
+              L1440,38
+              C1260,78 1160,86 980,52
+              C780,15 660,8 480,42
+              C300,76 170,78 0,38
+              Z
+            "
+            fill="white"
+          />
+        </svg>
+      </div>
+
+      {/* =====================================================
+          BACKGROUND GLOW
+      ====================================================== */}
+
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-40 top-24 h-[420px] w-[420px] rounded-full bg-blue-500/20 blur-3xl" />
+
+        <div className="absolute -right-40 top-1/4 h-[450px] w-[450px] rounded-full bg-indigo-500/25 blur-3xl" />
+
+        <div className="absolute bottom-0 left-1/3 h-[380px] w-[380px] rounded-full bg-cyan-400/10 blur-3xl" />
+
+        <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/5 blur-3xl" />
+      </div>
+
+      {/* =====================================================
+          ENGINEERING GRID
+      ====================================================== */}
+
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+
+      {/* =====================================================
+          CURVED ENGINEERING LINES
+      ====================================================== */}
+
+      <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-20">
+        <svg
+          viewBox="0 0 1440 700"
+          className="absolute left-0 top-10 h-full w-full"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M-100 190 C250 70 450 250 720 140 C980 35 1180 100 1540 210"
+            fill="none"
+            stroke="white"
+            strokeWidth="1"
+          />
+
+          <path
+            d="M-100 500 C260 350 470 590 760 430 C1030 280 1250 390 1540 470"
+            fill="none"
+            stroke="white"
+            strokeWidth="1"
+          />
+
+          <path
+            d="M100 700 C360 540 520 680 800 560 C1060 450 1240 520 1450 600"
+            fill="none"
+            stroke="white"
+            strokeWidth="1"
+          />
+        </svg>
+      </div>
+
+      {/* =====================================================
+          FLOATING PARTICLES
       ====================================================== */}
 
       <div className="pointer-events-none absolute inset-0">
-
-        <div className="absolute -right-32 top-10 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
-
-        <div className="absolute -bottom-32 -left-32 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl" />
-
-        <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/5 blur-3xl" />
-
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute h-1.5 w-1.5 rounded-full bg-white/30 animate-float"
+            style={{
+              top: `${8 + ((i * 13) % 82)}%`,
+              left: `${4 + ((i * 17) % 92)}%`,
+              animationDelay: `${i * 0.45}s`,
+              animationDuration: `${4 + (i % 4)}s`,
+            }}
+          />
+        ))}
       </div>
 
-      <div className="relative mx-auto max-w-7xl">
+      {/* =====================================================
+          DECORATIVE RINGS
+      ====================================================== */}
+
+      <div className="pointer-events-none absolute right-[-80px] top-[30%] hidden h-64 w-64 rounded-full border border-white/10 lg:block">
+        <div className="absolute inset-8 rounded-full border border-white/10" />
+        <div className="absolute inset-16 rounded-full border border-white/10" />
+      </div>
+
+      <div className="pointer-events-none absolute bottom-20 left-[-100px] hidden h-56 w-56 rounded-full border border-cyan-300/10 lg:block">
+        <div className="absolute inset-8 rounded-full border border-cyan-300/10" />
+      </div>
+
+      {/* =====================================================
+          MAIN CONTENT
+      ====================================================== */}
+
+      <div className="relative z-10 mx-auto max-w-7xl">
 
         {/* =====================================================
             SECTION HEADING
         ====================================================== */}
 
-        <div className="mb-10 text-center">
+        <div className="mb-12 text-center sm:mb-14">
 
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-blue-700">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-100 backdrop-blur-md">
+            <Sparkles size={13} />
 
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-300" />
 
             Get In Touch
-
           </span>
 
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">
-
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
             Let's Build Something{" "}
-
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-blue-200">
               Meaningful
             </span>
-
           </h2>
 
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-500">
+          <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-300 to-blue-300" />
+
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-blue-100/80 sm:text-base">
             Have a project in mind? Tell us about your requirements and our
             team will get back to you with the right solution.
           </p>
@@ -209,7 +315,7 @@ export default function ContactSection() {
             CONTACT CONTAINER
         ====================================================== */}
 
-        <div className="overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-xl shadow-slate-900/5">
+        <div className="overflow-hidden rounded-[28px] border border-white/15 bg-white/10 shadow-2xl shadow-black/20 backdrop-blur-sm">
 
           <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
 
@@ -217,20 +323,26 @@ export default function ContactSection() {
                 LEFT CONTACT INFO
             ================================================== */}
 
-            <div className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 p-7 text-white sm:p-9 lg:p-10">
+            <div className="relative overflow-hidden bg-gradient-to-br from-blue-600/80 via-blue-700/80 to-indigo-900/90 p-7 text-white sm:p-9 lg:p-10">
 
-              {/* Decorative circles */}
+              {/* Inner glow */}
 
-              <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
+              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-300/10 blur-3xl" />
 
-              <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-cyan-400/10 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-indigo-400/20 blur-3xl" />
+
+              {/* Decorative ring */}
+
+              <div className="pointer-events-none absolute right-6 top-8 h-20 w-20 rounded-full border border-white/10">
+                <div className="absolute inset-3 rounded-full border border-white/10" />
+              </div>
 
               <div className="relative z-10">
 
                 {/* Icon */}
 
-                <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-blue-100 ring-1 ring-white/10">
-                  <Send size={19} />
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-blue-100 shadow-lg backdrop-blur-md">
+                  <Send size={20} />
                 </div>
 
                 <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-200">
@@ -251,7 +363,7 @@ export default function ContactSection() {
 
                 {/* Contact Information */}
 
-                <div className="mt-8 space-y-5">
+                <div className="mt-8 space-y-4">
 
                   {contactDetails.map((item) => {
                     const Icon = item.icon;
@@ -259,15 +371,14 @@ export default function ContactSection() {
                     return (
                       <div
                         key={item.label}
-                        className="flex items-start gap-3"
+                        className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-white/10 hover:bg-white/5"
                       >
 
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-blue-100 ring-1 ring-white/10">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/10 text-blue-100 transition-transform duration-300 group-hover:scale-110">
                           <Icon size={16} />
                         </div>
 
                         <div>
-
                           <p className="text-[9px] font-semibold uppercase tracking-widest text-blue-300">
                             {item.label}
                           </p>
@@ -275,7 +386,6 @@ export default function ContactSection() {
                           <p className="mt-1 text-xs leading-5 text-white/90 sm:text-sm">
                             {item.value}
                           </p>
-
                         </div>
 
                       </div>
@@ -286,7 +396,7 @@ export default function ContactSection() {
 
                 {/* Bottom Stats */}
 
-                <div className="mt-9 border-t border-white/10 pt-6">
+                <div className="mt-8 border-t border-white/10 pt-6">
 
                   <div className="grid grid-cols-3 gap-3">
 
@@ -302,7 +412,7 @@ export default function ContactSection() {
 
                     <div>
                       <p className="text-xl font-bold">
-                        300+
+                        100+
                       </p>
 
                       <p className="mt-1 text-[9px] uppercase tracking-wider text-blue-300">
@@ -312,7 +422,7 @@ export default function ContactSection() {
 
                     <div>
                       <p className="text-xl font-bold">
-                        20+
+                        4+
                       </p>
 
                       <p className="mt-1 text-[9px] uppercase tracking-wider text-blue-300">
@@ -331,7 +441,7 @@ export default function ContactSection() {
                 RIGHT FORM
             ================================================== */}
 
-            <div className="p-7 sm:p-9 lg:p-10">
+            <div className="bg-white p-7 sm:p-9 lg:p-10">
 
               {submitted ? (
 
@@ -342,12 +452,10 @@ export default function ContactSection() {
                 <div className="flex min-h-[500px] flex-col items-center justify-center text-center">
 
                   <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
-
                     <CheckCircle
                       size={34}
                       strokeWidth={1.7}
                     />
-
                   </div>
 
                   <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600">
@@ -371,7 +479,7 @@ export default function ContactSection() {
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 hover:text-blue-800"
+                    className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition-colors hover:text-blue-800"
                   >
                     Send another enquiry
 
@@ -417,14 +525,11 @@ export default function ContactSection() {
 
                   </div>
 
-                  {/* =================================================
-                      NAME + EMAIL
-                  ================================================== */}
+                  {/* NAME + EMAIL */}
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                     <div>
-
                       <label
                         htmlFor="contact-name"
                         className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-slate-600"
@@ -443,11 +548,9 @@ export default function ContactSection() {
                         placeholder="Your name"
                         className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                       />
-
                     </div>
 
                     <div>
-
                       <label
                         htmlFor="contact-email"
                         className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-slate-600"
@@ -466,19 +569,15 @@ export default function ContactSection() {
                         placeholder="you@company.com"
                         className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                       />
-
                     </div>
 
                   </div>
 
-                  {/* =================================================
-                      PHONE + SERVICE
-                  ================================================== */}
+                  {/* PHONE + SERVICE */}
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                     <div>
-
                       <label
                         htmlFor="contact-phone"
                         className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-slate-600"
@@ -495,11 +594,9 @@ export default function ContactSection() {
                         placeholder="+91 98765 43210"
                         className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                       />
-
                     </div>
 
                     <div>
-
                       <label
                         htmlFor="contact-service"
                         className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-slate-600"
@@ -514,7 +611,6 @@ export default function ContactSection() {
                         onChange={handleChange}
                         className="w-full rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm text-slate-800 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                       >
-
                         <option value="">
                           Select a service
                         </option>
@@ -538,19 +634,14 @@ export default function ContactSection() {
                         <option value="other">
                           Other
                         </option>
-
                       </select>
-
                     </div>
 
                   </div>
 
-                  {/* =================================================
-                      MESSAGE
-                  ================================================== */}
+                  {/* MESSAGE */}
 
                   <div>
-
                     <label
                       htmlFor="contact-message"
                       className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-slate-600"
@@ -569,12 +660,9 @@ export default function ContactSection() {
                       placeholder="Tell us about your project, requirements or questions..."
                       className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm leading-6 text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                     />
-
                   </div>
 
-                  {/* =================================================
-                      FILE UPLOAD
-                  ================================================== */}
+                  {/* FILE UPLOAD */}
 
                   <div>
 
@@ -608,9 +696,7 @@ export default function ContactSection() {
                         />
 
                         <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-
                           <UploadCloud size={18} />
-
                         </div>
 
                         <p className="mt-2 text-xs font-semibold text-slate-700">
@@ -661,9 +747,7 @@ export default function ContactSection() {
 
                   </div>
 
-                  {/* =================================================
-                      SUBMIT BUTTON
-                  ================================================== */}
+                  {/* SUBMIT */}
 
                   <div className="pt-1">
 
@@ -700,32 +784,30 @@ export default function ContactSection() {
                   </div>
 
                 </form>
-
               )}
 
             </div>
 
           </div>
-
         </div>
 
         {/* =====================================================
-            BOTTOM STRIP
+            BOTTOM STATUS STRIP
         ====================================================== */}
 
-        <div className="mt-5 flex flex-col items-center justify-between gap-3 rounded-xl border border-slate-200/70 bg-white/70 px-5 py-4 backdrop-blur-sm sm:flex-row">
+        <div className="mt-5 flex flex-col items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-md sm:flex-row">
 
           <div className="flex items-center gap-2">
 
-            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+            <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
 
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-blue-100/70">
               Our team is currently accepting new projects
             </span>
 
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-medium text-blue-700">
+          <div className="flex items-center gap-2 text-xs font-medium text-blue-200">
             <Clock size={13} />
             Response within 24 hours
           </div>
@@ -733,6 +815,29 @@ export default function ContactSection() {
         </div>
 
       </div>
+
+      {/* =====================================================
+          ANIMATIONS
+      ====================================================== */}
+
+      <style>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0) translateX(0);
+            opacity: 0.25;
+          }
+
+          50% {
+            transform: translateY(-18px) translateX(8px);
+            opacity: 0.7;
+          }
+        }
+
+        .animate-float {
+          animation: float 5s ease-in-out infinite;
+        }
+      `}</style>
+
     </section>
   );
 }

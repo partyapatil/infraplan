@@ -91,7 +91,7 @@ export default function ContactSection() {
   const stats = [
     {
       icon: Building2,
-      value: "150+",
+      value: "100+",
       label: "Projects Delivered",
     },
     {
@@ -364,26 +364,26 @@ export default function ContactSection() {
             <div className="relative z-10 flex flex-col gap-3 mt-10 pt-6 border-t border-white/15">
 
               {[
-                {
-                  icon: MapPin,
-                  label: "Office",
-                  value:
-                    "Infraplan House, MG Road, Bengaluru, Karnataka 560001",
-                },
+            {
+  icon: MapPin,
+  label: "Office",
+  value: "109, Rajaji Complex, 1st Lane, Shahupuri, Kolhapur – 416001, Maharashtra | Infraplan House, MG Road, Bengaluru, Karnataka 560001",
+},
+         
                 {
                   icon: Phone,
                   label: "Phone",
-                  value: "+91 98765 43210",
+                  value: "+91-231-2655151",
                 },
                 {
                   icon: Mail,
                   label: "Email",
-                  value: "hello@infraplan.com",
+                  value: "contactus@infraplan.in",
                 },
                 {
                   icon: Clock,
                   label: "Working Hours",
-                  value: "Mon - Sat, 9:00 AM - 6:00 PM",
+                  value: "Mon - Sat, 9:30 AM - 6:00 PM",
                 },
               ].map(({ icon: Icon, label, value }) => (
 
