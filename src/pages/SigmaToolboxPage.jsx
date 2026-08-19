@@ -50,7 +50,7 @@ import {
   Mountain,
   TreePine,
 } from "lucide-react";
-
+import sigmaToolboxHeroBg from "../assets/sigmatoolbox-hero.png";
 // Consistent navigation
 const nav = [
   { label: "Home", active: false },
@@ -207,52 +207,288 @@ export default function SigmaToolboxPage() {
       </header> */}
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden px-5 sm:px-8 lg:px-12 pt-12 pb-10 lg:pt-20 lg:pb-16">
-        {/* Background photo - real infrastructure/water plant imagery */}
-        <div
-          className="absolute inset-0 bg-cover bg-center scale-105"
-          style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1600&h=900&fit=crop)",
-          }}
-        />
-        {/* Dark brand-tinted overlay so white text stays readable */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-950/95 via-indigo-950/92 to-slate-900/95" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+    {/* =========================================================
+    SIGMA TOOLBOX HERO SECTION
+========================================================= */}
 
-        {/* Soft glow accents on top */}
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-400 rounded-full blur-3xl" />
-        </div>
+<section
+  className="
+    relative
+    min-h-[500px]
+    overflow-hidden
+    px-5
+    sm:px-8
+    lg:px-12
+    pt-14
+    pb-14
+    lg:pt-20
+    lg:pb-20
+    flex
+    items-center
+  "
+>
+  {/* =======================================================
+      BACKGROUND IMAGE
+  ======================================================== */}
 
-        <div className="relative max-w-7xl mx-auto text-center text-white">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 text-xs font-semibold tracking-wider uppercase mb-6 border border-white/20">
-            <Cpu size={14} />
-            Sigma ToolBox
+  <div
+    className="
+      absolute
+      inset-0
+      bg-cover
+      bg-center
+      bg-no-repeat
+    "
+    style={{
+      backgroundImage: `url(${sigmaToolboxHeroBg})`,
+    }}
+  />
+
+  {/* =======================================================
+      SOFT CENTER READABILITY LAYER
+
+      The image already has the blue digital theme,
+      so we don't use a heavy dark overlay.
+  ======================================================== */}
+
+  <div
+    className="
+      absolute
+      inset-0
+      bg-gradient-to-r
+      from-white/20
+      via-white/45
+      to-blue-100/10
+    "
+  />
+
+  {/* =======================================================
+      VERY LIGHT BLUE BRAND TINT
+  ======================================================== */}
+
+  <div className="absolute inset-0 bg-blue-600/5" />
+
+  {/* =======================================================
+      SOFT CENTER GLOW
+
+      Helps separate the heading from the background
+      without hiding the image.
+  ======================================================== */}
+
+  <div
+    className="
+      absolute
+      left-1/2
+      top-1/2
+      h-[420px]
+      w-[900px]
+      -translate-x-1/2
+      -translate-y-1/2
+      rounded-full
+      bg-white/20
+      blur-3xl
+      pointer-events-none
+    "
+  />
+
+  {/* =======================================================
+      SUBTLE BOTTOM DEPTH
+  ======================================================== */}
+
+  <div
+    className="
+      absolute
+      inset-x-0
+      bottom-0
+      h-20
+      bg-gradient-to-t
+      from-blue-950/15
+      to-transparent
+      pointer-events-none
+    "
+  />
+
+  {/* =======================================================
+      CONTENT
+  ======================================================== */}
+
+  <div
+    className="
+      relative
+      z-10
+      mx-auto
+      w-full
+      max-w-7xl
+      text-center
+    "
+  >
+
+    {/* =====================================================
+        BADGE
+    ====================================================== */}
+
+    <div
+      className="
+        mb-6
+        inline-flex
+        items-center
+        gap-2
+        rounded-full
+        border
+        border-blue-200/70
+        bg-white/75
+        px-4
+        py-2
+        text-xs
+        font-semibold
+        uppercase
+        tracking-wider
+        text-blue-700
+        shadow-md
+        backdrop-blur-md
+      "
+    >
+      <Cpu
+        size={14}
+        className="text-blue-600"
+      />
+
+      Sigma ToolBox
+    </div>
+
+
+    {/* =====================================================
+        MAIN HEADING
+    ====================================================== */}
+
+    <h1
+      className="
+        mb-4
+        text-4xl
+        font-bold
+        leading-tight
+        tracking-tight
+        text-slate-900
+        drop-shadow-sm
+        sm:text-5xl
+        lg:text-[3.5rem]
+      "
+    >
+      Planning, Modelling,{" "}
+
+      <span
+        className="
+          bg-gradient-to-r
+          from-blue-600
+          via-indigo-600
+          to-cyan-500
+          bg-clip-text
+          text-transparent
+        "
+      >
+        Managing
+      </span>{" "}
+
+      Infrastructure
+    </h1>
+
+
+    {/* =====================================================
+        DESCRIPTION
+    ====================================================== */}
+
+    <p
+      className="
+        mx-auto
+        max-w-2xl
+        text-base
+        leading-relaxed
+        text-slate-600
+        drop-shadow-sm
+        sm:text-lg
+      "
+    >
+      Comprehensive digital solutions for water utilities
+      and infrastructure management
+    </p>
+
+
+    {/* =====================================================
+        QUICK STATS
+    ====================================================== */}
+
+    <div
+      className="
+        mt-8
+        flex
+        flex-wrap
+        justify-center
+        gap-3
+        sm:gap-4
+      "
+    >
+      {stats.map((stat) => {
+        const Icon = stat.icon;
+
+        return (
+          <div
+            key={stat.label}
+            className="
+              flex
+              items-center
+              gap-2
+              rounded-full
+              border
+              border-white/80
+              bg-white/75
+              px-4
+              py-2.5
+              text-slate-700
+              shadow-lg
+              backdrop-blur-md
+              transition-all
+              duration-300
+              hover:-translate-y-0.5
+              hover:bg-white/90
+              hover:shadow-xl
+            "
+          >
+            {/* Icon */}
+
+            <Icon
+              size={16}
+              className="text-blue-600"
+            />
+
+            {/* Value */}
+
+            <span
+              className="
+                font-bold
+                text-slate-900
+              "
+            >
+              {stat.value}
+            </span>
+
+            {/* Label */}
+
+            <span
+              className="
+                text-sm
+                text-slate-600
+              "
+            >
+              {stat.label}
+            </span>
+
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-tight tracking-tight mb-4">
-            Planning, Modelling, <span className="text-blue-200">Managing</span> Infrastructure
-          </h1>
-          <p className="text-lg text-blue-100 max-w-2xl mx-auto leading-relaxed">
-            Comprehensive digital solutions for water utilities and infrastructure management
-          </p>
-          
-          {/* Quick Stats */}
-          <div className="flex flex-wrap justify-center gap-6 mt-8">
-            {stats.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div key={stat.label} className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 flex items-center gap-2">
-                  <Icon size={16} className="text-blue-200" />
-                  <span className="font-bold">{stat.value}</span>
-                  <span className="text-sm text-blue-200">{stat.label}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+        );
+      })}
+    </div>
+
+  </div>
+</section>
 
       {/* Product Navigation */}
       <section className="px-5 sm:px-8 lg:px-12 py-6 bg-white border-b border-slate-100">

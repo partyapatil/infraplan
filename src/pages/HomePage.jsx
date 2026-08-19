@@ -23,7 +23,7 @@ import ContactSection from "../components/ContactSection";
 import JourneySection from "../components/JourneySection";
 import FeaturesStrip from "../components/FeaturesStrip";
 import HeroSection from "../components/HeroSection";
-import contImage from "../assets/cont.png";
+import contImage from "../assets/infraplanCont.png";
 import laboImage from "../assets/labo.png";
 import Tank from "../assets/tank.png";
 import Lab from "../assets/lab.png";
@@ -54,14 +54,14 @@ const footerLinks = {
 const verticals = [
   {
     title: "Engineering Contractors",
-    desc: "Execution of water supply, sewerage, irrigation and industrial infrastructure projects.",
+    desc: "Construction and Rehabilitation of Water Supply Schemes.",
     img: contImage,
     icon: Sun,
     color: "from-amber-600 to-orange-700",
   },
   {
     title: "Hydraulic Laboratory",
-    desc: "State-of-the-art testing of pipes, valves, meters and hydraulic structures.",
+    desc: "Physical and Mathematical model studies for hydraulic structures.",
     img: laboImage,
     icon: Wind,
     color: "from-cyan-600 to-teal-700",
@@ -69,7 +69,7 @@ const verticals = [
  
    {
     title: "SigmaToolBox",
-    desc: "Digital platform for water utilities to manage billing, assets, operations and analytics.",
+    desc: "Online toolsets for managing drinking water supply pipe networks.",
     img: toolboxImage,
     icon: Droplets,
     color: "from-blue-600 to-blue-800",
@@ -163,83 +163,6 @@ export default function InfraplanPage() {
       )}
 
       {/* Hero Section */}
-{/* <section className="relative overflow-hidden bg-gradient-to-br from-blue-50/50 via-white to-cyan-50/30 px-5 sm:px-8 lg:px-12 pt-12 pb-10 lg:pt-20 lg:pb-16">
-  <div className="absolute inset-0 pointer-events-none">
-    <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
-    <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl" />
-  </div>
-
-  <div className="relative max-w-7xl mx-auto">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div className="max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-6 border border-blue-200/30">
-          <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-          Building Tomorrow's Infrastructure
-        </div>
-        <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-slate-900 leading-tight tracking-tight">
-          Engineering Today.
-          <br />
-          Sustaining <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Tomorrow.</span>
-        </h1>
-        <p className="mt-4 text-sm sm:text-base text-slate-500 max-w-xl leading-relaxed">
-          Delivering innovative engineering, digital solutions and sustainable infrastructure for a better future.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-4">
-          <button className="group bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white text-sm font-medium px-8 py-3.5 rounded-xl shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 transition-all duration-300 hover:scale-105 flex items-center gap-2">
-            Explore Solutions 
-            <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-        </div>
-        
-        <div className="relative mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 bg-white/80 backdrop-blur-lg rounded-2xl border border-slate-200/60 p-5 shadow-xl">
-          {stats.map((s) => {
-            const Icon = s.icon;
-            return (
-              <div key={s.label} className="text-center group">
-                <div className="inline-flex p-2 rounded-xl bg-blue-50 text-blue-600 mb-1 group-hover:scale-110 transition-transform">
-                  <Icon size={18} />
-                </div>
-                <div className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">{s.value}</div>
-                <div className="text-[10px] text-slate-500 mt-0.5">{s.label}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black/5 border border-slate-200/60 lg:scale-110 lg:translate-x-8">
-        <video
-          className="w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-        
-        <div className="absolute inset-0 flex items-center justify-center">
-          <button className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md text-white hover:bg-white/30 hover:scale-110 transition-all duration-300 flex items-center justify-center border border-white/30">
-            <Play size={32} fill="white" className="ml-1" />
-          </button>
-        </div>
-
-        <div className="absolute top-4 left-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs text-white/90 border border-white/10 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-          Featured Video
-        </div>
-        
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
-          <div className="h-full w-1/3 bg-white rounded-full" />
-        </div>
-      </div>
-    </div>
-  </div>
-</section> */}
 <HeroSection />
 
     
@@ -303,10 +226,10 @@ export default function InfraplanPage() {
                 Featured <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Projects</span>
               </h2>
             </div>
-            <a href="#" className="group inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors mt-2 sm:mt-0">
+            {/* <a href="#" className="group inline-flex items-center gap-1 text-sm font-medium text-blue-700 hover:text-blue-800 transition-colors mt-2 sm:mt-0">
               View All Projects 
               <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </a>
+            </a> */}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {projects.map((p) => (
@@ -333,7 +256,7 @@ export default function InfraplanPage() {
                   <h3 className="font-semibold text-slate-900 text-sm mb-1">{p.title}</h3>
                   <p className="text-xs text-slate-400 mb-3">{p.location}</p>
                   <a href="#" className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 group-hover:text-blue-800 transition-colors">
-                    Read Case Study 
+                    Read More
                     <ChevronRight size={12} className="group-hover:translate-x-1 transition-transform" />
                   </a>
                 </div>

@@ -19,6 +19,7 @@ import {
   Globe,
 } from "lucide-react";
 
+import aboutPage from "../assets/aboutPage.png";
 // Re-using the navigation from the main page
 const nav = [
   { label: "Home", active: false },
@@ -35,29 +36,158 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white text-slate-800 font-sans antialiased">
       {/* Header - IDENTICAL to home page */}
  
+{/* Hero Section */}
+<section
+  className="
+    relative
+    min-h-[420px]
+    sm:min-h-[460px]
+    lg:min-h-[500px]
+    overflow-hidden
+    flex
+    items-center
+    px-5
+    sm:px-8
+    lg:px-12
+    py-16
+    lg:py-20
+  "
+>
+  {/* =======================================================
+      BACKGROUND IMAGE
+  ======================================================== */}
+  <div
+    className="
+      absolute
+      inset-0
+      bg-cover
+      bg-center
+      bg-no-repeat
+    "
+    style={{
+      backgroundImage: `url(${aboutPage})`,
+    }}
+  />
 
-      {/* Hero Section - Matches home page hero style */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50/50 via-white to-cyan-50/30 px-5 sm:px-8 lg:px-12 pt-12 pb-10 lg:pt-20 lg:pb-16">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl" />
-        </div>
+  {/* =======================================================
+      READABILITY SCRIM
+      A dark gradient across the whole image (strongest in the
+      center where the text sits) instead of a white blur blob.
+      This works regardless of what's behind it — sky, water,
+      panels, trees — because we're darkening rather than trying
+      to match a light patch to a busy photo.
+  ======================================================== */}
+  <div
+    className="
+      absolute
+      inset-0
+      z-[1]
+      bg-gradient-to-b
+      from-black/50
+      via-black/40
+      to-black/55
+      pointer-events-none
+    "
+  />
+  <div
+    className="
+      absolute
+      inset-0
+      z-[1]
+      bg-gradient-to-t
+      from-black/30
+      via-transparent
+      to-transparent
+      pointer-events-none
+    "
+  />
 
-        <div className="relative max-w-7xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-6 border border-blue-200/30">
-            <Users size={14} />
-            About Us
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-slate-900 leading-tight tracking-tight">
-            Team <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">InfraPlan</span>
-          </h1>
-          <p className="mt-4 text-sm sm:text-base text-slate-500 max-w-2xl mx-auto leading-relaxed">
-            Dedicated to plan, create and manage reliable and efficient water Infrastructure.
-          </p>
-        </div>
-      </section>
+  {/* =======================================================
+      CONTENT
+  ======================================================== */}
+  <div
+    className="
+      relative
+      z-10
+      mx-auto
+      w-full
+      max-w-7xl
+      text-center
+    "
+  >
+    {/* Badge */}
+    <div
+      className="
+        inline-flex
+        items-center
+        gap-2
+        rounded-full
+        border
+        border-white/30
+        bg-white/95
+        px-4
+        py-2
+        text-xs
+        font-semibold
+        uppercase
+        tracking-wider
+        text-blue-700
+        shadow-lg
+        mb-6
+      "
+    >
+      <Users size={14} />
+      About Us
+    </div>
 
+    {/* Heading — white now, since it sits on a dark scrim */}
+    <h1
+      className="
+        text-4xl
+        sm:text-5xl
+        lg:text-[3.5rem]
+        font-bold
+        leading-tight
+        tracking-tight
+        text-white
+        drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]
+      "
+    >
+      Team{" "}
+      <span
+        className="
+          bg-gradient-to-r
+          from-blue-300
+          to-indigo-300
+          bg-clip-text
+          text-transparent
+          drop-shadow-none
+        "
+      >
+        InfraPlan
+      </span>
+    </h1>
+
+    {/* Description — white/slate-100, strong drop shadow instead of
+        relying on a background blob */}
+    <p
+      className="
+        mx-auto
+        mt-4
+        max-w-2xl
+        text-sm
+        sm:text-base
+        leading-relaxed
+        font-medium
+        text-slate-100
+        drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]
+      "
+    >
+      Dedicated to plan, create and manage reliable and efficient
+      water infrastructure.
+    </p>
+  </div>
+</section>
       {/* Mission & Vision - Matches home page card styling */}
       <section className="px-5 sm:px-8 lg:px-12 py-16 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Building2,
   Droplets,
@@ -30,14 +30,19 @@ import {
   FlaskConical,
   ExternalLink,
   Wind,
+  Minimize2,
 } from "lucide-react";
+import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
 import HydraulicCTA from "../components/CTA/HydraulicCTA";
-
+import hydraulicLabHeroBg from "../assets/hydraulic-lab-hero-bg.png";
+import hydraulicLabHeroBg2 from "../assets/hydraulic-lab-hero-bg-2.png";
+import hydraulicLabHeroBg3 from "../assets/hydrolic-3.png";
 import physical1 from "../assets/phy1.png";
 import physical2 from "../assets/phy2.png";
 import physical3 from "../assets/phy3.png";
 import math1 from "../assets/math1.png";
+import ProjectMapSection from "../components/ProjectMapSection";
 
 // Consistent navigation
 const nav = [
@@ -56,11 +61,7 @@ const projectShowcase = [
       "Laboratory-based physical modelling for hydraulic structures, spillways, energy dissipation and flow behaviour.",
     icon: FlaskConical,
     gradient: "from-blue-600 to-cyan-600",
-    images: [
-      physical1,
-      physical2,
-      physical3,
-    ],
+    images: [physical1, physical2, physical3],
   },
   {
     title: "Mathematical Model Studies",
@@ -68,11 +69,7 @@ const projectShowcase = [
       "Advanced mathematical and numerical modelling for hydraulic systems, river behaviour and water infrastructure.",
     icon: Cpu,
     gradient: "from-indigo-600 to-blue-700",
-    images: [
-      math1,
-      math1,
-      math1,
-    ],
+    images: [math1, math1, math1],
   },
 ];
 
@@ -80,199 +77,90 @@ const modelStudies = {
   physicalModels: [
     {
       id: 1,
-      title: "Two-Dimensional Scaled Physical Model for Spillway",
+      title: "Two-Dimensional Sectional Physical Model For Spillway",
       purpose:
-        "To investigate flow behaviour, pressure distribution, energy dissipation and hydraulic performance of spillway systems.",
+        "To evaluate the hydraulic performance of a single, representative spillway block, bay or section.",
       application:
-        "Used for spillway design validation, flow optimisation and energy dissipation analysis.",
-      features: [
-        "Spillway flow analysis",
-        "Energy dissipation",
-        "Pressure distribution",
-        "Flow optimisation",
-      ],
-      detailedDescription:
-        "Physical scale models allow engineers to observe complex hydraulic behaviour and validate the performance of hydraulic structures before construction.",
-      methodology:
-        "A geometrically scaled physical model is constructed and tested under controlled laboratory conditions. Flow conditions and hydraulic parameters are measured and compared with design requirements.",
+        "Used for verifying discharge capacity, rating curves, pressure distribution along the chute, identifying cavitation potential, and testing the efficiency of energy dissipators (e.g., Flip / ski jump bucket, stilling basins, baffle blocks, end sills).",
     },
-
     {
       id: 2,
       title:
-        "Three-Dimensional Comprehensive Model for Spillway / Barrage and Intake",
+        "Three-Dimensional Comprehensive Model For Spillway / Barrage And Intake",
       purpose:
-        "To study complex three-dimensional flow interactions around spillways, barrages and intake structures.",
+        "To evaluate three-dimensional flow interactions for a complete spillway / barrage.",
       application:
-        "Used to analyse approach flow, flow concentration, hydraulic interactions and downstream conditions.",
-      features: [
-        "3D flow analysis",
-        "Approach flow studies",
-        "Intake hydraulics",
-        "Barrage interaction",
-      ],
-      detailedDescription:
-        "Three-dimensional physical models provide detailed understanding of complex flow patterns around major hydraulic structures.",
-      methodology:
-        "A scaled model is constructed based on prototype geometry and tested under different discharge and operating conditions.",
+        "Assessing discharging capacity, Essential for assessing complex flow patterns such as flow concentration, asymmetric approach conditions, interactions between intake structures and spillways during combined operations, and downstream river morphology/plunge pool formation.\n\nA part comprehensive model may also be modelled to reproduce representative few bays out of multiple bays, in case of large barrages.",
     },
-
     {
       id: 3,
-      title: "Physical Model for Aeration Studies",
+      title: "Physical Model For Aeration Studies",
       purpose:
-        "To evaluate air entrainment and aeration performance in high-velocity hydraulic structures.",
+        "To study air entrainment and the prevention of cavitation damage on spillway surfaces.",
       application:
-        "Used for spillway aerators, chute systems and energy dissipation structures.",
-      features: [
-        "Air entrainment",
-        "Cavitation protection",
-        "Aerator performance",
-        "High velocity flow",
-      ],
-      detailedDescription:
-        "Physical modelling helps determine suitable aerator geometry and operating conditions to reduce cavitation risk.",
-      methodology:
-        "Scaled hydraulic models are tested under representative flow conditions and aeration behaviour is measured.",
+        "Used to design and optimize aeration ramps or offsets to introduce air into the flow, thereby protecting concrete surfaces from cavitation at high velocities.",
     },
-
     {
       id: 4,
-      title: "Physical Model for Evaluating Hydro-Dynamic Forces on Gates",
+      title:
+        "Physical Model For Evaluating Hydro-Dynamic Forces On Gates (Uplift And Downpull)",
       purpose:
-        "To evaluate hydraulic forces acting on gates under different operating conditions.",
+        "To measure the hydro-dynamic forces acting on gates during operation.",
       application:
-        "Used for gate design, structural assessment and safe operating conditions.",
-      features: [
-        "Hydrodynamic forces",
-        "Gate operation",
-        "Pressure distribution",
-        "Structural assessment",
-      ],
-      detailedDescription:
-        "Physical model testing provides realistic information about hydraulic forces acting on gates and related structures.",
-      methodology:
-        "Pressure measurements and flow observations are performed on a scaled model under multiple operating scenarios.",
+        "Used to assess hydrodynamic uplift and downpull forces to verify corresponding hoist capacities, and flow conditions within gate wells. It may also be used in some cases to assess suitability of aeration provisions.",
     },
-
     {
       id: 5,
       title:
-        "Physical Model Combined With Mathematical Model for Sediment Flushing",
+        "Physical Model Combined With Mathematical Model For Sediment Flushing",
       purpose:
-        "To study sediment deposition and optimise reservoir flushing operations.",
+        "To utilize the strengths of both methods—numerical models for long-term sediment deposition predictions and physical models for visualization and operational optimization.",
       application:
-        "Used for reservoir sediment management and flushing strategy development.",
-      features: [
-        "Sediment transport",
-        "Reservoir flushing",
-        "Hybrid modelling",
-        "Operational optimisation",
-      ],
-      detailedDescription:
-        "This combined approach uses mathematical modelling for prediction and physical modelling for visualisation and validation.",
-      methodology:
-        "Mathematical models are calibrated using field data and physical models are used to validate and optimise flushing operations.",
+        "Mathematical models establish the timing and frequency of flushing based on deposition rates; physical models are then used to optimize flushing methodology (e.g., drawdown flushing), flushing discharge, and the efficacy of flushing tunnels or sediment outlets. The parameters such as, optimum flushing discharge, time required for flushing, quantity of sediments getting flushed are recommended based on studies.",
     },
   ],
 
   mathematicalModels: [
     {
       id: 101,
-      title: "Mathematical Model for Sediment Studies (2D)",
+      title: "Mathematical Model For Sediment Studies (2D)",
       purpose:
-        "To perform advanced two-dimensional hydraulic and sediment transport simulations.",
+        "To perform one-dimensional or advanced 2D hydraulic simulations, such as water surface profile computation and transient analysis.",
       application:
-        "Used for flood propagation, sediment transport, river morphology and deposition studies.",
-      features: [
-        "2D sediment modelling",
-        "River morphology",
-        "Erosion analysis",
-        "Deposition studies",
-      ],
-      detailedDescription:
-        "2D mathematical models provide detailed predictions of sediment transport and long-term morphological changes.",
-      methodology:
-        "The model is developed using specialised hydraulic modelling software, calibrated with field measurements and validated against observed conditions.",
+        "Used for flood propagation studies, dam breach analysis, and transient analysis for load rejection/acceptance scenarios to predict water levels and Manning's n values across river reaches.",
     },
-
     {
       id: 102,
-      title: "HEC-RAS Models for Specific Hydraulic Analysis",
+      title: "HEC-RAS Models For Specific Hydraulic Analysis",
       purpose:
-        "To analyse river hydraulics, water surface profiles and complex hydraulic structures.",
+        "To evaluate three-dimensional flow interactions for a complete spillway / barrage.",
       application:
-        "Used for flood studies, bridge hydraulics, spillway analysis and river modelling.",
-      features: [
-        "Flood simulation",
-        "River hydraulics",
-        "Bridge analysis",
-        "Water surface profiles",
-      ],
-      detailedDescription:
-        "HEC-RAS modelling provides reliable predictions of water levels, flow behaviour and hydraulic performance.",
-      methodology:
-        "The model is developed using cross-sectional and field data, calibrated using observed water levels and validated against historical events.",
+        "Assessing discharging capacity, Essential for assessing complex flow patterns such as flow concentration, asymmetric approach conditions, interactions between intake structures and spillways during combined operations, and downstream river morphology/plunge pool formation.\n\nA part comprehensive model may also be modelled to reproduce representative few bays out of multiple bays, in case of large barrages.",
     },
-
     {
       id: 103,
       title: "Transient Studies",
       purpose:
-        "To evaluate hydraulic transients caused by rapid changes in operating conditions.",
+        "Transient studies are conducted to evaluate the hydraulic performance of the water conductor system- including the surge tank, headrace/tailrace tunnels and intake structures- during abrupt changes in operating conditions. The primary goal is to ensure that pressure fluctuations, water level oscillations, and mass surges remain within safe design limits during transitions between different operational modes (generations, pumping, and load changes).",
       application:
-        "Used for surge tanks, tunnels, intakes, pumping systems and hydropower systems.",
-      features: [
-        "Pressure transients",
-        "Water hammer",
-        "Surge analysis",
-        "System protection",
-      ],
-      detailedDescription:
-        "Transient studies ensure pressure fluctuations and water level oscillations remain within safe design limits.",
-      methodology:
-        "Mathematical simulations are performed for different operating scenarios including start-up, shutdown and emergency conditions.",
+        "These studies confirm the design adequacy of the surge tank and water conductor tunnels, ensuring that neither high-pressure transients nor deep vaccum conditions threaten the structural integrity of the project during routine or emergency operations.",
     },
-  ],
-
-  cfdStudies: [
     {
-      id: 201,
-      title: "CFD Studies for Spillway, Aerator, Energy Dissipator, etc.",
+      id: 104,
+      title: "CFD Studies For Spillway, Aerator, Energy Dissipator, Etc.",
       purpose:
-        "To investigate detailed three-dimensional flow behaviour using Computational Fluid Dynamics.",
+        "To provide high-resolution visualization of flow fields, pressure distribution, and velocity vectors.",
       application:
-        "Used for spillways, aerators, energy dissipators and other complex hydraulic structures.",
-      features: [
-        "3D flow simulation",
-        "Velocity analysis",
-        "Pressure distribution",
-        "Turbulence modelling",
-      ],
-      detailedDescription:
-        "CFD simulations provide detailed insight into velocity fields, pressure zones, turbulence and complex flow interactions.",
-      methodology:
-        "A computational mesh is generated and appropriate turbulence and multiphase models are applied to simulate hydraulic conditions.",
+        "Used for preliminary hydraulic optimization, cavitation risk assessment, and detailed analysis of flow behavior over spillway piers, gate bays, and within energy dissipation basins without the immediate need for physical model construction.\n\nIHL is now adopting a complementary approach that integrates CFD studies with physical modelling: CFD analyses are utilized to optimize spillway and structure geometry by evaluating various modifications. Once the geometry is finalized through CFD, it is validated on a physical model, ensuring accuracy while significantly reducing project time and cost.",
     },
-
     {
-      id: 202,
+      id: 105,
       title:
-        "CFD Studies for Vibration Analysis of Gates Coupled With Finite Element Analysis (FEA)",
+        "CFD Studies For Vibration Analysis Of Gates Coupled With Finite Element Analysis (FEA)",
       purpose:
-        "To analyse flow-induced vibration and structural response of hydraulic gates.",
+        "To perform fluid-structure interaction (FSI) analysis by combining fluid dynamic results (CFD) with structural response simulations (FEA).",
       application:
-        "Used for gate systems subjected to complex hydraulic loading conditions.",
-      features: [
-        "Flow-induced vibration",
-        "Structural response",
-        "CFD analysis",
-        "FEA coupling",
-      ],
-      detailedDescription:
-        "Coupled CFD and FEA analysis helps assess the interaction between hydraulic forces and structural behaviour.",
-      methodology:
-        "Hydraulic loads generated through CFD simulations are transferred to structural models for vibration and stress analysis.",
+        "Used to determine the structural integrity of gates under operational loads, assessing fatigue, stress, and vibration responses caused by hydrodynamic pressure fluctuations.",
     },
   ],
 };
@@ -298,293 +186,330 @@ const modelStudyCategories = [
 const structures = [
   {
     name: "Spillways",
-    image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80",
   },
   {
     name: "Energy Dissipator",
-    image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&q=80",
   },
   {
     name: "Power Intakes",
-    image: "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80",
   },
   {
     name: "De-silting Basins",
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
   },
   {
     name: "Head Race Tunnels",
-    image: "https://images.unsplash.com/photo-1465447142348-e9952c393450?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1465447142348-e9952c393450?w=600&q=80",
   },
   {
     name: "Gates",
-    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80",
   },
   {
     name: "Canals",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80",
   },
   {
     name: "Bridges",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600&q=80",
   },
 ];
-
 
 const designStudies = [
   {
     name: "River Training",
-    image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600&q=80",
   },
   {
     name: "Safe Grade Elevation",
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
   },
   {
     name: "Flood Modelling",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80",
   },
   {
     name: "Watershed Evaluation",
-    image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600&q=80",
   },
   {
     name: "Integrated Reservoir Operation",
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
   },
   {
     name: "Dam Break Analysis",
-    image: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&q=80",
   },
   {
     name: "Sedimentation Studies",
-    image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=600&q=80",
   },
   {
     name: "Coastal Engineering",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
   },
 ];
 
 export default function HydraulicLabPage() {
-  const [expandedSections, setExpandedSections] = useState({
-    physical: false,
-    mathematical: false,
-    cfd: false,
-  });
-  const [expandedCards, setExpandedCards] = useState({});
-  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
-  const videoRef = useRef(null);
+const [expandedSections, setExpandedSections] = useState({
+  physical: false,
+  mathematical: false,
+  cfd: false,
+});
 
-  const toggleSection = (sectionKey) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [sectionKey]: !prev[sectionKey]
-    }));
-  };
+const [expandedCards, setExpandedCards] = useState({});
 
-  const toggleCard = (id) => {
-    setExpandedCards(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
+const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+const [isVideoFullscreen, setIsVideoFullscreen] = useState(false);
 
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isVideoPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsVideoPlaying(!isVideoPlaying);
+const videoRef = useRef(null);
+const videoContainerRef = useRef(null);
+
+const toggleSection = (sectionKey) => {
+  setExpandedSections((prev) => ({
+    ...prev,
+    [sectionKey]: !prev[sectionKey],
+  }));
+};
+
+const toggleCard = (id) => {
+  setExpandedCards((prev) => ({
+    ...prev,
+    [id]: !prev[id],
+  }));
+};
+
+const toggleVideo = async () => {
+  const video = videoRef.current;
+
+  if (!video) return;
+
+  try {
+    if (video.paused) {
+      await video.play();
+    } else {
+      video.pause();
     }
+  } catch (error) {
+    console.error("Video playback error:", error);
+  }
+};
+
+const toggleVideoFullscreen = async () => {
+  const container = videoContainerRef.current;
+
+  if (!container) return;
+
+  try {
+    if (!document.fullscreenElement) {
+      await container.requestFullscreen();
+    } else {
+      await document.exitFullscreen();
+    }
+  } catch (error) {
+    console.error("Fullscreen error:", error);
+  }
+};
+
+useEffect(() => {
+  const handleFullscreenChange = () => {
+    setIsVideoFullscreen(!!document.fullscreenElement);
   };
 
+  document.addEventListener(
+    "fullscreenchange",
+    handleFullscreenChange
+  );
+
+  return () => {
+    document.removeEventListener(
+      "fullscreenchange",
+      handleFullscreenChange
+    );
+  };
+}, []);
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans antialiased">
-      {/* Header - Consistent with other pages */}
-      {/* <header className="sticky top-0 z-50 flex items-center justify-between px-5 sm:px-8 lg:px-12 py-4 border-b border-slate-100 bg-white/95 backdrop-blur-sm shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-blue-600/20">
-            IP
+  
+
+ {/* Hero Section with Video - New Design */}
+<section className="relative flex min-h-[550px] items-center overflow-hidden px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style={{ backgroundImage: `url(${hydraulicLabHeroBg3})` }}
+  />
+
+  {/* Light Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/40 to-transparent" />
+
+  {/* Subtle Bottom Fade */}
+  <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white/60 to-transparent" />
+
+  {/* Main Content */}
+  <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-8 md:flex-row md:gap-8 lg:gap-12">
+    
+    {/* Left Content */}
+    <div className="w-full min-w-0 md:w-[48%] md:flex-none lg:w-[46%]">
+      {/* Badge */}
+      <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-blue-700 shadow-sm backdrop-blur-sm">
+        <Microscope size={14} className="shrink-0 text-blue-600" />
+        Hydraulic Laboratory
+      </div>
+
+      {/* Heading */}
+      <h1 className="mb-4 max-w-xl text-4xl font-bold leading-[1.08] tracking-tight text-slate-950 sm:text-[2.75rem] md:text-[2.55rem] lg:text-[3.2rem] xl:text-[3.35rem]">
+        InfraPlan{" "}
+        <span className="bg-gradient-to-r from-blue-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          Hydraulic
+        </span>{" "}
+        Laboratory
+      </h1>
+
+      {/* Description */}
+      <p className="max-w-xl text-sm font-medium leading-6 text-slate-700 sm:text-base md:max-w-md lg:max-w-lg">
+        State-of-the-art facility for physical and mathematical hydraulic model studies
+      </p>
+
+      {/* Information Meta */}
+      <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+        <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
+          <MapPin size={16} className="shrink-0 text-blue-600" />
+          <span>Pune, Maharashtra</span>
+        </div>
+
+        <div className="hidden h-5 w-px bg-slate-300 sm:block" />
+
+        <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
+          <Layers size={16} className="shrink-0 text-blue-600" />
+          <span>5 Acres Facility</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Video Section */}
+    <div className="w-full min-w-0 md:w-[52%] md:flex-1 lg:w-[54%] lg:flex-none">
+      <div
+        ref={videoContainerRef}
+        className={`relative mx-auto w-full max-w-[620px] overflow-hidden bg-slate-100 shadow-xl shadow-slate-900/10 ${
+          isVideoFullscreen
+            ? "h-screen max-w-none rounded-none"
+            : "aspect-video rounded-2xl border border-slate-200/70"
+        }`}
+      >
+        <video
+          ref={videoRef}
+          className={`absolute inset-0 h-full w-full ${
+            isVideoFullscreen ? "object-contain bg-black" : "object-cover"
+          }`}
+          autoPlay
+          muted
+          playsInline
+          loop
+          preload="auto"
+          controls={false}
+          onPlay={() => setIsVideoPlaying(true)}
+          onPause={() => setIsVideoPlaying(false)}
+          onEnded={() => setIsVideoPlaying(false)}
+        >
+          <source src={heroVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Video Gradient */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+
+        {/* Video Badge */}
+        {!isVideoFullscreen && (
+          <div className="absolute left-3 top-3 z-20 flex max-w-[85%] items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1.5 text-[10px] font-medium text-slate-700 shadow-sm backdrop-blur-md sm:left-4 sm:top-4">
+            <div className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-red-500" />
+            <span className="truncate">Infraplan Hydraulic Laboratory</span>
           </div>
-          <div className="leading-tight">
-            <div className="font-bold text-slate-900 text-base tracking-tight">INFRAPLAN</div>
-            <div className="text-[10px] text-slate-400 -mt-1 tracking-wider">Engineering the Future</div>
-          </div>
-        </div>
+        )}
 
-        <nav className="hidden lg:flex items-center gap-8 text-sm text-slate-600">
-          {nav.map((item) => (
-            <a
-              key={item.label}
-              href="#"
-              className={`relative flex items-center gap-1 hover:text-blue-700 transition-all duration-300 ${
-                item.active ? "text-blue-700 font-semibold" : ""
-              }`}
-            >
-              {item.label}
-              {item.dropdown && <ChevronDown size={14} className="opacity-60" />}
-              {item.active && (
-                <span className="absolute -bottom-4 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full" />
-              )}
-            </a>
-          ))}
-        </nav>
-
-        <div className="hidden lg:flex items-center gap-4">
-          <button className="bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 text-white text-sm font-medium px-6 py-2.5 rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-600/40 transition-all duration-300 hover:scale-105">
-            Contact Us
-          </button>
-        </div>
-      </header> */}
-
-      {/* Hero Section with Video - New Design */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 px-5 sm:px-8 lg:px-12 pt-12 pb-10 lg:pt-20 lg:pb-16 min-h-[600px] flex items-center">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl animate-pulse delay-500" />
-          
-          {/* Grid Pattern Overlay */}
-          <div className="absolute inset-0 opacity-5" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-          }} />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="text-white">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/90 text-xs font-semibold tracking-wider uppercase mb-6 border border-white/20 hover:bg-white/20 transition-all">
-              <Microscope size={14} />
-              Hydraulic Laboratory
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-bold leading-tight tracking-tight mb-4">
-              InfraPlan <span className="bg-gradient-to-r from-blue-300 to-cyan-300 bg-clip-text text-transparent">Hydraulic</span> Laboratory
-            </h1>
-            <p className="text-lg text-blue-200 max-w-xl leading-relaxed">
-              State-of-the-art facility for physical and mathematical hydraulic model studies
+        {/* Fullscreen Overlay Text */}
+        {isVideoFullscreen && (
+          <div className="absolute bottom-24 left-6 right-6 z-20 text-white sm:left-10 sm:right-10">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-300">
+              Infraplan · Engineering & Infrastructure
             </p>
-            <div className="flex flex-wrap gap-3 mt-6">
-              <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm text-white/90 border border-white/20 flex items-center gap-2">
-                <MapPin size={14} />
-                Pune, Maharashtra
-              </span>
-              <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm text-white/90 border border-white/20 flex items-center gap-2">
-                <Layers size={14} />
-                5 Acres Facility
-              </span>
-            </div>
-          </div>
-
-          {/* Video Player with Modern Design */}
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-black/70 border border-white/10">
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
-              <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            
-            {/* Video Controls */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-              <button
-                onClick={toggleVideo}
-                className="p-3 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 hover:scale-110 transition-all"
-              >
-                {isVideoPlaying ? <Pause size={20} /> : <Play size={20} />}
-              </button>
-              <div className="flex items-center gap-2">
-                <div className="w-20 h-1 bg-white/30 rounded-full overflow-hidden">
-                  <div className="w-1/2 h-full bg-white rounded-full" />
-                </div>
-                <button className="p-3 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 hover:scale-110 transition-all">
-                  <Maximize2 size={20} />
-                </button>
-              </div>
-            </div>
-
-            {/* Video Badge */}
-            <div className="absolute top-4 left-4 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-full text-xs text-white/80 border border-white/10 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              Infraplan Hydraulic Laboratory
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Laboratory Overview - Modern Card Design */}
-      <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-3 border border-blue-200/30">
-              Facility Overview
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-              World-Class <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Hydraulic Research</span>
+            <h2 className="mt-2 max-w-3xl text-2xl font-bold sm:text-4xl">
+              Engineering Tomorrow's Infrastructure
             </h2>
+            <p className="mt-2 text-sm text-white/60">
+              Watch our latest project showcase
+            </p>
           </div>
+        )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="group relative p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all" />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white flex items-center justify-center shadow-lg shadow-blue-600/20 group-hover:scale-110 transition-transform">
-                    <Waves size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900">Physical Hydraulic Model Studies</h3>
-                </div>
-                <ul className="space-y-3">
-                  {[
-                    "Laboratory spread over 5 acres for physical model studies",
-                    "Water re-circulation system: 350-700 lps discharge with 10m head",
-                    "Equipped with instruments for velocity, level, pressure & discharge measurement"
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-slate-600">
-                      <CheckCircle size={18} className="text-blue-600 mt-0.5 shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* Center Play Button */}
+        {!isVideoPlaying && (
+          <button
+            type="button"
+            onClick={toggleVideo}
+            aria-label="Play video"
+            className="absolute left-1/2 top-1/2 z-30 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-slate-700 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 sm:h-16 sm:w-16"
+          >
+            <Play size={25} className="ml-0.5" fill="currentColor" />
+          </button>
+        )}
+
+        {/* Video Controls Bar */}
+        <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-between sm:bottom-4 sm:left-4 sm:right-4">
+          <button
+            type="button"
+            onClick={toggleVideo}
+            aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+          >
+            {isVideoPlaying ? (
+              <Pause size={15} strokeWidth={2.3} />
+            ) : (
+              <Play size={15} className="ml-0.5" fill="currentColor" />
+            )}
+          </button>
+
+          <div className="flex items-center gap-2">
+            <div className="hidden h-1 w-16 overflow-hidden rounded-full bg-white/50 sm:block">
+              <div className="h-full w-1/2 rounded-full bg-white" />
             </div>
 
-            <div className="group relative p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all" />
-              <div className="relative">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-800 text-white flex items-center justify-center shadow-lg shadow-indigo-600/20 group-hover:scale-110 transition-transform">
-                    <Calculator size={24} />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900">Mathematical Hydraulic Studies</h3>
-                </div>
-                <ul className="space-y-3">
-                  {[
-                    "1-D, 2-D and 3-D simulations for hydraulic phenomena",
-                    "Hydro-dynamic, Morpho-dynamic & Sedimentation studies",
-                    "Guided by retired CWPRS officers based in Pune"
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-slate-600">
-                      <CheckCircle size={18} className="text-indigo-600 mt-0.5 shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            <button
+              type="button"
+              onClick={toggleVideoFullscreen}
+              aria-label={isVideoFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+            >
+              {isVideoFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
+            </button>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  
 
       {/* Hydraulic Engineering Capabilities */}
       <section className="px-5 sm:px-8 lg:px-12 py-20 bg-slate-50">
@@ -611,7 +536,10 @@ export default function HydraulicLabPage() {
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                 {structures.map((item) => (
-                  <div key={item.name} className="group text-center cursor-pointer">
+                  <div
+                    key={item.name}
+                    className="group text-center cursor-pointer"
+                  >
                     <div className="overflow-hidden rounded-2xl border border-slate-300">
                       <img
                         src={item.image}
@@ -634,7 +562,10 @@ export default function HydraulicLabPage() {
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                 {designStudies.map((item) => (
-                  <div key={item.name} className="group text-center cursor-pointer">
+                  <div
+                    key={item.name}
+                    className="group text-center cursor-pointer"
+                  >
                     <div className="overflow-hidden rounded-2xl border border-slate-300">
                       <img
                         src={item.image}
@@ -653,533 +584,447 @@ export default function HydraulicLabPage() {
         </div>
       </section>
 
-      {/* Model Studies - Accordion Style with Expandable Cards */}
-      <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 to-blue-50/30 border-y border-slate-100">
+    {/* Laboratory Overview - Modern Card Design */}
+      <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 border-b border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-3 border border-blue-200/30">
-              Research Excellence
+              Facility Overview
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-              Model Studies <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Conducted</span>
+              World-Class{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                Hydraulic Research
+              </span>
             </h2>
           </div>
 
-          {/* Physical Models */}
-          <div className="mb-6 border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm">
-            <button
-              onClick={() => toggleSection('physical')}
-              className="w-full flex items-center justify-between p-5 bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-blue-600 text-white">
-                  <Waves size={20} />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">Physical Models</h3>
-                <span className="text-xs bg-blue-600/10 text-blue-700 px-3 py-1 rounded-full font-semibold">
-                  {modelStudies.physicalModels.length}
-                </span>
-              </div>
-              <ChevronRight size={20} className={`transform transition-transform ${expandedSections.physical ? 'rotate-90' : ''}`} />
-            </button>
-
-            {expandedSections.physical && (
-              <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 bg-slate-50/50">
-                {modelStudies.physicalModels.map((item) => (
-                  <div 
-                    key={item.id} 
-                    className={`bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col ${
-                      expandedCards[item.id] ? 'border-blue-300 shadow-lg' : ''
-                    }`}
-                  >
-                    <div 
-                      className="p-5 cursor-pointer flex justify-between items-start gap-4 hover:bg-slate-50 transition-colors"
-                      onClick={() => toggleCard(item.id)}
-                    >
-                      <div className="flex-1">
-                        <h4 className="text-slate-950 font-bold text-lg leading-snug">
-                          {item.title}
-                        </h4>
-                      </div>
-                      <button className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors shrink-0">
-                        {expandedCards[item.id] ? (
-                          <ChevronUp size={18} className="text-slate-600" />
-                        ) : (
-                          <ChevronDown size={18} className="text-slate-600" />
-                        )}
-                      </button>
-                    </div>
-
-                    <div className="px-5 pb-5 space-y-4">
-                      <div className="space-y-3">
-                        <div>
-                          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Purpose</span>
-                          <p className="text-sm text-slate-600 mt-0.5 leading-relaxed">{item.purpose}</p>
-                        </div>
-                        <div>
-                          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Application</span>
-                          <p className="text-sm text-slate-600 mt-0.5 leading-relaxed">{item.application}</p>
-                        </div>
-                      </div>
-
-                      <div className="pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
-                        {item.features.map((feature, idx) => (
-                          <span key={idx} className="inline-flex items-center gap-1 text-xs bg-blue-50 text-blue-700 px-2.5 py-1 rounded-md font-medium">
-                            <CheckCircle size={12} className="text-blue-600" />
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Expanded Content */}
-                      {expandedCards[item.id] && item.detailedDescription && (
-                        <div className="mt-4 pt-4 border-t border-blue-200 bg-blue-50/50 rounded-lg p-4 space-y-3 animate-fade-in">
-                          <div>
-                            <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Detailed Description</span>
-                            <p className="text-sm text-slate-700 mt-1 leading-relaxed">{item.detailedDescription}</p>
-                          </div>
-                          {item.methodology && (
-                            <div>
-                              <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Methodology</span>
-                              <p className="text-sm text-slate-700 mt-1 leading-relaxed">{item.methodology}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="group relative p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 text-white flex items-center justify-center shadow-lg shadow-blue-600/20 group-hover:scale-110 transition-transform">
+                    <Waves size={24} />
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Mathematical Models */}
-          <div className="mb-6 border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm">
-            <button
-              onClick={() => toggleSection('mathematical')}
-              className="w-full flex items-center justify-between p-5 bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-indigo-600 text-white">
-                  <Calculator size={20} />
+                  <h3 className="text-xl font-bold text-slate-900">
+                    Physical Hydraulic Model Studies
+                  </h3>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900">Mathematical Models</h3>
-                <span className="text-xs bg-indigo-600/10 text-indigo-700 px-3 py-1 rounded-full font-semibold">
-                  {modelStudies.mathematicalModels.length}
-                </span>
-              </div>
-              <ChevronRight size={20} className={`transform transition-transform ${expandedSections.mathematical ? 'rotate-90' : ''}`} />
-            </button>
-
-            {expandedSections.mathematical && (
-              <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 bg-slate-50/50">
-                {modelStudies.mathematicalModels.map((item) => (
-                  <div 
-                    key={item.id} 
-                    className={`bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col ${
-                      expandedCards[item.id] ? 'border-indigo-300 shadow-lg' : ''
-                    }`}
-                  >
-                    <div 
-                      className="p-5 cursor-pointer flex justify-between items-start gap-4 hover:bg-slate-50 transition-colors"
-                      onClick={() => toggleCard(item.id)}
+                <ul className="space-y-3">
+                  {[
+                    "Laboratory spread over 5 acres for physical model studies",
+                    "Water re-circulation system: 350-700 lps discharge with 10m head",
+                    "Equipped with instruments for velocity, level, pressure & discharge measurement",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm text-slate-600"
                     >
-                      <div className="flex-1">
-                        <h4 className="text-slate-950 font-bold text-lg leading-snug">
-                          {item.title}
-                        </h4>
-                      </div>
-                      <button className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors shrink-0">
-                        {expandedCards[item.id] ? (
-                          <ChevronUp size={18} className="text-slate-600" />
-                        ) : (
-                          <ChevronDown size={18} className="text-slate-600" />
-                        )}
-                      </button>
-                    </div>
-
-                    <div className="px-5 pb-5 space-y-4">
-                      <div className="space-y-3">
-                        <div>
-                          <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">Purpose</span>
-                          <p className="text-sm text-slate-600 mt-0.5 leading-relaxed">{item.purpose}</p>
-                        </div>
-                        <div>
-                          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Application</span>
-                          <p className="text-sm text-slate-600 mt-0.5 leading-relaxed">{item.application}</p>
-                        </div>
-                      </div>
-
-                      <div className="pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
-                        {item.features.map((feature, idx) => (
-                          <span key={idx} className="inline-flex items-center gap-1 text-xs bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md font-medium">
-                            <CheckCircle size={12} className="text-indigo-600" />
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Expanded Content */}
-                      {expandedCards[item.id] && item.detailedDescription && (
-                        <div className="mt-4 pt-4 border-t border-indigo-200 bg-indigo-50/50 rounded-lg p-4 space-y-3 animate-fade-in">
-                          <div>
-                            <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">Detailed Description</span>
-                            <p className="text-sm text-slate-700 mt-1 leading-relaxed">{item.detailedDescription}</p>
-                          </div>
-                          {item.methodology && (
-                            <div>
-                              <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">Methodology</span>
-                              <p className="text-sm text-slate-700 mt-1 leading-relaxed">{item.methodology}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                      <CheckCircle
+                        size={18}
+                        className="text-blue-600 mt-0.5 shrink-0"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* CFD Studies */}
-          <div className="border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm">
-            <button
-              onClick={() => toggleSection('cfd')}
-              className="w-full flex items-center justify-between p-5 bg-gradient-to-r from-cyan-50 to-teal-50 hover:from-cyan-100 hover:to-teal-100 transition-all"
-            >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-cyan-600 text-white">
-                  <Cpu size={20} />
+            <div className="group relative p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-all" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-800 text-white flex items-center justify-center shadow-lg shadow-indigo-600/20 group-hover:scale-110 transition-transform">
+                    <Calculator size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">
+                    Mathematical Hydraulic Studies
+                  </h3>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900">CFD Studies</h3>
-                <span className="text-xs bg-cyan-600/10 text-cyan-700 px-3 py-1 rounded-full font-semibold">
-                  {modelStudies.cfdStudies.length}
-                </span>
-              </div>
-              <ChevronRight size={20} className={`transform transition-transform ${expandedSections.cfd ? 'rotate-90' : ''}`} />
-            </button>
-
-            {expandedSections.cfd && (
-              <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 bg-slate-50/50">
-                {modelStudies.cfdStudies.map((item) => (
-                  <div 
-                    key={item.id} 
-                    className={`bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col ${
-                      expandedCards[item.id] ? 'border-cyan-300 shadow-lg' : ''
-                    }`}
-                  >
-                    <div 
-                      className="p-5 cursor-pointer flex justify-between items-start gap-4 hover:bg-slate-50 transition-colors"
-                      onClick={() => toggleCard(item.id)}
+                <ul className="space-y-3">
+                  {[
+                    "1-D, 2-D and 3-D simulations for hydraulic phenomena",
+                    "Hydro-dynamic, Morpho-dynamic & Sedimentation studies",
+                    "Guided by retired CWPRS officers based in Pune",
+                  ].map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 text-sm text-slate-600"
                     >
-                      <div className="flex-1">
-                        <h4 className="text-slate-950 font-bold text-lg leading-snug">
-                          {item.title}
-                        </h4>
-                      </div>
-                      <button className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors shrink-0">
-                        {expandedCards[item.id] ? (
-                          <ChevronUp size={18} className="text-slate-600" />
-                        ) : (
-                          <ChevronDown size={18} className="text-slate-600" />
-                        )}
-                      </button>
-                    </div>
-
-                    <div className="px-5 pb-5 space-y-4">
-                      <div className="space-y-3">
-                        <div>
-                          <span className="text-xs font-bold text-cyan-600 uppercase tracking-wider">Purpose</span>
-                          <p className="text-sm text-slate-600 mt-0.5 leading-relaxed">{item.purpose}</p>
-                        </div>
-                        <div>
-                          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Application</span>
-                          <p className="text-sm text-slate-600 mt-0.5 leading-relaxed">{item.application}</p>
-                        </div>
-                      </div>
-
-                      <div className="pt-3 border-t border-slate-100 flex flex-wrap gap-1.5">
-                        {item.features.map((feature, idx) => (
-                          <span key={idx} className="inline-flex items-center gap-1 text-xs bg-cyan-50 text-cyan-700 px-2.5 py-1 rounded-md font-medium">
-                            <CheckCircle size={12} className="text-cyan-600" />
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Expanded Content */}
-                      {expandedCards[item.id] && item.detailedDescription && (
-                        <div className="mt-4 pt-4 border-t border-cyan-200 bg-cyan-50/50 rounded-lg p-4 space-y-3 animate-fade-in">
-                          <div>
-                            <span className="text-xs font-bold text-cyan-700 uppercase tracking-wider">Detailed Description</span>
-                            <p className="text-sm text-slate-700 mt-1 leading-relaxed">{item.detailedDescription}</p>
-                          </div>
-                          {item.methodology && (
-                            <div>
-                              <span className="text-xs font-bold text-cyan-700 uppercase tracking-wider">Methodology</span>
-                              <p className="text-sm text-slate-700 mt-1 leading-relaxed">{item.methodology}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                      <CheckCircle
+                        size={18}
+                        className="text-indigo-600 mt-0.5 shrink-0"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </section>
+      {/* Model Studies - Accordion Style with Expandable Cards */}
+<section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 to-blue-50/30 border-y border-slate-100">
+  <div className="max-w-7xl mx-auto">
+    <div className="text-center mb-12">
+      <span className="inline-block px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-3 border border-blue-200/30">
+        Research Excellence
+      </span>
+      <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
+        Model Studies{" "}
+        <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          Conducted
+        </span>
+      </h2>
+    </div>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+
+    {/* Physical Models */}
+    <div className="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+      <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
+        <div className="rounded-xl bg-blue-600 p-2 text-white">
+          <Waves size={20} />
+        </div>
+        <h3 className="text-lg font-bold text-slate-900">Physical Models</h3>
+        <span className="rounded-full bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-700">
+          {modelStudies.physicalModels.length}
+        </span>
+      </div>
+
+      <div className="p-3">
+        {modelStudies.physicalModels.map((item) => (
+          <div
+            key={item.id}
+            className={`overflow-hidden rounded-xl border transition-all ${
+              expandedCards[item.id] ? "border-blue-200 bg-blue-50/30" : "border-transparent"
+            }`}
+          >
+            <button
+              type="button"
+              onClick={() => toggleCard(item.id)}
+              className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
+            >
+              {expandedCards[item.id] ? (
+                <ChevronDown size={17} className="shrink-0 text-blue-600" />
+              ) : (
+                <ChevronRight size={17} className="shrink-0 text-blue-600" />
+              )}
+              <span className="text-sm font-semibold leading-snug text-slate-900">
+                {item.title}
+              </span>
+            </button>
+
+            {expandedCards[item.id] && (
+              <div className="mx-3 mb-3 rounded-xl border border-blue-100 bg-white p-4 space-y-4">
+                <div>
+                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
+                    Purpose
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    {item.purpose}
+                  </p>
+                </div>
+                <div>
+                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Application
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    {item.application}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Mathematical Models */}
+    <div className="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+      <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
+        <div className="rounded-xl bg-indigo-600 p-2 text-white">
+          <Calculator size={20} />
+        </div>
+        <h3 className="text-lg font-bold text-slate-900">Mathematical Models</h3>
+        <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-xs font-semibold text-indigo-700">
+          {modelStudies.mathematicalModels.length}
+        </span>
+      </div>
+
+      <div className="p-3">
+        {modelStudies.mathematicalModels.map((item) => (
+          <div
+            key={item.id}
+            className={`overflow-hidden rounded-xl border transition-all ${
+              expandedCards[item.id] ? "border-indigo-200 bg-indigo-50/30" : "border-transparent"
+            }`}
+          >
+            <button
+              type="button"
+              onClick={() => toggleCard(item.id)}
+              className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
+            >
+              {expandedCards[item.id] ? (
+                <ChevronDown size={17} className="shrink-0 text-indigo-600" />
+              ) : (
+                <ChevronRight size={17} className="shrink-0 text-indigo-600" />
+              )}
+              <span className="text-sm font-semibold leading-snug text-slate-900">
+                {item.title}
+              </span>
+            </button>
+
+            {expandedCards[item.id] && (
+              <div className="mx-3 mb-3 rounded-xl border border-indigo-100 bg-white p-4 space-y-4">
+                <div>
+                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-indigo-600">
+                    Purpose
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    {item.purpose}
+                  </p>
+                </div>
+                <div>
+                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Application
+                  </div>
+                  <p className="text-sm leading-relaxed text-slate-600">
+                    {item.application}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+</section>
       {/* =========================================================
     PROJECT SHOWCASE
 ========================================================= */}
 
-<section className="relative overflow-hidden border-y border-slate-100 bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+      <section className="relative overflow-hidden border-y border-slate-100 bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+        {/* Background Decoration */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
 
-  {/* Background Decoration */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
 
-    <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
+          <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.025] blur-3xl" />
+        </div>
 
-    <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
-
-    <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.025] blur-3xl" />
-
-  </div>
-
-  <div className="relative mx-auto max-w-7xl">
-
-    {/* =====================================================
+        <div className="relative mx-auto max-w-7xl">
+          {/* =====================================================
         SECTION HEADER
     ====================================================== */}
 
-    <div className="mx-auto mb-12 max-w-3xl text-center">
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              Project Showcase
+            </span>
 
-      <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-700">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Hydraulic{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                Model Studies
+              </span>
+            </h2>
 
-        <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
+              Explore our physical, mathematical and computational modelling
+              capabilities developed for complex hydraulic and water
+              infrastructure projects.
+            </p>
+          </div>
 
-        Project Showcase
-
-      </span>
-
-      <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-
-        Hydraulic{" "}
-
-        <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-          Model Studies
-        </span>
-
-      </h2>
-
-      <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
-        Explore our physical, mathematical and computational modelling
-        capabilities developed for complex hydraulic and water infrastructure
-        projects.
-      </p>
-
-    </div>
-
-
-    {/* =====================================================
+          {/* =====================================================
         FEATURED PROJECT CARDS
     ====================================================== */}
 
-    <div className="grid gap-6 md:grid-cols-2">
-
-      {projectShowcase.map(
-        ({
-          title,
-          description,
-          icon: Icon,
-          gradient,
-          images,
-        }) => (
-
-          <div
-            key={title}
-            className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10"
-          >
-
-            {/* Image Grid */}
-
-            <div className="grid h-52 grid-cols-3 gap-2 overflow-hidden rounded-2xl bg-slate-100">
-
-              {images.map((image, index) => (
-
+          <div className="grid gap-6 md:grid-cols-2">
+            {projectShowcase.map(
+              ({ title, description, icon: Icon, gradient, images }) => (
                 <div
-                  key={image}
-                  className="relative overflow-hidden"
+                  key={title}
+                  className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10"
                 >
+                  {/* Image Grid */}
 
-                  <img
-                    src={image}
-                    alt={`${title} ${index + 1}`}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  <div className="grid h-52 grid-cols-3 gap-2 overflow-hidden rounded-2xl bg-slate-100">
+                    {images.map((image, index) => (
+                      <div key={image} className="relative overflow-hidden">
+                        <img
+                          src={image}
+                          alt={`${title} ${index + 1}`}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
-
-                </div>
-
-              ))}
-
-            </div>
-
-
-            {/* Card Content */}
-
-            <div className="px-2 pb-2 pt-5">
-
-              <div className="flex items-start justify-between gap-4">
-
-                <div className="flex items-start gap-3">
-
-                  <div
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-lg`}
-                  >
-                    <Icon size={20} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
+                      </div>
+                    ))}
                   </div>
 
-                  <div>
+                  {/* Card Content */}
 
-                    <h3 className="text-lg font-bold text-slate-900">
-                      {title}
-                    </h3>
+                  <div className="px-2 pb-2 pt-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-lg`}
+                        >
+                          <Icon size={20} />
+                        </div>
 
-                    <p className="mt-1 text-xs leading-5 text-slate-500">
-                      {description}
-                    </p>
+                        <div>
+                          <h3 className="text-lg font-bold text-slate-900">
+                            {title}
+                          </h3>
 
+                          <p className="mt-1 text-xs leading-5 text-slate-500">
+                            {description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* CTA */}
+
+                    <button
+                      type="button"
+                      className="group/btn mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-blue-700"
+                    >
+                      Explore Studies
+                      <ArrowRight
+                        size={14}
+                        className="transition-transform duration-300 group-hover/btn:translate-x-1"
+                      />
+                    </button>
                   </div>
-
                 </div>
-
-              </div>
-
-
-              {/* CTA */}
-
-              <button
-                type="button"
-                className="group/btn mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-blue-700"
-              >
-
-                Explore Studies
-
-                <ArrowRight
-                  size={14}
-                  className="transition-transform duration-300 group-hover/btn:translate-x-1"
-                />
-
-              </button>
-
-            </div>
-
+              ),
+            )}
           </div>
 
-        )
-      )}
-
-    </div>
-
-
-    {/* =====================================================
+          {/* =====================================================
         DIVIDER / INTRO
     ====================================================== */}
 
-    <div className="mx-auto mt-14 max-w-3xl text-center">
+          <div className="mx-auto mt-14 max-w-3xl text-center">
+            <div className="mx-auto mb-5 h-px w-16 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
 
-      <div className="mx-auto mb-5 h-px w-16 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+            <p className="text-sm font-semibold leading-6 text-slate-700 sm:text-base">
+              Model Studies Conducted at{" "}
+              <span className="text-blue-700">
+                Infraplan Hydraulic Laboratory, Pune, India
+              </span>{" "}
+              for Various Aspects of Design Parameters
+            </p>
+          </div>
 
-      <p className="text-sm font-semibold leading-6 text-slate-700 sm:text-base">
-
-        Model Studies Conducted at{" "}
-
-        <span className="text-blue-700">
-          Infraplan Hydraulic Laboratory, Pune, India
-        </span>
-
-        {" "}for Various Aspects of Design Parameters
-
-      </p>
-
-    </div>
-
-
-    {/* =====================================================
+          {/* =====================================================
         MODEL STUDY CATEGORIES
     ====================================================== */}
 
- 
-
-
-    {/* =====================================================
+          {/* =====================================================
         LOCATION / LABORATORY CTA
     ====================================================== */}
 
-    <div className="mx-auto mt-12 max-w-2xl">
+         {/* =====================================================
+    LOCATION & PUBLICATIONS
+====================================================== */}
 
-      <div className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 p-7 text-center shadow-xl shadow-blue-900/15 sm:p-9">
+<div className="mx-auto mt-12 w-full max-w-5xl">
+  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 
-        {/* Glow */}
+    {/* Location Map */}
 
-        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-cyan-400/15 blur-3xl" />
+    <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
+      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
 
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-blue-400/15 blur-3xl" />
-
-
-        <div className="relative z-10">
-
-          {/* Icon */}
-
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-blue-100 ring-1 ring-white/20 backdrop-blur-sm">
-
-            <MapPin size={21} />
-
-          </div>
-
-
-          <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-200">
-            Infraplan Hydraulic Laboratory
-          </p>
-
-
-          <h3 className="mt-2 text-xl font-bold text-white sm:text-2xl">
-            Pune, Maharashtra
-          </h3>
-
-
-          <p className="mx-auto mt-2 max-w-md text-xs leading-5 text-blue-100/75">
-            Chandkhed Village, Tal-Maval, Dist. Pune,
-            Maharashtra, India.
-          </p>
-
-
-          <button
-            type="button"
-            className="group/map mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-xs font-semibold text-blue-700 shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50 hover:shadow-xl"
-          >
-
-            View Location
-
-            <ExternalLink
-              size={13}
-              className="transition-transform group-hover/map:translate-x-0.5"
-            />
-
-          </button>
-
+      <div className="relative z-10">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-100">
+          <MapPin size={20} strokeWidth={2} />
         </div>
 
-      </div>
+        <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
+          Infraplan Hydraulic Laboratory
+        </p>
 
+        <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          Location Map
+        </h3>
+
+        <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+          Chandkhed Village, Tal-Maval,
+          <br />
+          Dist. Pune, Maharashtra, India.
+        </p>
+
+        <button
+          type="button"
+          className="group/map mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/30"
+        >
+          View Location
+          <ExternalLink
+            size={13}
+            className="transition-transform duration-300 group-hover/map:translate-x-0.5"
+          />
+        </button>
+      </div>
+    </div>
+
+    {/* Publications */}
+
+    <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-900/10 sm:p-8">
+      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
+
+      <div className="relative z-10">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-indigo-100">
+          <FlaskConical size={20} strokeWidth={2} />
+        </div>
+
+        <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
+          Hydraulic Laboratory
+        </p>
+
+        <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          Publications
+        </h3>
+
+        <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+          Explore research, technical studies
+          <br />
+          and hydraulic engineering publications.
+        </p>
+
+        <button
+          type="button"
+          className="group/pub mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-600/30"
+        >
+          View Publications
+          <ExternalLink
+            size={13}
+            className="transition-transform duration-300 group-hover/pub:translate-x-0.5"
+          />
+        </button>
+      </div>
     </div>
 
   </div>
-
-</section>
+</div>
+        </div>
+      </section>
 
       {/* Location Map - Modern Design */}
       <section className="px-5 sm:px-8 lg:px-12 py-16 bg-white border-b border-slate-100">
@@ -1189,7 +1034,10 @@ export default function HydraulicLabPage() {
               Find Us
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-              Laboratory <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Location</span>
+              Laboratory{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                Location
+              </span>
             </h2>
           </div>
 
@@ -1200,11 +1048,19 @@ export default function HydraulicLabPage() {
                   <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/20">
                     <MapPin size={32} />
                   </div>
-                  <p className="text-slate-600 font-medium text-lg">Interactive Map</p>
+                  <p className="text-slate-600 font-medium text-lg">
+                    Interactive Map
+                  </p>
                   <div className="mt-4 p-4 bg-white/90 backdrop-blur-sm rounded-xl border border-slate-200 shadow-sm max-w-xs mx-auto">
-                    <p className="text-sm font-semibold text-slate-800">InfraPlan Hydraulic Laboratory</p>
-                    <p className="text-sm text-slate-500">Chandkhed Village, Tal- Maval</p>
-                    <p className="text-sm text-slate-500">Dist. Pune, Maharashtra, India</p>
+                    <p className="text-sm font-semibold text-slate-800">
+                      InfraPlan Hydraulic Laboratory
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      Chandkhed Village, Tal- Maval
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      Dist. Pune, Maharashtra, India
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1217,9 +1073,18 @@ export default function HydraulicLabPage() {
                   Contact Information
                 </h3>
                 <div className="space-y-2 text-sm text-slate-600">
-                  <p className="flex items-center gap-2"><MapPin size={16} className="text-blue-600" /> Chandkhed Village, Tal- Maval, Dist. Pune</p>
-                  <p className="flex items-center gap-2"><Phone size={16} className="text-blue-600" /> +91 98765 43210</p>
-                  <p className="flex items-center gap-2"><Mail size={16} className="text-blue-600" /> lab@infraplan.in</p>
+                  <p className="flex items-center gap-2">
+                    <MapPin size={16} className="text-blue-600" /> Chandkhed
+                    Village, Tal- Maval, Dist. Pune
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <Phone size={16} className="text-blue-600" /> +91 98765
+                    43210
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <Mail size={16} className="text-blue-600" />{" "}
+                    lab@infraplan.in
+                  </p>
                 </div>
               </div>
 
@@ -1229,10 +1094,18 @@ export default function HydraulicLabPage() {
                   Facility Details
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-sm text-slate-600">
-                  <div className="p-2 bg-white/70 rounded-lg">🌐 Total Area: 5 Acres</div>
-                  <div className="p-2 bg-white/70 rounded-lg">💧 Discharge: 350-700 lps</div>
-                  <div className="p-2 bg-white/70 rounded-lg">📏 Available Head: 10 m</div>
-                  <div className="p-2 bg-white/70 rounded-lg">👨‍🔬 CWPRS Expert Guidance</div>
+                  <div className="p-2 bg-white/70 rounded-lg">
+                    🌐 Total Area: 5 Acres
+                  </div>
+                  <div className="p-2 bg-white/70 rounded-lg">
+                    💧 Discharge: 350-700 lps
+                  </div>
+                  <div className="p-2 bg-white/70 rounded-lg">
+                    📏 Available Head: 10 m
+                  </div>
+                  <div className="p-2 bg-white/70 rounded-lg">
+                    👨‍🔬 CWPRS Expert Guidance
+                  </div>
                 </div>
               </div>
             </div>
@@ -1240,11 +1113,9 @@ export default function HydraulicLabPage() {
         </div>
       </section>
 
-
-
-<HydraulicCTA/>
+<ProjectMapSection/>
+      <HydraulicCTA />
       {/* Footer - Consistent with other pages */}
-  
 
       {/* Animation Styles */}
       <style>{`

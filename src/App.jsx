@@ -9,6 +9,7 @@ import ContractorsPage from "./pages/ContractorsPage";
 import HydraulicLabPage from "./pages/HydraulicLabPage";
 import SigmaToolboxPage from "./pages/SigmaToolboxPage";
 import ContactPage from "./pages/ContactPage";
+import PublicationsPage from "./pages/Publicationspage";
 
 // Layout wrapper with optional secondary nav
 function Layout({ children}) {
@@ -32,6 +33,8 @@ export default function App() {
       <Route path="/hydrolic" element={<Layout showSecondaryNav={true}><HydraulicLabPage /></Layout>} />
       <Route path="/toolbox" element={<Layout><SigmaToolboxPage /></Layout>} />
       <Route path="/contact" element={<Layout><ContactPage /></Layout>} />
+      <Route path="/hydrolicLabpublications" element={<Layout><PublicationsPage /></Layout>} />
+      <Route path="/publications" element={<Layout><PublicationsPage /></Layout>} />
     </Routes>
   );
 }

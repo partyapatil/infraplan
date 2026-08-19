@@ -24,7 +24,6 @@ const footerLinks = {
   Company: [
     { label: "About Us", path: "/about" },
     { label: "Careers", path: "/careers" },
-    { label: "Newsroom", path: "/newsroom" },
     { label: "Contact Us", path: "/contact" },
   ],
 
@@ -37,8 +36,8 @@ const footerLinks = {
   Resources: [
     { label: "Case Studies", path: "/case-studies" },
     { label: "Whitepapers", path: "/whitepapers" },
-    { label: "Blog", path: "/blog" },
-    { label: "FAQs", path: "/faqs" },
+    // { label: "Blog", path: "/blog" },
+    // { label: "FAQs", path: "/faqs" },
   ],
 };
 
