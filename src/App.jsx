@@ -7,7 +7,7 @@ import AboutPage from "./pages/About";
 import ContractorsPage from "./pages/ContractorsPage";
 import HydraulicLabPage from "./pages/HydraulicLabPage";
 import SigmaToolboxPage from "./pages/SigmaToolboxPage";
-import PublicationsPage from "./pages/PublicationsPage";
+import PublicationsPage from "./pages/Publicationspage";
 
 const router = createBrowserRouter([
   {
