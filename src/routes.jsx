@@ -8,7 +8,7 @@ import ContractorsPage from "./pages/ContractorsPage";
 import HydraulicLabPage from "./pages/HydraulicLabPage";
 import SigmaToolboxPage from "./pages/SigmaToolboxPage";
 import ContactPage from "./pages/ContactPage";
-import PublicationsPage from "./pages/PublicationsPage";
+import PublicationsPage from "./pages/Publicationspage";
 import MathematicalModelStudiesPage from "./pages/MathematicalModelStudiesPage";
 import PhysicalModelStudiesPage from "./pages/PhysicalModelStudiesPage";
 
