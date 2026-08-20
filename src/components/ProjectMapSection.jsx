@@ -1,9 +1,8 @@
-import React, { useMemo, useState, useEffect } from "react";
+import  { useMemo, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import {
   Search,
-  MapPin,
   X,
   ChevronRight,
   Building2,

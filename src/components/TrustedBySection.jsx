@@ -1,13 +1,6 @@
-import React from "react";
 
 export default function TrustedBySection() {
-  /**
-   * Automatically load all partner logos from:
-   * src/assets/partners/
-   *
-   * Supports:
-   * png, jpg, jpeg, webp, gif, svg
-   */
+
   const partnerImages = import.meta.glob(
     "/src/assets/partners/*.{png,jpg,jpeg,webp,gif,svg}",
     {

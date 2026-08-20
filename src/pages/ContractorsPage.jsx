@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 
 import newcontractorshero from "../assets/new-contractors-hero.png";
+import ProjectMapSection from "../components/ProjectMapSection";
 
 const contractorImages = import.meta.glob(
   "../assets/contractorsPage/**/*.{png,jpg,jpeg,webp}",
@@ -364,58 +365,7 @@ export default function ContractorsPage() {
       {/* =========================================================
           MAP
       ========================================================= */}
-      <section className="border-b border-slate-100 bg-white px-4 py-12 sm:px-8 sm:py-16 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 text-center sm:mb-10">
-            <span className="text-[10px] font-semibold tracking-widest text-blue-700 uppercase sm:text-xs">
-              Our Presence
-            </span>
-            <h2 className="mt-2 text-xl font-bold text-slate-900 sm:text-3xl">
-              Project{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Locations
-              </span>
-            </h2>
-            <p className="mx-auto mt-2 max-w-2xl px-2 text-xs leading-relaxed text-slate-500 sm:text-sm">
-              Delivering engineering excellence across Maharashtra and beyond
-            </p>
-          </div>
-
-          <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-lg">
-            <div className="relative h-[280px] w-full bg-slate-100 sm:h-[400px] lg:h-[500px]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15077668.411596345!2d72.83656430606691!3d22.862330864450733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b745d5b7c4bd%3A0x816e0a5f1b0b3e9f!2sMaharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-                className="absolute inset-0 h-full w-full"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Project Locations Map"
-              />
-
-              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/20 to-transparent" />
-
-              <div className="pointer-events-none absolute bottom-3 left-3 rounded-xl border border-white/50 bg-white/90 px-3 py-1.5 shadow-lg backdrop-blur-md sm:bottom-4 sm:left-4 sm:px-4 sm:py-2">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-                  <span className="text-[10px] font-medium text-slate-700 sm:text-xs">Live Tracking</span>
-                </div>
-              </div>
-
-              <div className="pointer-events-none absolute bottom-3 right-3 flex max-w-[160px] flex-wrap justify-end gap-1 sm:bottom-4 sm:right-4 sm:max-w-[200px] sm:gap-1.5">
-                {["Kolhapur", "Pune", "Mumbai", "Bengaluru", "Delhi", "Chennai"].map((city) => (
-                  <span
-                    key={city}
-                    className="rounded-lg border border-slate-200/80 bg-white/90 px-2 py-0.5 text-[9px] font-medium text-slate-700 shadow-sm backdrop-blur-sm sm:px-2.5 sm:py-1 sm:text-[10px]"
-                  >
-                    📍 {city}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+<ProjectMapSection/>
 
       {/* =========================================================
           CTA

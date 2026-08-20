@@ -1,21 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
-  Building2,
-  Droplets,
-  Sun,
+
   MapPin,
   Mail,
   Phone,
   ChevronDown,
   CheckCircle,
   ArrowRight,
-  Users,
   Microscope,
   Calculator,
   Waves,
-  BarChart3,
-  Activity,
-  Gauge,
+
   ChevronRight,
   Play,
   Pause,
@@ -23,20 +18,14 @@ import {
   Layers,
   Database,
   Cpu,
-  Orbit,
-  Shield,
-  Zap,
-  ChevronUp,
+
   FlaskConical,
   ExternalLink,
-  Wind,
   Minimize2,
 } from "lucide-react";
 import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
 import HydraulicCTA from "../components/CTA/HydraulicCTA";
-import hydraulicLabHeroBg from "../assets/hydraulic-lab-hero-bg.png";
-import hydraulicLabHeroBg2 from "../assets/hydraulic-lab-hero-bg-2.png";
 import hydraulicLabHeroBg3 from "../assets/hydrolic-3.png";
 import physical1 from "../assets/phy1.png";
 import physical2 from "../assets/phy2.png";
@@ -44,16 +33,7 @@ import physical3 from "../assets/phy3.png";
 import math1 from "../assets/math1.png";
 import ProjectMapSection from "../components/ProjectMapSection";
 
-// Consistent navigation
-const nav = [
-  { label: "Home", active: false },
-  { label: "About Us", active: false },
-  { label: "Services", active: true, dropdown: true },
-  { label: "Projects" },
-  { label: "Sigma ToolBox" },
-  { label: "Resources", dropdown: true },
-  { label: "Careers" },
-];
+
 const projectShowcase = [
   {
     title: "Physical Model Studies",
@@ -164,23 +144,7 @@ const modelStudies = {
     },
   ],
 };
-const modelStudyCategories = [
-  {
-    title: "Physical Models",
-    icon: Waves,
-    items: modelStudies.physicalModels,
-  },
-  {
-    title: "Mathematical Models",
-    icon: Calculator,
-    items: modelStudies.mathematicalModels,
-  },
-  {
-    title: "CFD Studies",
-    icon: Cpu,
-    items: modelStudies.cfdStudies,
-  },
-];
+
 
 // Hydraulic structures data
 const structures = [
@@ -270,11 +234,7 @@ const designStudies = [
 ];
 
 export default function HydraulicLabPage() {
-const [expandedSections, setExpandedSections] = useState({
-  physical: false,
-  mathematical: false,
-  cfd: false,
-});
+
 
 const [expandedCards, setExpandedCards] = useState({});
 
@@ -284,12 +244,7 @@ const [isVideoFullscreen, setIsVideoFullscreen] = useState(false);
 const videoRef = useRef(null);
 const videoContainerRef = useRef(null);
 
-const toggleSection = (sectionKey) => {
-  setExpandedSections((prev) => ({
-    ...prev,
-    [sectionKey]: !prev[sectionKey],
-  }));
-};
+
 
 const toggleCard = (id) => {
   setExpandedCards((prev) => ({

@@ -121,7 +121,6 @@ const testimonials = [
 export default function InfraplanPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
 
   // Scroll to top button visibility
   useEffect(() => {

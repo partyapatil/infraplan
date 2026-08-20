@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight, Shield, Users, Orbit } from "lucide-react";
 import { Link } from "react-router-dom";
 

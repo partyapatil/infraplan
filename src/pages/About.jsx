@@ -1,20 +1,15 @@
-import React from "react";
 import {
   Building2,
   Target,
   Eye,
   Droplets,
-  Sun,
   Microscope,
-  Laptop,
   MapPin,
   Award,
   Users,
   CheckCircle,
   ArrowRight,
-  ChevronDown,
-  Mail,
-  Phone,
+
   Shield,
   Globe,
 } from "lucide-react";

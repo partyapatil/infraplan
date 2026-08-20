@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import  { useState, useRef, useEffect } from "react";
 
 import {
   ChevronRight,
@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 
 import blueprintBg from "../assets/engineering-blueprint-bg.png";
-import darker from "../assets/darker.png";
 import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
 export default function HeroSection() {
