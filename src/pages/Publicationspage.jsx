@@ -29,7 +29,9 @@ const publications = [
       "Ranjit Desai",
       "Snehal A. Sutar",
     ],
+    pdf: "/pdfs/MATHEMATICAL-AND-HYDRAULIC-MODEL-STUDIES-FOR.pdf",
   },
+
   {
     srNo: 2,
     conference: "ISH – HYDRO 2026 INTERNATIONAL, CWPRS, NIT ROURKELA",
@@ -42,7 +44,9 @@ const publications = [
       "Shital S. Nadagire",
       "Dr. Karan Gupta",
     ],
+    pdf: "/pdfs/CFD-Analysis-for-Hydraulic-Design-of-Surge-Tank-for-Hydroelectric-Projects.pdf",
   },
+
   {
     srNo: 3,
     conference: "ISH – HYDRO 2026 INTERNATIONAL, CWPRS, NIT ROURKELA",
@@ -54,7 +58,9 @@ const publications = [
       "Amruta S. Kale",
       "Karan H. Magadum",
     ],
+    pdf: "/pdfs/Hydraulic-Design-Aspects-of-pumped-storage-intake.pdf",
   },
+
   {
     srNo: 4,
     conference:
@@ -68,7 +74,9 @@ const publications = [
       "Amruta S. Kale",
       "Ashish A. Doshi",
     ],
+    pdf: "/pdfs/20250113_Hydraulic-Aspects-of-reservoir-operation-and-flushing-of-sediments-1.pdf",
   },
+
   {
     srNo: 5,
     conference:
@@ -82,7 +90,9 @@ const publications = [
       "Shital S. Nadagire",
       "P. B. Deolalikar",
     ],
+    pdf: "/pdfs/The-Hydraulic-Aspects-of-High-Head-Barrages-1.pdf",
   },
+
   {
     srNo: 6,
     conference: "ISH – HYDRO 2024 INTERNATIONAL, CWPRS, Pune",
@@ -95,15 +105,22 @@ const publications = [
       "Snehal A. Sutar",
       "Amey U. Kumbhar",
     ],
+    pdf: "/pdfs/Flood in Mekong River & Simultaneous Failure of a Dam Situated on it.pdf",
   },
+
   {
     srNo: 7,
     conference:
       "ISH – HYDRO 2023 INTERNATIONAL, National Institute of Technology, Warangal, Telangana",
     year: "2023",
     title: "Simulation of Suspended Sediments for Physical Model Studies",
-    authors: ["Ashish A. Doshi", "Pramod B. Deolalikar"],
+    authors: [
+      "Ashish A. Doshi",
+      "Pramod B. Deolalikar",
+    ],
+    pdf: "/pdfs/Simulation of Suspended Sediments for Physical Model Studies P2-1.pdf",
   },
+
   {
     srNo: 8,
     conference:
@@ -116,7 +133,9 @@ const publications = [
       "Amruta S. Kore",
       "Pramod B. Deolalikar",
     ],
+    pdf: "/pdfs/Hydraulic Model Studies for Removing the Sediment Deposition in th.pdf",
   },
+
   {
     srNo: 9,
     conference:
@@ -124,18 +143,26 @@ const publications = [
     year: "2020",
     title:
       "Effect of Dense Streambank Vegetation with Steep Sloping Riverbanks on Manning's Roughness Coefficient of 0.11 in Hydraulic Model Studies",
-    authors: ["Ashish A. Doshi", "Pramod B. Deolalikar"],
+    authors: [
+      "Ashish A. Doshi",
+      "Pramod B. Deolalikar",
+    ],
+    pdf: "/pdfs/Effects of dense.pdf",
   },
+
   {
     srNo: 10,
     conference: "ISH – HYDRO 2016 INTERNATIONAL, CWPRS, Pune",
     year: "2016",
     title:
       "Hydraulic Design Aspects of Diversion of Open Channel Flow into Closed Conduit",
-    authors: ["Ashish A. Doshi", "Pramod B. Deolalikar"],
+    authors: [
+      "Ashish A. Doshi",
+      "Pramod B. Deolalikar",
+    ],
+    pdf: "/pdfs/hydrolic design aspects.pdf",
   },
 ];
-
 export default function PublicationsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedYear, setSelectedYear] = useState("all");
@@ -423,8 +450,22 @@ export default function PublicationsPage() {
                           {pub.year}
                         </span>
                       </td>
-                      <td className="px-4 py-4 align-top text-sm leading-relaxed text-slate-800">{pub.title}</td>
-                      <td className="px-4 py-4 align-top text-xs leading-relaxed text-slate-600">{pub.authors.join(", ")}</td>
+<td className="px-4 py-4 align-top text-sm leading-relaxed">
+  {pub.pdf ? (
+    <a
+      href={pub.pdf}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="font-medium text-slate-800 transition-colors hover:text-blue-600 hover:underline"
+    >
+      {pub.title}
+    </a>
+  ) : (
+    <span className="text-slate-800">
+      {pub.title}
+    </span>
+  )}
+</td>                      <td className="px-4 py-4 align-top text-xs leading-relaxed text-slate-600">{pub.authors.join(", ")}</td>
                       <td className="px-4 py-4 align-top">
                         <button
                           type="button"

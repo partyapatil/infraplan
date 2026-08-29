@@ -8,18 +8,105 @@ import {
   BarChart3,
   Activity,
 } from "lucide-react";
+
 import ProjectMapSection from "../components/ProjectMapSection";
 
-/* ============================================================
-   PLACEHOLDER IMAGES — swap these arrays for real project
-   photos later. Keeping 2–3 per project so the carousel UI
-   has something to demonstrate.
-============================================================ */
+// ============================================================
+// BAGGI HEP
+// ============================================================
+import baggi1 from "../assets/mathematicalModel/Baggi-HEP/1.png";
+import baggi2 from "../assets/mathematicalModel/Baggi-HEP/2.png";
+import baggi3 from "../assets/mathematicalModel/Baggi-HEP/3.png";
+import baggi4 from "../assets/mathematicalModel/Baggi-HEP/4.png";
+import baggi5 from "../assets/mathematicalModel/Baggi-HEP/5.png";
+import baggi6 from "../assets/mathematicalModel/Baggi-HEP/6.png";
 
+// ============================================================
+// CHOROKHI RIVER
+// ============================================================
+import chorokhi1 from "../assets/mathematicalModel/Chorokhi-River/1.jpg";
+import chorokhi2 from "../assets/mathematicalModel/Chorokhi-River/2.jpg";
+import chorokhi3 from "../assets/mathematicalModel/Chorokhi-River/3.jpg";
+import chorokhi4 from "../assets/mathematicalModel/Chorokhi-River/4.png";
+
+// ============================================================
+// DAM BREAK
+// ============================================================
+import damBreak1 from "../assets/mathematicalModel/DamBreakF/1.png";
+import damBreak2 from "../assets/mathematicalModel/DamBreakF/2.png";
+import damBreak3 from "../assets/mathematicalModel/DamBreakF/3.png";
+
+// ============================================================
+// DAM BREAK 2
+// ============================================================
+import damBreak21 from "../assets/mathematicalModel/DamBreak/1.jpg";
+import damBreak22 from "../assets/mathematicalModel/DamBreak/2.jpg";
+import damBreak23 from "../assets/mathematicalModel/DamBreak/3.png";
+import damBreak24 from "../assets/mathematicalModel/DamBreak/4.png";
+import damBreak25 from "../assets/mathematicalModel/DamBreak/5.png";
+import damBreak26 from "../assets/mathematicalModel/DamBreak/5.png";
+import damBreak27 from "../assets/mathematicalModel/DamBreak/7.png";
+
+// ============================================================
+// DIVERSION CANAL XEKONG
+// ============================================================
+import diversion1 from "../assets/mathematicalModel/Diversion-Canal-Xekong/1.png";
+import diversion2 from "../assets/mathematicalModel/Diversion-Canal-Xekong/2.png";
+import diversion3 from "../assets/mathematicalModel/Diversion-Canal-Xekong/3.png";
+import diversion4 from "../assets/mathematicalModel/Diversion-Canal-Xekong/4.png";
+import diversion6 from "../assets/mathematicalModel/Diversion-Canal-Xekong/6.png";
+import diversion8 from "../assets/mathematicalModel/Diversion-Canal-Xekong/8.png";
+
+// ============================================================
+// NAGALWADI LIFT
+// ============================================================
+import nagalwadi1 from "../assets/mathematicalModel/Nagalwadi-Lift/1.png";
+import nagalwadi2 from "../assets/mathematicalModel/Nagalwadi-Lift/2.png";
+import nagalwadi3 from "../assets/mathematicalModel/Nagalwadi-Lift/3.png";
+import nagalwadi4 from "../assets/mathematicalModel/Nagalwadi-Lift/4.png";
+import nagalwadi5 from "../assets/mathematicalModel/Nagalwadi-Lift/5.png";
+
+// ============================================================
+// NAM BENG DAM
+// ============================================================
+import namBeng1 from "../assets/mathematicalModel/Nam-Beng-Dam/1.png";
+import namBeng2 from "../assets/mathematicalModel/Nam-Beng-Dam/2.png";
+import namBeng3 from "../assets/mathematicalModel/Nam-Beng-Dam/3.png";
+import namBeng4 from "../assets/mathematicalModel/Nam-Beng-Dam/4.png";
+import namBeng5 from "../assets/mathematicalModel/Nam-Beng-Dam/5.png";
+import namBeng6 from "../assets/mathematicalModel/Nam-Beng-Dam/6.png";
+import namBeng7 from "../assets/mathematicalModel/Nam-Beng-Dam/7.png";
+
+// ============================================================
+// SHONGTONG
+// ============================================================
+import shongtong1 from "../assets/mathematicalModel/Shongtong/1.png";
+import shongtong2 from "../assets/mathematicalModel/Shongtong/2.png";
+import shongtong4 from "../assets/mathematicalModel/Shongtong/4.png";
+import shongtong5 from "../assets/mathematicalModel/Shongtong/5.png";
+import shongtong6 from "../assets/mathematicalModel/Shongtong/6.png";
+import shongtong7 from "../assets/mathematicalModel/Shongtong/7.png";
+import shongtong8 from "../assets/mathematicalModel/Shongtong/8.png";
+import shongtong9 from "../assets/mathematicalModel/Shongtong/9.png";
+
+// ============================================================
+// SURGE ANALYSIS
+// ============================================================
+import surge1 from "../assets/mathematicalModel/Surge-Analysis/1.jpg";
+import surge2 from "../assets/mathematicalModel/Surge-Analysis/2.jpg";
+
+// ============================================================
+// TAILRACE
+// ============================================================
+import tailrace1 from "../assets/mathematicalModel/Tailrace/1.png";
+import tailrace2 from "../assets/mathematicalModel/Tailrace/2.png";
+import tailrace3 from "../assets/mathematicalModel/Tailrace/3.png";
+import tailrace4 from "../assets/mathematicalModel/Tailrace/4.png";
+import tailrace5 from "../assets/mathematicalModel/Tailrace/5.png";
 const collageImages = [
-  "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=80",
-  "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80",
-  "https://images.unsplash.com/photo-1580500550469-9b7d9f2a3d24?w=1200&q=80",
+  tailrace1,
+  namBeng1,
+  nagalwadi5
 ];
 
 const mathematicalModelStudies = [
@@ -30,108 +117,141 @@ const mathematicalModelStudies = [
     description:
       "The MP 30 Gandhi Sagar Pumped Storage Project (1920 MW) is under construction at Madhya Pradesh, India. Existing Gandhi Sagar reservoir acts as lower intake, comprising nine units of reversible turbines, includes a critical Tailrace/Approach Channel (TRC) that regulates water flow during both pumping and generation modes. The hydraulic design of the tailrace/approach channel was analysed using HEC-RAS 2D modelling to optimize flow conditions during both pumping and generation modes. The study evaluated flow velocities, water levels, and return flows to ensure efficient operation.",
     images: [
-      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=80",
-      "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&q=80",
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=1200&q=80",
+      tailrace1,
+      tailrace2,
+      tailrace3,
+      tailrace4,
+      tailrace5,
     ],
   },
+
   {
     id: 2,
     title: "Shongtong Karcham HEP, Himachal Pradesh, India",
     description:
       "Shongtong Karcham Hydro electric Project is on the Satluj River. A computational fluid dynamics (CFD) model is being carried out for headrace tunnel, Surge tank and Pressure shafts. CFD models provided very good insight. Analysis for the Water Conductor System of the Hydroelectric Project to optimize flow efficiency and assess hydraulic performance under varying operational conditions.",
     images: [
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
-      "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=1200&q=80",
-      "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1200&q=80",
+      shongtong1,
+      shongtong2,
+      shongtong4,
+      shongtong5,
+      shongtong6,
+      shongtong7,
+      shongtong8,
+      shongtong9,
     ],
   },
+
   {
     id: 3,
     title: "Dam Break Simulation of Nam Houng 1 HPP (15MW), Laos",
     description:
       "A 15 MW Hydro Power Project located in the south-eastern area of Xayaboury Province, Lao PDR, and 6 km upstream of the confluence of Nam Houng and Mekong rivers which is a concrete gravity dam with 5 radial gates having a height of 35m. The dam breach simulation was carried out in HEC-RAS 2D, with various scenarios. Initially, a Dam breach at FRL with fair-weather conditions was simulated, secondly, a breach was done when the project design flood was impinging on the reservoir and the flood was passing through the gates and the third case was similar to case 2 but with the Mekong itself flowing at high flood levels.",
     images: [
-      "https://images.unsplash.com/photo-1439405326854-014607f694d7?w=1200&q=80",
-      "https://images.unsplash.com/photo-1444492417251-9c84a5fa18e0?w=1200&q=80",
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=1200&q=80",
+      damBreak1,
+      damBreak2,
+      damBreak3,
     ],
   },
+
   {
     id: 4,
     title: "Dam Break Simulation for Nam Ngiep 2C HPP, Laos",
     description:
       "Nam Ngiep 2C Hydropower project is located in northern Lao PDR. Multiple power projects are located on Nam Ngiep River having a NN1 HPP at downstream end and various hydro power projects namely, 2A, 2B, 2C and 3A located along the river. The dam breach simulation was carried out simulating various scenarios of flooding. The river reach of about 58 km was simulated along with all the hydraulic structures in-between. The breach flood wave was seen traveling at more than 15 to 20 m/s velocities along the steep sloping river. Two dams and 4 powerhouses observed to be affected adversely along with six bridges found to be prone to damages due to very high velocities anticipated. Safe places and evacuation routes were suggested along with critical inputs to prepare the emergency action plan.",
     images: [
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80",
-      "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1200&q=80",
-      "https://images.unsplash.com/photo-1439405326854-014607f694d7?w=1200&q=80",
+      damBreak21,
+      damBreak22,
+      damBreak23,
+      damBreak24,
+      damBreak25,
+      damBreak26,
+      damBreak27,
     ],
   },
+
   {
     id: 5,
     title: "Diversion Canal-Xekong River, Laos",
     description:
       "The Xekong Thermal Power Plant is located in Xekong Province of Lao PDR. A critical part of the project involved diverting a 13 km section of the Xekong River. This required the construction of a 5.2 km diversion canal and the installation of dams both upstream and downstream. Hydraulic model studies were conducted at IHL to evaluate the impact of the Xekong Diversion Canal on the water levels for the 4B and 4A hydroelectric power plants (HPPs), as well as to mitigate the risk of coal mine pit flooding over a 30 year period. These studies helped determine the optimal canal alignment, assessed the required elevations for the access road and bridge to Xekong 4B. Based on these findings, it was recommended to relocate the proposed bridge near the canal's upstream inlet to ensure safety and reliability.",
     images: [
-      "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&q=80",
-      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=80",
-      "https://images.unsplash.com/photo-1444492417251-9c84a5fa18e0?w=1200&q=80",
+      diversion1,
+      diversion2,
+      diversion3,
+      diversion4,
+      diversion6,
+      diversion8,
     ],
   },
+
   {
     id: 6,
-    title: "Surge Analysis of Ganj em Water Supply Scheme (25MLD) Ganjem Usgao, Goa.",
+    title:
+      "Surge Analysis of Ganjem Water Supply Scheme (25MLD), Ganjem Usgao, Goa",
     description:
       "A surge analysis of the clear water rising main for the Ganjem Water Supply Scheme in Goa, conducted by InfraPlan Hydraulic Laboratory using Bentley Open Flows Hammer Software. The study evaluated transient pressures and water hammer effects under current demand (25 MLD) and future increased demand (37.5 MLD). The existing pipeline is a 700 mm diameter Ductile Iron (DI) pipe, and a new 711 mm diameter Mild Steel (MS) pipe is proposed. The analysis included scenarios of sequential pump shut-off and sudden pump power failure, both with and without protection devices like Surge Anticipator Valve (SAV) and Hydro-pneumatic Tank (HT). The study was supported by Laxmi Civil Engineering Services Pvt. Ltd. The study concluded that both DI and MS pipes are designed to withstand static and surge pressures, and protection devices like SAV and HT are essential for managing transient pressures effectively. Recommendations include increasing pump and motor inertia, modifying terrain slope, and installing SAV and HT.",
     images: [
-      "https://images.unsplash.com/photo-1580500550469-9b7d9f2a3d24?w=1200&q=80",
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
-      "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=1200&q=80",
+      surge1,
+      surge2,
     ],
   },
+
   {
     id: 7,
-    title: "Nam Beng Dam break analysis, Laos",
+    title: "Nam Beng Dam Break Analysis, Laos",
     description:
       "Nam Beng Hydro Power Project is located 17 km upstream of Pak Beng Town. The studies were conducted for prediction of flood propagation from Nam Beng Dam up to the confluence of Mekong River. A two-dimensional mathematical model was set up in HEC-RAS latest version of software. The maximum velocity observed through dam breach width was more than 9 m/s for piping failure mode whereas it was more than 5 m/s for overtopping failure mode. It is observed that during the breach simulation, very high velocity flow passes through the river. The simulation has been carried out with the downstream boundary condition considering the normal depth flow condition at the confluence.",
     images: [
-      "https://images.unsplash.com/photo-1439405326854-014607f694d7?w=1200&q=80",
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=1200&q=80",
-      "https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1200&q=80",
+      namBeng1,
+      namBeng2,
+      namBeng3,
+      namBeng4,
+      namBeng5,
+      namBeng6,
+      namBeng7,
     ],
   },
+
   {
     id: 8,
     title: "Baggi HEP, 42 MW, Himachal Pradesh, India",
     description:
       "Beas-Sutlej link project is considered as one of the achievements of modern India. The Beas project was undertaken to harness the water and power resources of the Beas River by storage and diversion works. The proposed Baggi Power Plant (42 MW) is located on National Highway No. 21 about 12 KM upstream of Sundernagar Town in District Mandi of Himachal Pradesh. The mathematical model studies were conducted for transient analysis in Bentley Open Flows Hammer licensed software. The studies were conducted for load rejection case as well as load acceptance case.",
     images: [
-      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=80",
-      "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80",
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
+      baggi1,
+      baggi2,
+      baggi3,
+      baggi4,
+      baggi5,
+      baggi6,
     ],
   },
+
   {
     id: 9,
     title: "Chorokhi River, Batumi, Georgia",
     description:
       "Perhaps one of the biggest model ever constructed in laboratory spread over 70 m x 30 m. River length of 2.5 km was reproduced along with some part of seabed. Part of the coast near the mouth of Chorokhi river is eroding for last few decades. The geometrically similar rigid bed physical hydraulic model on the scale of 1:50 conforming to Froudean similitude was constructed to assess the hydraulic performance and sediment movement near Chorokhi river mouth. Mathematical model in Hec-RAS was prepared for the reach of 3 km from river mouth. The mathematical model was used to arrive and compare the water surface profiles and Manning's n values in various sections of river reach.",
     images: [
-      "https://images.unsplash.com/photo-1444492417251-9c84a5fa18e0?w=1200&q=80",
-      "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&q=80",
-      "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=1200&q=80",
+      chorokhi1,
+      chorokhi2,
+      chorokhi3,
+      chorokhi4,
     ],
   },
+
   {
     id: 10,
     title: "Nagalwadi Lift Irrigation Intake, MP, India",
     description:
       "Lift irrigation scheme is under construction on the Narmada River at Nagalwadi. The entire scheme envisages seven stage pumping. A computational fluid dynamics (CFD) models were carried out for various pumping stations. The physical and mathematical CFD model for Pumping station no. 1 showed very good correlation. CFD models provided very good insight. The predicted flow conditions helped in optimizing and finalizing the designs of pump sumps.",
     images: [
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
-      "https://images.unsplash.com/photo-1580500550469-9b7d9f2a3d24?w=1200&q=80",
-      "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&q=80",
+      nagalwadi1,
+      nagalwadi2,
+      nagalwadi3,
+      nagalwadi4,
+      nagalwadi5,
     ],
   },
 ];
@@ -213,10 +333,10 @@ function ProjectRow({ project }) {
           {project.description}
         </p>
 
-        <button className="group mt-5 inline-flex w-fit items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/40">
+        {/* <button className="group mt-5 inline-flex w-fit items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/40">
           View Details
           <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-        </button>
+        </button> */}
       </div>
     </div>
   );
