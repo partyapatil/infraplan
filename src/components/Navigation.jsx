@@ -23,12 +23,17 @@ const navItems = [
     dropdown: true,
     subItems: [
       {
-        label: "Physical Models",
+        label: "Overview",
+        path: "/hydrolic",
+        icon: FlaskConical,
+      },
+      {
+        label: "Project Showcase",
         path: "/physical-model-studies",
         icon: FlaskConical,
       },
       {
-        label: "Mathematical Models",
+        label: "Project Showcase",
         path: "/mathematical-model-studies",
         icon: Sigma,
       },

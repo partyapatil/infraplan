@@ -172,7 +172,7 @@ function ContactSection() {
     service: "",
     message: "",
   });
-
+  const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -215,15 +215,65 @@ function ContactSection() {
 
   const removeFile = () => setFile(null);
 
+// --- API INTEGRATION START ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    // 1. Create FormData object
+    const payload = new FormData();
+    
+    // 2. Append fields exactly as named in the Swagger screenshot
+    payload.append("FullName", formData.name);
+    payload.append("Email", formData.email);
+    payload.append("Phone", formData.phone);
+    
+    // Map the string service value to an integer (Swagger expects int32)
+    // You may need to adjust these integers based on your backend's enum values
+    const serviceMapping = {
+      "engineering": 1,
+      "hydraulic": 2,
+      "digital": 3,
+      "consulting": 4,
+      "empanelment": 5,
+      "partner": 6,
+      "other": 7,
+    };
+    const serviceId = serviceMapping[formData.service] || 1; // Default to 1 if empty
+    payload.append("Service", serviceId);
+    
+    payload.append("ProjectDetails", formData.message);
+    
+    // Only append attachment if a file exists
+    if (file) {
+      payload.append("Attachment", file);
+    }
+
+    try {
+      // 3. Make the API call
+      // Replace 'YOUR_API_BASE_URL' with your actual backend URL (e.g., http://localhost:5000)
+      const response = await fetch("https://staging.infraplan.co.in:7052/api/contactus", {
+        method: "POST",
+        body: payload,
+        // IMPORTANT: Do NOT set 'Content-Type' header manually when using FormData. 
+        // The browser will automatically set it to 'multipart/form-data' with the correct boundary.
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+
+      // Success
       setSubmitted(true);
-    }, 1200);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setError("Something went wrong. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   const resetForm = () => {
     setSubmitted(false);

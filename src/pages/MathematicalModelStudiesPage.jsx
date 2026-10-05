@@ -263,40 +263,57 @@ const mathematicalModelStudies = [
 function ProjectCarousel({ images, title }) {
   const [index, setIndex] = useState(0);
 
-  const next = () => setIndex((prev) => (prev + 1) % images.length);
-  const prev = () => setIndex((prev) => (prev - 1 + images.length) % images.length);
+  const next = () => {
+    setIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prev = () => {
+    setIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
-    <div className="group relative h-[240px] w-full shrink-0 overflow-hidden rounded-2xl bg-slate-100 shadow-lg sm:h-[300px] lg:h-[320px] lg:w-[420px]">
+    <div className="group relative h-[240px] w-full shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-md transition-all duration-500 hover:shadow-xl sm:h-[300px] lg:h-[320px] lg:w-[440px]">
+      {/* Image */}
       <img
         src={images[index]}
         alt={`${title} ${index + 1}`}
-        className="h-full w-full object-cover transition-all duration-700"
+        className="h-full w-full object-cover "
       />
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+      {/* Soft overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-slate-950/10" />
+
+      {/* Image counter */}
+      {images.length > 1 && (
+        <div className="absolute right-3 top-3 rounded-full border border-white/20 bg-black/35 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+          {index + 1} / {images.length}
+        </div>
+      )}
 
       {images.length > 1 && (
         <>
+          {/* Previous */}
           <button
             type="button"
             onClick={prev}
             aria-label="Previous image"
-            className="absolute left-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-black/65 sm:h-9 sm:w-9 lg:opacity-0 lg:group-hover:opacity-100"
+            className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white opacity-100 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-white/70 lg:opacity-0 lg:group-hover:opacity-100"
           >
-            <ChevronLeft size={16} className="sm:h-[18px] sm:w-[18px]" />
+            <ChevronLeft size={18} />
           </button>
 
+          {/* Next */}
           <button
             type="button"
             onClick={next}
             aria-label="Next image"
-            className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/45 text-white shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-black/65 sm:h-9 sm:w-9 lg:opacity-0 lg:group-hover:opacity-100"
+            className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white opacity-100 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-white/70 lg:opacity-0 lg:group-hover:opacity-100"
           >
-            <ChevronRight size={16} className="sm:h-[18px] sm:w-[18px]" />
+            <ChevronRight size={18} />
           </button>
 
-          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
+          {/* Dots */}
+          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full border border-white/10 bg-black/25 px-2.5 py-2 backdrop-blur-md">
             {images.map((_, i) => (
               <button
                 key={i}
@@ -304,7 +321,9 @@ function ProjectCarousel({ images, title }) {
                 onClick={() => setIndex(i)}
                 aria-label={`Show image ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === index ? "w-5 bg-white" : "w-1.5 bg-white/50 hover:bg-white/80"
+                  i === index
+                    ? "w-6 bg-white"
+                    : "w-1.5 bg-white/50 hover:bg-white/80"
                 }`}
               />
             ))}
@@ -321,27 +340,42 @@ function ProjectCarousel({ images, title }) {
 
 function ProjectRow({ project }) {
   return (
-    <div className="flex flex-col gap-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:shadow-md sm:p-6 lg:flex-row lg:items-start lg:gap-8 lg:p-8">
-      <ProjectCarousel images={project.images} title={project.title} />
+    <div className="group flex flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-4 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl sm:p-5 lg:flex-row lg:items-center lg:gap-8 lg:p-6">
+      {/* Image */}
+      <ProjectCarousel
+        images={project.images}
+        title={project.title}
+      />
 
-      <div className="flex flex-1 flex-col">
-        <h3 className="text-lg font-bold leading-snug text-slate-900 sm:text-xl">
+      {/* Content */}
+      <div className="flex min-w-0 flex-1 flex-col px-1 pb-1 pt-5 sm:px-2 lg:px-0 lg:py-2">
+        {/* Small label */}
+        <div className="mb-3 flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+
+          <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-600">
+            Project
+          </span>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-xl font-bold leading-tight tracking-tight text-slate-900 transition-colors duration-300 group-hover:text-blue-700 sm:text-2xl">
           {project.title}
         </h3>
 
-        <p className="mt-3 text-sm leading-relaxed text-slate-600">
+        {/* Divider */}
+        <div className="mt-4 h-px w-full bg-gradient-to-r from-slate-200 via-slate-100 to-transparent" />
+
+        {/* Description */}
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 sm:text-[15px]">
           {project.description}
         </p>
 
-        {/* <button className="group mt-5 inline-flex w-fit items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/40">
-          View Details
-          <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-        </button> */}
+     
       </div>
     </div>
   );
 }
-
 /* ============================================================
    PAGE
 ============================================================ */

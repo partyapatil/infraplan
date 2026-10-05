@@ -165,16 +165,6 @@ export default function InfraplanPage() {
         </div>
       )}
 
-      {/* =========================================================
-          HERO
-          Note: HeroSection already renders its own stats card
-          (Years / Projects / Countries / States) overlapping the
-          bottom of the hero — that one stays. The `stats` array
-          below is intentionally unused now; a second stats strip
-          here would just repeat the same numbers a few seconds
-          later with no added value. Remove `stats` entirely if
-          nothing else ends up using it.
-      ========================================================= */}
       <HeroSection />
 
       {/* =========================================================

@@ -8,6 +8,11 @@ import ContractorsPage from "./pages/ContractorsPage";
 import HydraulicLabPage from "./pages/HydraulicLabPage";
 import SigmaToolboxPage from "./pages/SigmaToolboxPage";
 import PublicationsPage from "./pages/Publicationspage";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import AdminLayout from "./admin/admin/AdminLayout";
+import AdminLogin from "./admin/admin/AdminLogin";
+import AdminProjects from "./admin/admin/AdminProjects";
+import AdminPublications from "./admin/admin/AdminPublications";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +50,16 @@ const router = createBrowserRouter([
         path: "/hydrolicLabpublications",
         element: <PublicationsPage />,
       },
+        { path: "/admin/login", element: <AdminLogin /> },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <Navigate to="projects" replace /> },
+      { path: "projects", element: <AdminProjects /> },
+      { path: "publications", element: <AdminPublications /> },
+    ],
+  },
     ],
   },
 ]);

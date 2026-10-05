@@ -8,7 +8,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between px-5 sm:px-8 lg:px-12 py-4 border-b border-slate-100 bg-white/95 backdrop-blur-sm shadow-sm">
+<header className="sticky top-0 z-[1000] flex items-center justify-between px-5 sm:px-8 lg:px-12 py-4 border-b border-slate-100 bg-white/95 backdrop-blur-sm shadow-sm">
       <Link to="/" className="flex items-center gap-3 shrink-0" onClick={() => setMenuOpen(false)}>
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-blue-600/20">
           IP

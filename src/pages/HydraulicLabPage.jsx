@@ -15,6 +15,8 @@ import {
   Play,
   Pause,
   Maximize2,
+    Volume2,
+  VolumeX,
   Layers,
   Database,
   Cpu,
@@ -27,6 +29,11 @@ import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
 import HydraulicCTA from "../components/CTA/HydraulicCTA";
 import hydraulicLabHeroBg3 from "../assets/hydrolic-3.png";
+import hydrolicBG from "../assets/hydrolicBG.png";
+import hydrolicTop from "../assets/hydrolicTop.png"; 
+import hydroLast from "../assets/hydroLast.png"; 
+import last4 from "../assets/last4.png"; 
+import newCropped from "../assets/newCropped.png"; 
 import physical1 from "../assets/phy1.png";
 import physical2 from "../assets/phy2.png";
 import physical3 from "../assets/phy3.png";
@@ -240,7 +247,7 @@ const [expandedCards, setExpandedCards] = useState({});
 
 const [isVideoPlaying, setIsVideoPlaying] = useState(true);
 const [isVideoFullscreen, setIsVideoFullscreen] = useState(false);
-
+const [isMuted, setIsMuted] = useState(true);
 const videoRef = useRef(null);
 const videoContainerRef = useRef(null);
 
@@ -252,7 +259,24 @@ const toggleCard = (id) => {
     [id]: !prev[id],
   }));
 };
+const toggleMute = async () => {
+  const video = videoRef.current;
 
+  if (!video) return;
+
+  try {
+    const newMutedState = !video.muted;
+
+    video.muted = newMutedState;
+    setIsMuted(newMutedState);
+
+    if (video.paused) {
+      await video.play();
+    }
+  } catch (error) {
+    console.error("Audio error:", error);
+  }
+};
 const toggleVideo = async () => {
   const video = videoRef.current;
 
@@ -302,169 +326,188 @@ useEffect(() => {
     );
   };
 }, []);
-  return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans antialiased">
+return (
+  <div className="min-h-screen bg-white text-slate-800 font-sans antialiased">
   
-
- {/* Hero Section with Video - New Design */}
-<section className="relative flex min-h-[550px] items-center overflow-hidden px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
-  {/* Background Image */}
-  <div
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-    style={{ backgroundImage: `url(${hydraulicLabHeroBg3})` }}
-  />
-
-  {/* Light Gradient Overlay */}
-  <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/40 to-transparent" />
-
-  {/* Subtle Bottom Fade */}
-  <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white/60 to-transparent" />
-
-  {/* Main Content */}
-  <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-8 md:flex-row md:gap-8 lg:gap-12">
-    
-    {/* Left Content */}
-    <div className="w-full min-w-0 md:w-[48%] md:flex-none lg:w-[46%]">
-      {/* Badge */}
-      <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-blue-700 shadow-sm backdrop-blur-sm">
-        <Microscope size={14} className="shrink-0 text-blue-600" />
-        Hydraulic Laboratory
-      </div>
-
-      {/* Heading */}
-      <h1 className="mb-4 max-w-xl text-4xl font-bold leading-[1.08] tracking-tight text-slate-950 sm:text-[2.75rem] md:text-[2.55rem] lg:text-[3.2rem] xl:text-[3.35rem]">
-        InfraPlan{" "}
-        <span className="bg-gradient-to-r from-blue-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-          Hydraulic
-        </span>{" "}
-        Laboratory
-      </h1>
-
-      {/* Description */}
-      <p className="max-w-xl text-sm font-medium leading-6 text-slate-700 sm:text-base md:max-w-md lg:max-w-lg">
-        State-of-the-art facility for physical and mathematical hydraulic model studies
-      </p>
-
-      {/* Information Meta */}
-      <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-        <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-          <MapPin size={16} className="shrink-0 text-blue-600" />
-          <span>Pune, Maharashtra</span>
-        </div>
-
-        <div className="hidden h-5 w-px bg-slate-300 sm:block" />
-
-        <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-          <Layers size={16} className="shrink-0 text-blue-600" />
-          <span>5 Acres Facility</span>
-        </div>
-      </div>
-    </div>
-
-    {/* Video Section */}
-    <div className="w-full min-w-0 md:w-[52%] md:flex-1 lg:w-[54%] lg:flex-none">
+    {/* Hero Section with Video - New Design */}
+    {/* CHANGED: Added lg:pl-24 lg:pb-24 to push content right and up */}
+    <section className="relative flex min-h-[550px] items-center overflow-hidden px-5 py-12 sm:px-8 lg:pl-24 lg:pr-12 lg:py-16 lg:pb-24">
+      
+        {/* Background Image */}
       <div
-        ref={videoContainerRef}
-        className={`relative mx-auto w-full max-w-[620px] overflow-hidden bg-slate-100 shadow-xl shadow-slate-900/10 ${
-          isVideoFullscreen
-            ? "h-screen max-w-none rounded-none"
-            : "aspect-video rounded-2xl border border-slate-200/70"
-        }`}
-      >
-        <video
-          ref={videoRef}
-          className={`absolute inset-0 h-full w-full ${
-            isVideoFullscreen ? "object-contain bg-black" : "object-cover"
-          }`}
-          autoPlay
-          muted
-          playsInline
-          loop
-          preload="auto"
-          controls={false}
-          onPlay={() => setIsVideoPlaying(true)}
-          onPause={() => setIsVideoPlaying(false)}
-          onEnded={() => setIsVideoPlaying(false)}
-        >
-          <source src={heroVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${last4})` }}
+      />
 
-        {/* Video Gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+      {/* 1. Light Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/30 to-transparent" />
 
-        {/* Video Badge */}
-        {!isVideoFullscreen && (
-          <div className="absolute left-3 top-3 z-20 flex max-w-[85%] items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1.5 text-[10px] font-medium text-slate-700 shadow-sm backdrop-blur-md sm:left-4 sm:top-4">
-            <div className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-red-500" />
-            <span className="truncate">Infraplan Hydraulic Laboratory</span>
+      {/* 2. Bottom Fade */}
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white/40 to-transparent" />
+
+      {/* Main Content */}
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-8 md:flex-row md:gap-8 lg:gap-12">
+
+        {/* Left Content */}
+        <div className="relative w-full min-w-0 md:w-[48%] md:flex-none lg:w-[46%]">
+          {/* Soft glow behind text */}
+          <div className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[2.5rem] bg-white/50 blur-2xl" />
+
+          {/* Badge */}
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-blue-700 shadow-sm backdrop-blur-sm">
+            <Microscope size={14} className="shrink-0 text-blue-600" />
+            Hydraulic Laboratory
           </div>
-        )}
 
-        {/* Fullscreen Overlay Text */}
-        {isVideoFullscreen && (
-          <div className="absolute bottom-24 left-6 right-6 z-20 text-white sm:left-10 sm:right-10">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-300">
-              Infraplan · Engineering & Infrastructure
-            </p>
-            <h2 className="mt-2 max-w-3xl text-2xl font-bold sm:text-4xl">
-              Engineering Tomorrow's Infrastructure
-            </h2>
-            <p className="mt-2 text-sm text-white/60">
-              Watch our latest project showcase
-            </p>
-          </div>
-        )}
+          {/* Heading */}
+          <h1 className="mb-4 max-w-xl text-4xl font-bold leading-[1.08] tracking-tight text-slate-950 sm:text-[2.75rem] md:text-[2.55rem] lg:text-[3.2rem] xl:text-[3.35rem]">
+            InfraPlan{" "}
+            <span className="bg-gradient-to-r from-blue-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              Hydraulic
+            </span>{" "}
+            Laboratory
+          </h1>
 
-        {/* Center Play Button */}
-        {!isVideoPlaying && (
-          <button
-            type="button"
-            onClick={toggleVideo}
-            aria-label="Play video"
-            className="absolute left-1/2 top-1/2 z-30 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-slate-700 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 sm:h-16 sm:w-16"
-          >
-            <Play size={25} className="ml-0.5" fill="currentColor" />
-          </button>
-        )}
+          {/* Description */}
+          <p className="max-w-xl text-sm font-medium leading-6 text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)] sm:text-base md:max-w-md lg:max-w-lg">
+            State-of-the-art facility for physical and mathematical hydraulic model studies
+          </p>
 
-        {/* Video Controls Bar */}
-        <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-between sm:bottom-4 sm:left-4 sm:right-4">
-          <button
-            type="button"
-            onClick={toggleVideo}
-            aria-label={isVideoPlaying ? "Pause video" : "Play video"}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
-          >
-            {isVideoPlaying ? (
-              <Pause size={15} strokeWidth={2.3} />
-            ) : (
-              <Play size={15} className="ml-0.5" fill="currentColor" />
-            )}
-          </button>
-
-          <div className="flex items-center gap-2">
-            <div className="hidden h-1 w-16 overflow-hidden rounded-full bg-white/50 sm:block">
-              <div className="h-full w-1/2 rounded-full bg-white" />
+          {/* Information Meta */}
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <div className="flex items-center gap-2 text-sm font-medium text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
+              <MapPin size={16} className="shrink-0 text-blue-600" />
+              <span>Pune, Maharashtra</span>
             </div>
 
-            <button
-              type="button"
-              onClick={toggleVideoFullscreen}
-              aria-label={isVideoFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-              className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+            <div className="hidden h-5 w-px bg-slate-400 sm:block" />
+
+            <div className="flex items-center gap-2 text-sm font-medium text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
+              <Layers size={16} className="shrink-0 text-blue-600" />
+              <span>5 Acres Facility</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Video Section */}
+        <div className="w-full min-w-0 md:w-[52%] md:flex-1 lg:w-[54%] lg:flex-none">
+          <div
+            ref={videoContainerRef}
+            className={`relative mx-auto w-full max-w-[620px] overflow-hidden bg-slate-100 shadow-xl shadow-slate-900/10 ${
+              isVideoFullscreen
+                ? "h-screen max-w-none rounded-none"
+                : "aspect-video rounded-2xl border border-slate-200/70"
+            }`}
+          >
+            <video
+              ref={videoRef}
+              className={`absolute inset-0 h-full w-full ${
+                isVideoFullscreen ? "object-contain bg-black" : "object-cover"
+              }`}
+              autoPlay
+              muted={isMuted}
+              playsInline
+              loop
+              preload="auto"
+              controls={false}
+              onPlay={() => setIsVideoPlaying(true)}
+              onPause={() => setIsVideoPlaying(false)}
+              onEnded={() => setIsVideoPlaying(false)}
             >
-              {isVideoFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
-            </button>
+              <source src={heroVideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Video Gradient */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+
+            {/* Video Badge */}
+            {!isVideoFullscreen && (
+              <div className="absolute left-3 top-3 z-20 flex max-w-[85%] items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1.5 text-[10px] font-medium text-slate-700 shadow-sm backdrop-blur-md sm:left-4 sm:top-4">
+                <div className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-red-500" />
+                <span className="truncate">Infraplan Hydraulic Laboratory</span>
+              </div>
+            )}
+
+            {/* Fullscreen Overlay Text */}
+            {isVideoFullscreen && (
+              <div className="absolute bottom-24 left-6 right-6 z-20 text-white sm:left-10 sm:right-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-300">
+                  Infraplan · Engineering & Infrastructure
+                </p>
+                <h2 className="mt-2 max-w-3xl text-2xl font-bold sm:text-4xl">
+                  Engineering Tomorrow's Infrastructure
+                </h2>
+                <p className="mt-2 text-sm text-white/60">
+                  Watch our latest project showcase
+                </p>
+              </div>
+            )}
+
+            {/* Center Play Button */}
+            {!isVideoPlaying && (
+              <button
+                type="button"
+                onClick={toggleVideo}
+                aria-label="Play video"
+                className="absolute left-1/2 top-1/2 z-30 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-slate-700 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 sm:h-16 sm:w-16"
+              >
+                <Play size={25} className="ml-0.5" fill="currentColor" />
+              </button>
+            )}
+
+            {/* Video Controls Bar */}
+            <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-between sm:bottom-4 sm:left-4 sm:right-4">
+              {/* LEFT CONTROLS */}
+              <div className="flex items-center gap-2">
+                {/* PLAY / PAUSE */}
+                <button
+                  type="button"
+                  onClick={toggleVideo}
+                  aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+                >
+                  {isVideoPlaying ? (
+                    <Pause size={15} strokeWidth={2.3} />
+                  ) : (
+                    <Play size={15} className="ml-0.5" fill="currentColor" />
+                  )}
+                </button>
+
+                {/* MUTE / UNMUTE */}
+                <button
+                  type="button"
+                  onClick={toggleMute}
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+                >
+                  {isMuted ? (
+                    <VolumeX size={15} strokeWidth={2.3} />
+                  ) : (
+                    <Volume2 size={15} strokeWidth={2.3} />
+                  )}
+                </button>
+              </div>
+
+              {/* FULLSCREEN */}
+              <button
+                type="button"
+                onClick={toggleVideoFullscreen}
+                aria-label={isVideoFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+              >
+                {isVideoFullscreen ? (
+                  <Minimize2 size={15} />
+                ) : (
+                  <Maximize2 size={15} />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-  </div>
-</section>
-
-  
 
       {/* Hydraulic Engineering Capabilities */}
       <section className="px-5 sm:px-8 lg:px-12 py-20 bg-slate-50">
@@ -885,17 +928,7 @@ useEffect(() => {
             </p>
           </div>
 
-          {/* =====================================================
-        MODEL STUDY CATEGORIES
-    ====================================================== */}
-
-          {/* =====================================================
-        LOCATION / LABORATORY CTA
-    ====================================================== */}
-
-         {/* =====================================================
-    LOCATION & PUBLICATIONS
-====================================================== */}
+        
 
 <div className="mx-auto mt-12 w-full max-w-5xl">
   <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
