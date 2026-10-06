@@ -48,9 +48,10 @@ async function request(path, { headers, ...options } = {}) {
   }
 
   const text = await res.text();
-  return text ? JSON.parse(text) : null;
+  const json = text ? JSON.parse(text) : null;
+  if (json && json.isSuccess === false) throw new Error(json.resMsg || "Request failed");
+  return json;
 }
-
 // Accepts a plain array or a wrapped response like { data: [...] }
 const toArray = (r) =>
   Array.isArray(r) ? r : r?.result ?? r?.data ?? r?.items ?? [];
@@ -139,17 +140,27 @@ uploadPdf: async (file) => {
 // AUTH (mock)
 // ============================================================
 export const auth = {
-  login: async (email, password) => {
-    await wait();
-    if (email === "admin@example.com" && password === "admin123") {
-      localStorage.setItem(K.token, "mock-admin-token");
-      return true;
-    }
-    throw new Error("Invalid email or password");
+  login: async (userName, password) => {
+    const json = await request("/login", {
+      method: "POST",
+      body: JSON.stringify({ userName, password }),
+    });
+    // result is just an id, so keep it only as a "logged in" flag
+    localStorage.setItem(K.token, json?.result || "logged-in");
+    return true;
   },
-  logout: () => localStorage.removeItem(K.token),
+
+  logout: async () => {
+    try {
+      await request("/logout", { method: "POST" });
+    } catch {
+      // ignore, always clear locally
+    } finally {
+      localStorage.removeItem(K.token);
+    }
+  },
+
   isLoggedIn: () => !!localStorage.getItem(K.token),
-  getToken: () => localStorage.getItem(K.token),
 };
 
 // ============================================================

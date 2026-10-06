@@ -58,7 +58,7 @@ export default function PublicationsPage() {
           year: item.year.toString(), // Ensure year is a string for your filters
           authors: item.authors || [],
           // Prepend the base URL to the pdfPath if it exists
-          pdf: item.pdfPath ? `${API_BASE_URL}${item.pdfPath}` : null,
+pdf: item.pdfPath || null,
         }));
 
         setPublications(formattedData);

@@ -48,6 +48,13 @@ const navItems = [
     label: "Sigma ToolBox",
     path: "/toolbox",
   },
+  {
+    label: "Admin",
+    path: "/admin",
+  },
+  {
+
+  }
 ];
 
 export default function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
