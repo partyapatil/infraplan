@@ -169,21 +169,6 @@
 //     </form>
 //   );
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -203,9 +188,6 @@ import { uploadToCloudinary } from "./lib/cloudinary";
 
 /* ============================================================
    IMAGE UPLOADER
-   - Shows local preview immediately
-   - Uploads directly to Cloudinary
-   - Stores Cloudinary URL in parent form
    ============================================================ */
 
 function ImageUploader({ images = [], onChange }) {
@@ -214,7 +196,7 @@ function ImageUploader({ images = [], onChange }) {
   const [error, setError] = useState("");
 
   /*
-   * Load existing images when editing a project.
+   * Load existing images when editing.
    */
   useEffect(() => {
     const existingItems = (images ?? []).map((url) => ({
@@ -225,13 +207,13 @@ function ImageUploader({ images = [], onChange }) {
     }));
 
     setItems(existingItems);
-  }, []);
+  }, [images]);
 
   /*
    * Upload selected images directly to Cloudinary.
    */
   const add = async (e) => {
-    const files = [...e.target.files];
+    const files = Array.from(e.target.files || []);
 
     // Allow selecting the same file again
     e.target.value = "";
@@ -245,6 +227,7 @@ function ImageUploader({ images = [], onChange }) {
      * Create local previews immediately.
      */
     const previewItems = files.map((file) => ({
+      id: `${file.name}-${file.size}-${Date.now()}-${Math.random()}`,
       file,
       url: null,
       preview: URL.createObjectURL(file),
@@ -265,6 +248,7 @@ function ImageUploader({ images = [], onChange }) {
         const result = await uploadToCloudinary(item.file);
 
         uploadedItems.push({
+          id: item.id,
           url: result.url,
           preview: result.url,
           uploading: false,
@@ -275,41 +259,41 @@ function ImageUploader({ images = [], onChange }) {
       }
 
       /*
-       * Replace temporary preview items
-       * with Cloudinary uploaded items.
+       * Replace temporary items with uploaded items.
        */
       setItems((prev) => {
-        const existing = prev.filter(
-          (item) => !previewItems.includes(item)
-        );
+        return prev.map((item) => {
+          const uploaded = uploadedItems.find(
+            (uploadedItem) => uploadedItem.id === item.id
+          );
 
-        return [...existing, ...uploadedItems];
+          return uploaded || item;
+        });
       });
 
       /*
-       * Send Cloudinary URLs to parent form.
+       * Send all current image URLs to parent.
        */
-      const newUrls = uploadedItems.map(
-        (item) => item.url
-      );
+      setItems((currentItems) => {
+        const urls = currentItems
+          .map((item) => item.url)
+          .filter(Boolean);
 
-      onChange([
-        ...(images ?? []),
-        ...newUrls,
-      ]);
+        onChange(urls);
+
+        return currentItems;
+      });
     } catch (err) {
       /*
        * Remove failed upload previews.
        */
       setItems((prev) =>
         prev.filter(
-          (item) => !previewItems.includes(item)
+          (item) => !previewItems.some((p) => p.id === item.id)
         )
       );
 
-      setError(
-        err?.message || "Failed to upload image."
-      );
+      setError(err?.message || "Failed to upload image.");
     } finally {
       setBusy(false);
 
@@ -330,10 +314,7 @@ function ImageUploader({ images = [], onChange }) {
   const move = (index, direction) => {
     const newIndex = index + direction;
 
-    if (
-      newIndex < 0 ||
-      newIndex >= items.length
-    ) {
+    if (newIndex < 0 || newIndex >= items.length) {
       return;
     }
 
@@ -346,15 +327,9 @@ function ImageUploader({ images = [], onChange }) {
 
     setItems(next);
 
-    /*
-     * Update parent with new image order.
-     */
     onChange(
       next
-        .filter(
-          (item) =>
-            item.url && !item.uploading
-        )
+        .filter((item) => item.url && !item.uploading)
         .map((item) => item.url)
     );
   };
@@ -365,105 +340,84 @@ function ImageUploader({ images = [], onChange }) {
   const remove = (index) => {
     const item = items[index];
 
-    const next = items.filter(
-      (_, i) => i !== index
-    );
+    const next = items.filter((_, i) => i !== index);
 
     setItems(next);
 
-    /*
-     * Update parent state.
-     */
     onChange(
       next
-        .filter(
-          (item) =>
-            item.url && !item.uploading
-        )
+        .filter((item) => item.url && !item.uploading)
         .map((item) => item.url)
     );
 
-    /*
-     * Cleanup local preview.
-     */
     if (item?.preview?.startsWith("blob:")) {
       URL.revokeObjectURL(item.preview);
     }
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+    <div className="w-full min-w-0">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {items.map((item, index) => (
           <div
-            key={`${item.url || item.name}-${index}`}
-            className="relative overflow-hidden rounded-lg border border-slate-200 bg-white"
+            key={item.id || `${item.url}-${index}`}
+            className="min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
           >
             {/* Image */}
-            <div className="relative">
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
               <img
                 src={item.preview}
-                alt=""
-                className="h-24 w-full object-cover"
+                alt={item.name || `Project image ${index + 1}`}
+                className="h-full w-full object-cover"
               />
 
-              {/* Uploading overlay */}
+              {/* Uploading */}
               {item.uploading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                  <span className="text-xs font-medium text-white">
+                <div className="absolute inset-0 flex items-center justify-center bg-slate-900/55">
+                  <span className="rounded-md bg-black/30 px-2 py-1 text-xs font-medium text-white">
                     Uploading...
                   </span>
                 </div>
               )}
 
-              {/* Cover badge */}
+              {/* Cover */}
               {index === 0 && !item.uploading && (
-                <span className="absolute left-1 top-1 rounded bg-blue-600 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                <span className="absolute left-2 top-2 rounded-md bg-blue-600 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-white shadow-sm">
                   Cover
                 </span>
               )}
             </div>
 
             {/* Controls */}
-            <div className="flex justify-between bg-white px-1 py-1">
-              {/* Move left */}
+            <div className="flex items-center justify-between border-t border-slate-100 bg-white px-2 py-1.5">
               <button
                 type="button"
-                disabled={
-                  index === 0 ||
-                  item.uploading
-                }
-                onClick={() =>
-                  move(index, -1)
-                }
-                className="rounded p-1 text-slate-500 hover:bg-slate-100 disabled:opacity-30"
+                disabled={index === 0 || item.uploading}
+                onClick={() => move(index, -1)}
+                className="rounded-md p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-30"
+                aria-label="Move image left"
               >
                 <ArrowLeft size={14} />
               </button>
 
-              {/* Delete */}
               <button
                 type="button"
                 disabled={item.uploading}
-                onClick={() =>
-                  remove(index)
-                }
-                className="rounded p-1 text-red-500 hover:bg-red-50 disabled:opacity-30"
+                onClick={() => remove(index)}
+                className="rounded-md p-1.5 text-red-500 transition hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-30"
+                aria-label="Delete image"
               >
                 <Trash2 size={14} />
               </button>
 
-              {/* Move right */}
               <button
                 type="button"
                 disabled={
-                  index === items.length - 1 ||
-                  item.uploading
+                  index === items.length - 1 || item.uploading
                 }
-                onClick={() =>
-                  move(index, 1)
-                }
-                className="rounded p-1 text-slate-500 hover:bg-slate-100 disabled:opacity-30"
+                onClick={() => move(index, 1)}
+                className="rounded-md p-1.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 disabled:cursor-not-allowed disabled:opacity-30"
+                aria-label="Move image right"
               >
                 <ArrowRight size={14} />
               </button>
@@ -473,17 +427,15 @@ function ImageUploader({ images = [], onChange }) {
 
         {/* Add images */}
         <label
-          className={`flex h-[88px] cursor-pointer flex-col items-center justify-center gap-1 self-start rounded-lg border-2 border-dashed border-slate-300 text-xs text-slate-500 transition hover:border-blue-400 hover:text-blue-600 ${
-            busy
-              ? "pointer-events-none opacity-60"
-              : ""
+          className={`flex aspect-[4/3] min-w-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 text-xs font-medium text-slate-500 transition hover:border-blue-400 hover:bg-blue-50/40 hover:text-blue-600 ${
+            busy ? "pointer-events-none opacity-60" : ""
           }`}
         >
-          <ImagePlus size={18} />
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm">
+            <ImagePlus size={18} />
+          </div>
 
-          {busy
-            ? "Uploading..."
-            : "Add images"}
+          <span>{busy ? "Uploading..." : "Add images"}</span>
 
           <input
             type="file"
@@ -496,9 +448,8 @@ function ImageUploader({ images = [], onChange }) {
         </label>
       </div>
 
-      {/* Error */}
       {error && (
-        <p className="mt-2 text-sm text-red-600">
+        <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
           {error}
         </p>
       )}
@@ -518,26 +469,16 @@ export default function ProjectForm({
   const [form, setForm] = useState({
     title: initial?.title ?? "",
     categoryId: initial?.categoryId ?? "",
-    subCategoryId:
-      initial?.subCategoryId ?? "",
+    subCategoryId: initial?.subCategoryId ?? "",
     description: initial?.description ?? "",
     imagePaths: initial?.imagePaths ?? [],
-    ...(initial?.id
-      ? { id: initial.id }
-      : {}),
+    ...(initial?.id ? { id: initial.id } : {}),
   });
 
-  const [categories, setCategories] =
-    useState([]);
-
-  const [subCategories, setSubCategories] =
-    useState([]);
-
-  const [errors, setErrors] =
-    useState({});
-
-  const [saving, setSaving] =
-    useState(false);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   /*
    * Load categories and subcategories.
@@ -553,19 +494,19 @@ export default function ProjectForm({
       })
       .catch((err) => {
         setErrors({
-          api: err.message,
+          api: err?.message || "Failed to load categories.",
         });
       });
   }, []);
 
   /*
-   * Filter subcategories based on selected category.
+   * Filter subcategories.
    */
-  const visibleSubs =
-    subCategories.filter(
-      (s) =>
-        s.categoryId === form.categoryId
-    );
+  const visibleSubs = subCategories.filter(
+    (subCategory) =>
+      String(subCategory.categoryId) ===
+      String(form.categoryId)
+  );
 
   /*
    * Generic input handler.
@@ -579,16 +520,21 @@ export default function ProjectForm({
         categoryId: value,
         subCategoryId: "",
       }));
-    } else {
-      setForm((prev) => ({
+
+      setErrors((prev) => ({
         ...prev,
-        [key]: value,
+        categoryId: "",
+        subCategoryId: "",
       }));
+
+      return;
     }
 
-    /*
-     * Clear field error when user starts typing.
-     */
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+
     setErrors((prev) => ({
       ...prev,
       [key]: "",
@@ -596,18 +542,7 @@ export default function ProjectForm({
   };
 
   /*
-   * Submit project.
-   *
-   * IMPORTANT:
-   * At this point imagePaths already contains
-   * Cloudinary URLs.
-   *
-   * Example:
-   *
-   * imagePaths: [
-   *   "https://res.cloudinary.com/...",
-   *   "https://res.cloudinary.com/..."
-   * ]
+   * Submit.
    */
   const submit = async (e) => {
     e.preventDefault();
@@ -619,40 +554,24 @@ export default function ProjectForm({
     }
 
     if (!form.categoryId) {
-      errs.categoryId =
-        "Category is required";
+      errs.categoryId = "Category is required";
     }
 
-    if (!form.subCategoryId) {
-      errs.subCategoryId =
-        "Sub category is required";
-    }
+    // if (!form.subCategoryId) {
+    //   errs.subCategoryId = "Sub category is required";
+    // }
 
     if (!form.description.trim()) {
-      errs.description =
-        "Description is required";
+      errs.description = "Description is required";
     }
+
+    // if (!form.imagePaths.length) {
+    //   errs.images = "At least one image is required";
+    // }
 
     setErrors(errs);
 
     if (Object.keys(errs).length > 0) {
-      return;
-    }
-
-    /*
-     * Don't submit while an image is uploading.
-     */
-    const hasUploadingImage =
-      form.imagePaths.some?.(
-        (image) =>
-          image?.uploading === true
-      );
-
-    if (hasUploadingImage) {
-      setErrors({
-        api: "Please wait until all images finish uploading.",
-      });
-
       return;
     }
 
@@ -661,22 +580,14 @@ export default function ProjectForm({
     try {
       await onSave({
         ...form,
-
+          subCategoryId: form.subCategoryId || null, 
         title: form.title.trim(),
-
-        description:
-          form.description.trim(),
-
-        /*
-         * These are now Cloudinary URLs.
-         */
+        description: form.description.trim(),
         imagePaths: form.imagePaths,
       });
     } catch (err) {
       setErrors({
-        api:
-          err?.message ||
-          "Failed to save project.",
+        api: err?.message || "Failed to save project.",
       });
     } finally {
       setSaving(false);
@@ -686,122 +597,180 @@ export default function ProjectForm({
   return (
     <form
       onSubmit={submit}
-      className="space-y-5"
+      className="w-full min-w-0 space-y-6"
     >
-      {/* TITLE */}
-      <Field
-        label="Title"
-        error={errors.title}
-      >
-        <input
-          value={form.title}
-          onChange={set("title")}
-          className={inputCls}
-          placeholder="Enter project title"
-        />
-      </Field>
+      {/* ======================================================
+          BASIC INFORMATION
+          ====================================================== */}
 
-      {/* CATEGORY */}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field
-          label="Category"
-          error={errors.categoryId}
-        >
-          <select
-            value={form.categoryId}
-            onChange={set("categoryId")}
-            className={inputCls}
+      <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
+        <div className="mb-5">
+          <h3 className="text-sm font-semibold text-slate-900">
+            Project Information
+          </h3>
+
+          <p className="mt-1 text-xs text-slate-500">
+            Enter the basic information for this project.
+          </p>
+        </div>
+
+        <div className="space-y-5">
+          {/* Title */}
+          <Field
+            label="Project Title"
+            error={errors.title}
           >
-            <option value="">
-              — Select category —
-            </option>
+            <input
+              value={form.title}
+              onChange={set("title")}
+              className={inputCls}
+              placeholder="Enter project title"
+            />
+          </Field>
 
-            {categories.map((category) => (
-              <option
-                key={category.id}
-                value={category.id}
+          {/* Category / Subcategory */}
+          <div className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2">
+            <div className="min-w-0">
+              <Field
+                label="Category"
+                error={errors.categoryId}
               >
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </Field>
-
-        {/* SUB CATEGORY */}
-        <Field
-          label="Sub Category"
-          error={errors.subCategoryId}
-        >
-          <select
-            value={form.subCategoryId}
-            onChange={set("subCategoryId")}
-            className={inputCls}
-            disabled={!form.categoryId}
-          >
-            <option value="">
-              {form.categoryId
-                ? "— Select sub category —"
-                : "Select a category first"}
-            </option>
-
-            {visibleSubs.map(
-              (subCategory) => (
-                <option
-                  key={subCategory.id}
-                  value={subCategory.id}
+                <select
+                  value={form.categoryId}
+                  onChange={set("categoryId")}
+                  className={`${inputCls} min-w-0 cursor-pointer`}
                 >
-                  {subCategory.name}
-                </option>
-              )
+                  <option value="">
+                    Select category
+                  </option>
+
+                  {categories.map((category) => (
+                    <option
+                      key={category.id}
+                      value={category.id}
+                    >
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            </div>
+
+            <div className="min-w-0">
+              <Field
+                label="Sub Category"
+                error={errors.subCategoryId}
+              >
+                <select
+                  value={form.subCategoryId}
+                  onChange={set("subCategoryId")}
+                  className={`${inputCls} min-w-0 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400`}
+                  disabled={!form.categoryId}
+                >
+                  <option value="">
+                    {form.categoryId
+                      ? "Select sub category"
+                      : "Select category first"}
+                  </option>
+
+                  {visibleSubs.map((subCategory) => (
+                    <option
+                      key={subCategory.id}
+                      value={subCategory.id}
+                    >
+                      {subCategory.name}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            </div>
+          </div>
+
+          {/* Description */}
+          <Field
+            label="Description"
+            error={errors.description}
+            hint="Provide a short description of the project."
+          >
+            <textarea
+              rows={6}
+              value={form.description}
+              onChange={set("description")}
+              className={`${inputCls} min-h-[140px] resize-y`}
+              placeholder="Enter project description"
+            />
+          </Field>
+        </div>
+      </div>
+
+      {/* ======================================================
+          IMAGES
+          ====================================================== */}
+
+      <div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
+        <div className="mb-5">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <h3 className="text-sm font-semibold text-slate-900">
+                Project Images
+              </h3>
+
+              <p className="mt-1 text-xs text-slate-500">
+                The first image will be used as the project cover.
+              </p>
+            </div>
+
+            {form.imagePaths.length > 0 && (
+              <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+                {form.imagePaths.length}{" "}
+                {form.imagePaths.length === 1
+                  ? "image"
+                  : "images"}
+              </span>
             )}
-          </select>
+          </div>
+        </div>
+
+        <Field
+          label=""
+          error={errors.images}
+          hint="JPG, PNG or WebP. Use the arrows to change image order."
+        >
+          <ImageUploader
+            images={form.imagePaths}
+            onChange={(imagePaths) => {
+              setForm((prev) => ({
+                ...prev,
+                imagePaths,
+              }));
+
+              setErrors((prev) => ({
+                ...prev,
+                images: "",
+              }));
+            }}
+          />
         </Field>
       </div>
 
-      {/* DESCRIPTION */}
-      <Field
-        label="Description"
-        error={errors.description}
-      >
-        <textarea
-          rows={6}
-          value={form.description}
-          onChange={set("description")}
-          className={inputCls}
-          placeholder="Enter project description"
-        />
-      </Field>
-
-      {/* IMAGES */}
-      <Field
-        label="Images"
-        hint="First image is the cover. Use arrows to reorder."
-      >
-        <ImageUploader
-          images={form.imagePaths}
-          onChange={(imagePaths) => {
-            setForm((prev) => ({
-              ...prev,
-              imagePaths,
-            }));
-          }}
-        />
-      </Field>
-
       {/* API ERROR */}
       {errors.api && (
-        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+        <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
           {errors.api}
-        </p>
+        </div>
       )}
 
-      {/* BUTTONS */}
-      <div className="flex justify-end gap-3 border-t border-slate-100 pt-4">
+      {/* ======================================================
+          ACTIONS
+          ====================================================== */}
+
+      <div className="flex flex-col-reverse gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:justify-end">
         <Button
           type="button"
           variant="secondary"
           onClick={onCancel}
           disabled={saving}
+          className="w-full sm:w-auto"
         >
           Cancel
         </Button>
@@ -809,8 +778,9 @@ export default function ProjectForm({
         <Button
           type="submit"
           loading={saving}
+          className="w-full sm:w-auto"
         >
-          Save project
+          Save Project
         </Button>
       </div>
     </form>

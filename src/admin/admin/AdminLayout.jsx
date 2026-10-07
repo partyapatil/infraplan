@@ -18,8 +18,7 @@ const links = [
   { to: "/admin/masters", label: "Masters", icon: GraduationCap },
 ];
 
-// ✅ Defined OUTSIDE AdminLayout so it's a stable component reference
-function NavItems({ onNavigate, onLogout }) {
+function NavItems({ onNavigate }) {
   return (
     <>
       {links.map(({ to, label, icon: Icon }) => (
@@ -50,14 +49,6 @@ function NavItems({ onNavigate, onLogout }) {
         <ExternalLink size={18} className="shrink-0" />
         <span>View site</span>
       </a>
-
-      <button
-        onClick={onLogout}
-        className="mt-auto flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-red-50 hover:text-red-600"
-      >
-        <LogOut size={18} className="shrink-0" />
-        <span>Log out</span>
-      </button>
     </>
   );
 }
@@ -67,12 +58,10 @@ export default function AdminLayout() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Close drawer on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  // Lock body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
@@ -144,10 +133,21 @@ export default function AdminLayout() {
           </button>
         </div>
 
-        {/* Nav */}
+        {/* Nav — scrollable */}
         <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
-          <NavItems onNavigate={closeDrawer} onLogout={logout} />
+          <NavItems onNavigate={closeDrawer} />
         </nav>
+
+        {/* Logout footer — always visible */}
+        <div className="border-t border-slate-200 p-3">
+          <button
+            onClick={logout}
+            className="flex w-full items-center gap-2.5 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100 hover:text-red-700"
+          >
+            <LogOut size={18} className="shrink-0" />
+            <span>Log out</span>
+          </button>
+        </div>
       </aside>
 
       {/* Main content */}
