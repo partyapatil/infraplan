@@ -79,9 +79,9 @@ export default function AdminLayout() {
   const closeDrawer = () => setMobileOpen(false);
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 md:flex-row">
+    <div className="flex h-screen flex-col overflow-hidden bg-slate-50 md:flex-row">
       {/* Mobile top bar */}
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden">
+      <header className="sticky top-0 z-30 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
             <LayoutDashboard size={18} />
@@ -112,7 +112,7 @@ export default function AdminLayout() {
           fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col
           border-r border-slate-200 bg-white
           transition-transform duration-300 ease-in-out
-          md:static md:z-auto md:w-64 md:max-w-none md:translate-x-0
+          md:static md:z-auto md:h-screen md:w-64 md:max-w-none md:translate-x-0
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
@@ -138,7 +138,7 @@ export default function AdminLayout() {
           <NavItems onNavigate={closeDrawer} />
         </nav>
 
-        {/* Logout footer — always visible */}
+        {/* Logout footer */}
         <div className="border-t border-slate-200 p-3">
           <button
             onClick={logout}
@@ -151,8 +151,8 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">
-        <div className="mx-auto max-w-6xl">
+      <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden p-4 sm:p-6 lg:p-8">
+        <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col">
           <Outlet />
         </div>
       </main>
