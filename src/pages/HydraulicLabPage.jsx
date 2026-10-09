@@ -25,7 +25,7 @@ import {
   ExternalLink,
   Minimize2,
 } from "lucide-react";
-import heroVideo from "../assets/videos/hydrolicVideo.mp4";
+// import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
 import HydraulicCTA from "../components/CTA/HydraulicCTA";
 import hydraulicLabHeroBg3 from "../assets/hydrolic-3.png";
@@ -39,7 +39,11 @@ import physical2 from "../assets/phy2.png";
 import physical3 from "../assets/phy3.png";
 import math1 from "../assets/math1.png";
 import ProjectMapSection from "../components/ProjectMapSection";
+// remove this line:
+// import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
+// add this instead:
+const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791533589/COMP150MB_1_e2utgv.mp4";
 
 const projectShowcase = [
   {
