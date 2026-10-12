@@ -1,181 +1,7 @@
-// import { useEffect, useState } from "react";
-// import { ArrowLeft, ArrowRight, Trash2, ImagePlus } from "lucide-react";
-// import { categoriesApi, subCategoriesApi, projectsApi, imageUrl } from "./lib/adminApi";
-// import { Button, Field, inputCls } from "./AdminUI";
 
-// function ImageUploader({ images, onChange }) {
-//   const [busy, setBusy] = useState(false);
-//   const [error, setError] = useState("");
-
-//   const add = async (e) => {
-//     const files = [...e.target.files];
-//     e.target.value = "";
-//     if (!files.length) return;
-//     setBusy(true);
-//     setError("");
-//     try {
-//       const paths = await projectsApi.uploadImages(files); // upload first -> get paths
-//       onChange([...images, ...paths]);
-//     } catch (err) {
-//       setError(err.message);
-//     } finally {
-//       setBusy(false);
-//     }
-//   };
-
-//   const move = (i, dir) => {
-//     const next = [...images];
-//     [next[i], next[i + dir]] = [next[i + dir], next[i]];
-//     onChange(next);
-//   };
-
-//   return (
-//     <div>
-//       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-//         {images.map((path, i) => (
-//           <div key={path} className="relative overflow-hidden rounded-lg border border-slate-200">
-//             <img src={imageUrl(path)} alt="" className="h-24 w-full object-cover" />
-//             {i === 0 && (
-//               <span className="absolute left-1 top-1 rounded bg-blue-600 px-1.5 py-0.5 text-[10px] font-semibold text-white">
-//                 Cover
-//               </span>
-//             )}
-//             <div className="flex justify-between bg-white px-1 py-1">
-//               <button type="button" disabled={i === 0} onClick={() => move(i, -1)} className="rounded p-1 text-slate-500 hover:bg-slate-100 disabled:opacity-30">
-//                 <ArrowLeft size={14} />
-//               </button>
-//               <button type="button" onClick={() => onChange(images.filter((_, j) => j !== i))} className="rounded p-1 text-red-500 hover:bg-red-50">
-//                 <Trash2 size={14} />
-//               </button>
-//               <button type="button" disabled={i === images.length - 1} onClick={() => move(i, 1)} className="rounded p-1 text-slate-500 hover:bg-slate-100 disabled:opacity-30">
-//                 <ArrowRight size={14} />
-//               </button>
-//             </div>
-//           </div>
-//         ))}
-//         <label className="flex h-[88px] cursor-pointer flex-col items-center justify-center gap-1 self-start rounded-lg border-2 border-dashed border-slate-300 text-xs text-slate-500 hover:border-blue-400 hover:text-blue-600">
-//           <ImagePlus size={18} />
-//           {busy ? "Uploading..." : "Add images"}
-//           <input type="file" accept="image/*" multiple hidden onChange={add} disabled={busy} />
-//         </label>
-//       </div>
-//       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-//     </div>
-//   );
-// }
-
-// export default function ProjectForm({ initial, onSave, onCancel }) {
-//   const [form, setForm] = useState({
-//     title: initial?.title ?? "",
-//     categoryId: initial?.categoryId ?? "",
-//     subCategoryId: initial?.subCategoryId ?? "",
-//     description: initial?.description ?? "",
-//     imagePaths: initial?.imagePaths ?? [],
-//     ...(initial?.id ? { id: initial.id } : {}),
-//   });
-//   const [categories, setCategories] = useState([]);
-//   const [subCategories, setSubCategories] = useState([]);
-//   const [errors, setErrors] = useState({});
-//   const [saving, setSaving] = useState(false);
-
-//   useEffect(() => {
-//     Promise.all([categoriesApi.options(), subCategoriesApi.list()])
-//       .then(([c, s]) => { setCategories(c); setSubCategories(s); })
-//       .catch((err) => setErrors({ api: err.message }));
-//   }, []);
-
-//   const visibleSubs = subCategories.filter((s) => s.categoryId === form.categoryId);
-
-//   const set = (k) => (e) => {
-//     const value = e.target.value;
-//     if (k === "categoryId") setForm({ ...form, categoryId: value, subCategoryId: "" });
-//     else setForm({ ...form, [k]: value });
-//   };
-
-//   const submit = async (e) => {
-//     e.preventDefault();
-//     const errs = {};
-//     if (!form.title.trim()) errs.title = "Title is required";
-//     if (!form.categoryId) errs.categoryId = "Category is required";
-//     if (!form.subCategoryId) errs.subCategoryId = "Sub category is required";
-//     if (!form.description.trim()) errs.description = "Description is required";
-//     setErrors(errs);
-//     if (Object.keys(errs).length) return;
-
-//     setSaving(true);
-//     try {
-//       await onSave({
-//         ...form,
-//         title: form.title.trim(),
-//         description: form.description.trim(),
-//       });
-//     } catch (err) {
-//       setErrors({ api: err.message });
-//     } finally {
-//       setSaving(false);
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={submit} className="space-y-5">
-//       <Field label="Title" error={errors.title}>
-//         <input value={form.title} onChange={set("title")} className={inputCls} />
-//       </Field>
-
-//       <div className="grid gap-4 sm:grid-cols-2">
-//         <Field label="Category" error={errors.categoryId}>
-//           <select value={form.categoryId} onChange={set("categoryId")} className={inputCls}>
-//             <option value="">— Select category —</option>
-//             {categories.map((c) => (
-//               <option key={c.id} value={c.id}>{c.name}</option>
-//             ))}
-//           </select>
-//         </Field>
-
-//         <Field label="Sub Category" error={errors.subCategoryId}>
-//           <select
-//             value={form.subCategoryId}
-//             onChange={set("subCategoryId")}
-//             className={inputCls}
-//             disabled={!form.categoryId}
-//           >
-//             <option value="">
-//               {form.categoryId ? "— Select sub category —" : "Select a category first"}
-//             </option>
-//             {visibleSubs.map((s) => (
-//               <option key={s.id} value={s.id}>{s.name}</option>
-//             ))}
-//           </select>
-//         </Field>
-//       </div>
-
-//       <Field label="Description" error={errors.description}>
-//         <textarea rows={6} value={form.description} onChange={set("description")} className={inputCls} />
-//       </Field>
-
-//       <Field label="Images" hint="First image is the cover. Use arrows to reorder.">
-//         <ImageUploader
-//           images={form.imagePaths}
-//           onChange={(imagePaths) => setForm({ ...form, imagePaths })}
-//         />
-//       </Field>
-
-//       {errors.api && <p className="text-sm text-red-600">{errors.api}</p>}
-
-//       <div className="flex justify-end gap-3 border-t border-slate-100 pt-4">
-//         <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
-//         <Button type="submit" loading={saving}>Save project</Button>
-//       </div>
-//     </form>
-//   );
-// }
 import { useEffect, useState } from "react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Trash2,
-  ImagePlus,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Trash2, ImagePlus, Video } from "lucide-react";
+
 
 import {
   categoriesApi,
@@ -184,8 +10,7 @@ import {
 } from "./lib/adminApi";
 
 import { Button, Field, inputCls } from "./AdminUI";
-import { uploadToCloudinary } from "./lib/cloudinary";
-
+import { uploadToCloudinary, uploadVideoToCloudinary } from "./lib/cloudinary";
 /* ============================================================
    IMAGE UPLOADER
    ============================================================ */
@@ -461,19 +286,84 @@ function ImageUploader({ images = [], onChange }) {
    PROJECT FORM
    ============================================================ */
 
+
+
+   function VideoUploader({ value, onChange }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  const pick = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    if (!file.type.startsWith("video/")) return setError("Please select a video file.");
+    if (file.size > 100 * 1024 * 1024) return setError("Video must be under 100 MB.");
+
+    setBusy(true);
+    setError("");
+    try {
+      const result = await uploadVideoToCloudinary(file);
+      onChange(result.url);
+    } catch (err) {
+      setError(err?.message || "Failed to upload video.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="w-full min-w-0">
+      {value ? (
+        <div className="space-y-3">
+          <video
+            src={imageUrl(value)}
+            controls
+            className="aspect-video w-full rounded-xl bg-black"
+          />
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm text-red-500 hover:bg-red-50"
+          >
+            <Trash2 size={14} /> Remove video
+          </button>
+        </div>
+      ) : (
+        <label
+          className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 py-10 text-xs font-medium text-slate-500 transition hover:border-blue-400 hover:bg-blue-50/40 hover:text-blue-600 ${
+            busy ? "pointer-events-none opacity-60" : ""
+          }`}
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm">
+            <Video size={18} />
+          </div>
+          <span>{busy ? "Uploading video..." : "Add video"}</span>
+          <input type="file" accept="video/mp4,video/webm,video/quicktime" hidden onChange={pick} disabled={busy} />
+        </label>
+      )}
+
+      {error && (
+        <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>
+      )}
+    </div>
+  );
+}
 export default function ProjectForm({
   initial,
   onSave,
   onCancel,
 }) {
-  const [form, setForm] = useState({
-    title: initial?.title ?? "",
-    categoryId: initial?.categoryId ?? "",
-    subCategoryId: initial?.subCategoryId ?? "",
-    description: initial?.description ?? "",
-    imagePaths: initial?.imagePaths ?? [],
-    ...(initial?.id ? { id: initial.id } : {}),
-  });
+const [form, setForm] = useState({
+  title: initial?.title ?? "",
+  categoryId: initial?.categoryId ?? "",
+  subCategoryId: initial?.subCategoryId ?? "",
+  description: initial?.description ?? "",
+  imagePaths: initial?.imagePaths ?? [],
+  posterImagePaths: initial?.posterImagePaths ?? [],   // NEW
+  videoPath: initial?.videoPath ?? "",                 // NEW
+  ...(initial?.id ? { id: initial.id } : {}),
+});
 
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
@@ -564,6 +454,7 @@ export default function ProjectForm({
     if (!form.description.trim()) {
       errs.description = "Description is required";
     }
+    
 
     // if (!form.imagePaths.length) {
     //   errs.images = "At least one image is required";
@@ -584,6 +475,7 @@ export default function ProjectForm({
         title: form.title.trim(),
         description: form.description.trim(),
         imagePaths: form.imagePaths,
+        videoPath: form.videoPath || null,
       });
     } catch (err) {
       setErrors({
@@ -752,6 +644,42 @@ export default function ProjectForm({
           />
         </Field>
       </div>
+      {/* POSTER IMAGES */}
+<div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
+  <div className="mb-5 flex items-center justify-between gap-3">
+    <div>
+      <h3 className="text-sm font-semibold text-slate-900">Poster Images</h3>
+      <p className="mt-1 text-xs text-slate-500">
+        Posters for this project. These are separate from the project images above.
+      </p>
+    </div>
+    {form.posterImagePaths.length > 0 && (
+      <span className="shrink-0 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+        {form.posterImagePaths.length} {form.posterImagePaths.length === 1 ? "poster" : "posters"}
+      </span>
+    )}
+  </div>
+
+  <ImageUploader
+    images={form.posterImagePaths}
+    onChange={(posterImagePaths) =>
+      setForm((prev) => ({ ...prev, posterImagePaths }))
+    }
+  />
+</div>
+
+{/* VIDEO */}
+<div className="rounded-xl border border-slate-200 bg-white p-5 sm:p-6">
+  <div className="mb-5">
+    <h3 className="text-sm font-semibold text-slate-900">Project Video</h3>
+    <p className="mt-1 text-xs text-slate-500">MP4, WebM or MOV, up to 100 MB.</p>
+  </div>
+
+  <VideoUploader
+    value={form.videoPath}
+    onChange={(videoPath) => setForm((prev) => ({ ...prev, videoPath }))}
+  />
+</div>
 
       {/* API ERROR */}
       {errors.api && (

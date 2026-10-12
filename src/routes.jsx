@@ -17,6 +17,7 @@ import PhysicalModelStudiesPage from "./pages/PhysicalModelStudiesPage";
 import AdminLayout from "./admin/admin/AdminLayout";
 import AdminLogin from "./admin/admin/AdminLogin";
 import AdminPublications from "./admin/admin/AdminPublications";
+import ProjectPostersPage from "./pages/ProjectPostersPage";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       { path: "/hydrolicpublications", element: <PublicationsPage /> },
       { path: "/mathematical-model-studies", element: <MathematicalModelStudiesPage /> },
       { path: "/physical-model-studies", element: <PhysicalModelStudiesPage /> },
+      { path: "/project-posters/:id", element: <ProjectPostersPage /> },
     ],
   },
 

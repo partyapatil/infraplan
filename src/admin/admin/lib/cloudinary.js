@@ -123,3 +123,26 @@ export const uploadPdfToCloudinary = async (file) => {
     "infraplan/publications"
   );
 };
+
+/* ============================================================
+   VIDEO UPLOAD
+   ============================================================ */
+
+export const uploadVideoToCloudinary = async (file) => {
+  const allowedTypes = ["video/mp4", "video/webm", "video/quicktime"];
+
+  if (!allowedTypes.includes(file.type)) {
+    throw new Error("Only MP4, WebM and MOV videos are allowed.");
+  }
+
+  if (file.size > 100 * 1024 * 1024) {
+    throw new Error("Video must be smaller than 100 MB.");
+  }
+
+  return uploadAssetToCloudinary(
+    file,
+    IMAGE_UPLOAD_PRESET,
+    "video", // resource type: video, not image
+    "infraplan/projects"
+  );
+};

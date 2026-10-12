@@ -41,18 +41,6 @@ const nav = [
   { label: "Careers" },
 ];
 
-const stats = [
-  { value: "15+", label: "Years of Excellence", icon: Award },
-  { value: "300+", label: "Projects Delivered", icon: Shield },
-  { value: "20+", label: "Countries Served", icon: Globe },
-  { value: "150+", label: "Happy Clients", icon: Users },
-];
-
-const footerLinks = {
-  Company: ["About Us", "Careers", "Newsroom", "Contact Us"],
-  Services: ["Hydraulic Laboratory", "Engineering & Construction", "SigmaToolBox"],
-  Resources: ["Case Studies", "Whitepapers", "Blog", "FAQs"],
-};
 
 const verticals = [
   {
@@ -78,33 +66,6 @@ const verticals = [
   },
 ];
 
-const projects = [
-  {
-    title: "24x7 Water Supply Project",
-    location: "Balrampur, Karnataka",
-    img: Tank,
-    status: "Completed",
-  },
-  {
-    title: "XONI MLD STP Project",
-    location: "Pune, Maharashtra",
-    img: Lab,
-    status: "In Progress",
-  },
-  {
-    title: "Smart Water Network",
-    location: "Gujarat",
-    img: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=400&fit=crop",
-    status: "Completed",
-  },
-  {
-    title: "Industrial Water System",
-    location: "JSW Steel Plant, Vijayanagar",
-    img: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=600&h=400&fit=crop",
-    status: "Planning",
-  },
-];
-
 const testimonials = [
   {
     quote:
@@ -122,11 +83,6 @@ const testimonials = [
   },
 ];
 
-const statusStyles = {
-  Completed: "bg-emerald-500/90 text-white",
-  "In Progress": "bg-amber-500/90 text-white",
-  Planning: "bg-blue-500/90 text-white",
-};
 
 export default function InfraplanPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -244,130 +200,9 @@ export default function InfraplanPage() {
       <JourneySection />
       <TrustedBySection />
 
-      {/* =========================================================
-          FEATURED PROJECTS
-      ========================================================= */}
-      <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10 flex flex-col items-center justify-between gap-3 sm:mb-12 sm:flex-row">
-            <div className="text-center sm:text-left">
-              <span className="text-xs font-semibold tracking-widest text-blue-700 uppercase">
-                Our Work
-              </span>
-              <h2 className="mt-1 text-2xl font-bold text-slate-900 sm:text-3xl">
-                Featured{" "}
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Projects
-                </span>
-              </h2>
-            </div>
 
-            <a
-              href="#"
-              className="group inline-flex items-center gap-1.5 rounded-xl border border-blue-100 bg-blue-50/60 px-4 py-2 text-sm font-semibold text-blue-700 transition-all hover:bg-blue-50 hover:shadow-sm"
-            >
-              View All Projects
-              <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-            </a>
-          </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {projects.map((p) => (
-              <div
-                key={p.title}
-                className="group overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <div
-                    className="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                    style={{ backgroundImage: `url(${p.img})` }}
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                  <div className="absolute right-3 top-3">
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur-sm ${statusStyles[p.status]}`}
-                    >
-                      {p.status}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-5">
-                  <h3 className="mb-1 text-sm font-semibold text-slate-900">{p.title}</h3>
-                  <p className="mb-3 flex items-center gap-1 text-xs text-slate-400">
-                    <MapPin size={11} className="shrink-0" />
-                    {p.location}
-                  </p>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-blue-700 transition-colors group-hover:text-blue-800"
-                  >
-                    Read More
-                    <ChevronRight size={12} className="transition-transform group-hover:translate-x-1" />
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-          TESTIMONIALS
-      ========================================================= */}
-      <section className="border-y border-slate-100 bg-gradient-to-br from-slate-50 to-blue-50/30 px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center sm:mb-14">
-            <span className="text-xs font-semibold tracking-widest text-blue-700 uppercase">
-              Testimonials
-            </span>
-            <h2 className="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">
-              What Our{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Clients Say
-              </span>
-            </h2>
-          </div>
-<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-  {testimonials.map((t, index) => (
-    <div
-      key={index}
-      className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-8 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-    >
-      {/* Subtler quote icon size and positioning */}
-      <Quote
-        size={36}
-        strokeWidth={1.5}
-        className="pointer-events-none absolute right-4 top-4 text-slate-200/70 transition-colors duration-300 group-hover:text-blue-200"
-      />
-
-      <div className="relative mb-4 flex gap-1">
-        {[...Array(t.rating)].map((_, i) => (
-          <span key={i} className="text-amber-400">
-            ★
-          </span>
-        ))}
-      </div>
-
-      <p className="relative text-sm italic leading-relaxed text-slate-600">
-        "{t.quote}"
-      </p>
-
-      <div className="relative mt-5 flex items-center gap-3 border-t border-slate-100 pt-5">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-sm font-bold text-white">
-          {t.author.charAt(0)}
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-slate-900">{t.author}</p>
-          <p className="text-xs text-slate-400">{t.role}</p>
-        </div>
-      </div>
-    </div>
-  ))}
-</div>
-        </div>
-      </section>
+    
 
       <FeaturesStrip />
       <ContactSection />

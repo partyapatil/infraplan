@@ -16,7 +16,7 @@ import {
 
 import blueprintBg from "../assets/engineering-blueprint-bg.png";
 import heroVideo from "../assets/videos/hydrolicVideo.mp4";
-
+const heroVideo2 = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791607793/hydrolicVideo_pqzp6r.mp4";
 export default function HeroSection() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -262,25 +262,18 @@ export default function HeroSection() {
 
               {/* Heading */}
 
-              <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
-                Engineering Today.
-                <br />
-                Sustaining{" "}
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Tomorrow.
-                </span>
-              </h1>
+           <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
+  Plan, Model, Construct and
+  <br />
+  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+    Manage Water Infrastructure
+  </span>
+</h1>
 
-              {/* Description */}
-
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-base">
-                Delivering innovative engineering, digital solutions and
-                sustainable infrastructure for a better future.
-              </p>
 
               {/* CTA */}
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              {/* <div className="mt-8 flex flex-wrap gap-4">
                 <button
                   type="button"
                   className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-700 to-indigo-700 px-8 py-3.5 text-sm font-medium text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:from-blue-800 hover:to-indigo-800 hover:shadow-blue-600/40"
@@ -292,7 +285,7 @@ export default function HeroSection() {
                     className="transition-transform group-hover:translate-x-1"
                   />
                 </button>
-              </div>
+              </div> */}
             </div>
           )}
 
@@ -328,7 +321,7 @@ export default function HeroSection() {
               onPause={() => setIsPlaying(false)}
               onEnded={() => setIsPlaying(false)}
             >
-              <source src={heroVideo} type="video/mp4" />
+              <source src={heroVideo2} type="video/mp4" />
 
               Your browser does not support the video tag.
             </video>

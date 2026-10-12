@@ -32,11 +32,11 @@ const navItems = [
         path: "/physical-model-studies",
         icon: FlaskConical,
       },
-      {
-        label: "Project Showcase",
-        path: "/mathematical-model-studies",
-        icon: Sigma,
-      },
+      // {
+      //   label: "Project Showcase",
+      //   path: "/mathematical-model-studies",
+      //   icon: Sigma,
+      // },
       {
         label: "Publications",
         path: "/hydrolicpublications",

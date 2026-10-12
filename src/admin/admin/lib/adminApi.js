@@ -191,23 +191,55 @@ export const categoriesApi = {
   remove: (id) => request(`/Category/${id}`, { method: "DELETE" }),
 };
 
+const parseDescription = (description = "") => {
+  const purposeMatch = description.match(
+    /Purpose:\s*([\s\S]*?)(?=\n\s*•?\s*Application:|$)/i
+  );
+
+  const applicationMatch = description.match(
+    /Application:\s*([\s\S]*)/i
+  );
+
+  return {
+    purpose: purposeMatch?.[1]?.trim() || "",
+    application: applicationMatch?.[1]?.trim() || "",
+  };
+};
 export const subCategoriesApi = {
-  list: async () => toArray(await request("/SubCategory")),
+  list: async () => {
+    const data = toArray(await request("/SubCategory"));
+
+    return data.map((item) => ({
+      ...item,
+      ...parseDescription(item.description),
+    }));
+  },
 
   save: ({ id, categoryId, name, description }) =>
     id
       ? request(`/SubCategory/${id}`, {
           method: "PUT",
-          body: JSON.stringify({ id, categoryId, name, description }),
+          body: JSON.stringify({
+            id,
+            categoryId,
+            name,
+            description,
+          }),
         })
       : request("/SubCategory", {
           method: "POST",
-          body: JSON.stringify({ categoryId, name, description }),
+          body: JSON.stringify({
+            categoryId,
+            name,
+            description,
+          }),
         }),
 
-  remove: (id) => request(`/SubCategory/${id}`, { method: "DELETE" }),
+  remove: (id) =>
+    request(`/SubCategory/${id}`, {
+      method: "DELETE",
+    }),
 };
-
 
 
 export const projectsApi = {
@@ -222,16 +254,16 @@ export const projectsApi = {
     return Array.isArray(json) ? json : json?.result ?? [];
   },
 
-  save: ({ id, title, categoryId, subCategoryId, description, imagePaths }) =>
-    id
-      ? request("/project/Update", {             // TODO: confirm real update endpoint
-          method: "PUT",
-          body: JSON.stringify({ id, title, categoryId, subCategoryId, description, imagePaths }),
-        })
-      : request("/project/Insert", {
-          method: "POST",
-          body: JSON.stringify({ title, categoryId, subCategoryId, description, imagePaths }),
-        }),
+save: ({ id, title, categoryId, subCategoryId, description, imagePaths, posterImagePaths, videoPath }) =>
+  id
+    ? request("/project/Update", {
+        method: "PUT",
+        body: JSON.stringify({ id, title, categoryId, subCategoryId, description, imagePaths, posterImagePaths, videoPath }),
+      })
+    : request("/project/Insert", {
+        method: "POST",
+        body: JSON.stringify({ title, categoryId, subCategoryId, description, imagePaths, posterImagePaths, videoPath }),
+      }),
 
   remove: (id) => request(`/project/Delete/${id}`, { method: "DELETE" }), // TODO: confirm
 };

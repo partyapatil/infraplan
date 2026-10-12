@@ -367,26 +367,7 @@ export default function JourneySection() {
               </span>
             </h2>
 
-            <p className="mx-auto mt-2 max-w-2xl px-4 text-xs leading-relaxed text-slate-500 sm:mt-3 sm:text-sm md:text-base">
-              Fifteen years of building the infrastructure that keeps water flowing, with innovation at every step.
-            </p>
-
-            <div className="mt-4 flex flex-wrap justify-center gap-3 sm:mt-6 sm:gap-6">
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-xl font-bold text-blue-600 sm:text-2xl">15+</span>
-                <span className="text-[10px] text-slate-500 sm:text-sm">Years</span>
-              </div>
-              <div className="h-6 w-px bg-slate-200 sm:h-8" />
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-xl font-bold text-blue-600 sm:text-2xl">300+</span>
-                <span className="text-[10px] text-slate-500 sm:text-sm">Projects</span>
-              </div>
-              <div className="h-6 w-px bg-slate-200 sm:h-8" />
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-xl font-bold text-blue-600 sm:text-2xl">20+</span>
-                <span className="text-[10px] text-slate-500 sm:text-sm">Countries</span>
-              </div>
-            </div>
+          
           </div>
         </div>
 

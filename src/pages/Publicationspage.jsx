@@ -625,41 +625,7 @@ pdf: item.pdfPath || null,
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-800 to-indigo-900 px-4 py-14 sm:px-8 sm:py-16 lg:px-12">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -left-32 -top-32 h-[300px] w-[300px] rounded-full bg-blue-400/20 blur-3xl sm:h-[430px] sm:w-[430px]" />
-          <div className="absolute -right-40 top-1/4 h-[300px] w-[300px] rounded-full bg-indigo-400/20 blur-3xl sm:h-[450px] sm:w-[450px]" />
-          <div className="absolute bottom-0 left-1/3 h-[200px] w-[200px] rounded-full bg-cyan-400/10 blur-3xl sm:h-[300px] sm:w-[300px]" />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-3xl text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-blue-100 backdrop-blur-md">
-            <Sparkles size={14} />
-            Get In Touch
-          </div>
-
-          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-            Interested in Our Research?
-          </h2>
-
-          <p className="mx-auto mt-3 max-w-xl px-2 text-xs leading-relaxed text-blue-100/90 sm:text-sm">
-            Reach out to discuss our hydraulic model studies, collaborate on
-            research, or request copies of our published papers.
-          </p>
-
-          <button
-            type="button"
-            className="group mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-xs font-semibold text-blue-700 shadow-xl shadow-blue-950/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl sm:px-8 sm:py-3.5 sm:text-sm"
-          >
-            Get In Touch
-            <ExternalLink
-              size={15}
-              className="transition-transform duration-300 group-hover:translate-x-0.5"
-            />
-          </button>
-        </div>
-      </section>
+  
 
       {/* Custom Animation Styles */}
       <style>{`

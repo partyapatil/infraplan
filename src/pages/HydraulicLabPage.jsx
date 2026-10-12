@@ -162,42 +162,42 @@ const structures = [
   {
     name: "Spillways",
     image:
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626017/spillway_k6jhum.jpg",
   },
   {
     name: "Energy Dissipator",
     image:
-      "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626013/energy-dessipator_gzfw0q.png",
   },
   {
     name: "Power Intakes",
     image:
-      "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626015/power-intakes_z3xgnx.jpg",
   },
   {
     name: "De-silting Basins",
     image:
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626013/De-silting-Basins_iek22c.jpg",
   },
   {
     name: "Head Race Tunnels",
     image:
-      "https://images.unsplash.com/photo-1465447142348-e9952c393450?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626014/Head-race_cotq8m.jpg",
   },
   {
     name: "Gates",
     image:
-      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626014/Gates_tnlxmt.jpg",
   },
   {
     name: "Canals",
     image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626800/cannel_mpl9eo.jpg",
   },
   {
     name: "Bridges",
     image:
-      "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626012/bridges-1_d0po6t.jpg",
   },
 ];
 
@@ -205,42 +205,42 @@ const designStudies = [
   {
     name: "River Training",
     image:
-      "https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626059/River-Engineering_tdzftl.jpg",
   },
   {
     name: "Safe Grade Elevation",
     image:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626060/Safe-Grade-Elevation_iwssbe.jpg",
   },
   {
     name: "Flood Modelling",
     image:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626057/Flood-Modeling_rxakkk.jpg",
   },
   {
     name: "Watershed Evaluation",
     image:
-      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626062/Watershed-Evalution_ar69rs.jpg",
   },
   {
     name: "Integrated Reservoir Operation",
     image:
-      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626058/Integrated-Reservoir-Operation_gmpobi.jpg",
   },
   {
     name: "Dam Break Analysis",
     image:
-      "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626056/Dam-Break-Analysis_tvavuu.jpg",
   },
   {
     name: "Sedimentation Studies",
     image:
-      "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626061/Sedimentation-Studies_k2xzk5.jpg",
   },
   {
     name: "Coastal Engineering",
     image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
+      "https://res.cloudinary.com/ddpunpqre/image/upload/v1791626055/Coastal_Engineering_z6ubei.jpg",
   },
 ];
 
@@ -589,17 +589,7 @@ return (
     {/* Laboratory Overview - Modern Card Design */}
       <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 border-b border-slate-100">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-3 border border-blue-200/30">
-              Facility Overview
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-              World-Class{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Hydraulic Research
-              </span>
-            </h2>
-          </div>
+         
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="group relative p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
@@ -672,14 +662,10 @@ return (
 <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 to-blue-50/30 border-y border-slate-100">
   <div className="max-w-7xl mx-auto">
     <div className="text-center mb-12">
-      <span className="inline-block px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-3 border border-blue-200/30">
-        Research Excellence
-      </span>
+  
       <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-        Model Studies{" "}
-        <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-          Conducted
-        </span>
+   Model Studies Conducted at Infraplan Hydraulic Laboratory, Pune, India for Various Aspects of the Design Parameters
+
       </h2>
     </div>
 
@@ -829,23 +815,13 @@ return (
     ====================================================== */}
 
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-700">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-              Project Showcase
-            </span>
+         
 
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Hydraulic{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Model Studies
-              </span>
+             Project Showcase
+           
             </h2>
 
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
-              Explore our physical, mathematical and computational modelling
-              capabilities developed for complex hydraulic and water
-              infrastructure projects.
-            </p>
           </div>
 
           {/* =====================================================
@@ -919,18 +895,6 @@ return (
           {/* =====================================================
         DIVIDER / INTRO
     ====================================================== */}
-
-          <div className="mx-auto mt-14 max-w-3xl text-center">
-            <div className="mx-auto mb-5 h-px w-16 bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-
-            <p className="text-sm font-semibold leading-6 text-slate-700 sm:text-base">
-              Model Studies Conducted at{" "}
-              <span className="text-blue-700">
-                Infraplan Hydraulic Laboratory, Pune, India
-              </span>{" "}
-              for Various Aspects of Design Parameters
-            </p>
-          </div>
 
         
 
@@ -1106,7 +1070,6 @@ return (
       </section>
 
 <ProjectMapSection/>
-      <HydraulicCTA />
       {/* Footer - Consistent with other pages */}
 
       {/* Animation Styles */}
