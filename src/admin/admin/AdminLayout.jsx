@@ -79,19 +79,21 @@ export default function AdminLayout() {
   const closeDrawer = () => setMobileOpen(false);
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-slate-50 md:flex-row">
+    <div className="flex min-h-screen flex-col bg-slate-50 md:h-screen md:flex-row md:overflow-hidden">
       {/* Mobile top bar */}
-      <header className="sticky top-0 z-30 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
+      <header className="sticky top-0 z-30 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-3 py-2.5 sm:px-4 sm:py-3 md:hidden">
+        <div className="flex min-w-0 items-center gap-2">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-white">
             <LayoutDashboard size={18} />
           </div>
-          <span className="text-base font-bold text-slate-900">Content Admin</span>
+          <span className="truncate text-sm font-bold text-slate-900 sm:text-base">
+            Content Admin
+          </span>
         </div>
         <button
           onClick={() => setMobileOpen(true)}
           aria-label="Open menu"
-          className="rounded-lg p-2 text-slate-600 hover:bg-slate-100"
+          className="shrink-0 rounded-lg p-2 text-slate-600 hover:bg-slate-100 active:bg-slate-200"
         >
           <Menu size={22} />
         </button>
@@ -110,24 +112,26 @@ export default function AdminLayout() {
       <aside
         className={`
           fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col
-          border-r border-slate-200 bg-white
+          border-r border-slate-200 bg-white shadow-xl
           transition-transform duration-300 ease-in-out
-          md:static md:z-auto md:h-screen md:w-64 md:max-w-none md:translate-x-0
+          md:static md:z-auto md:h-screen md:w-64 md:max-w-none md:translate-x-0 md:shadow-none
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         {/* Brand + close (mobile) */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3 sm:px-5 sm:py-4">
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-white">
               <LayoutDashboard size={18} />
             </div>
-            <span className="text-base font-bold text-slate-900">Content Admin</span>
+            <span className="truncate text-sm font-bold text-slate-900 sm:text-base">
+              Content Admin
+            </span>
           </div>
           <button
             onClick={closeDrawer}
             aria-label="Close menu"
-            className="rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
+            className="shrink-0 rounded-lg p-2 text-slate-600 hover:bg-slate-100 active:bg-slate-200 md:hidden"
           >
             <X size={20} />
           </button>
@@ -142,7 +146,7 @@ export default function AdminLayout() {
         <div className="border-t border-slate-200 p-3">
           <button
             onClick={logout}
-            className="flex w-full items-center gap-2.5 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100 hover:text-red-700"
+            className="flex w-full items-center gap-2.5 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100 hover:text-red-700 active:bg-red-200"
           >
             <LogOut size={18} className="shrink-0" />
             <span>Log out</span>
@@ -151,11 +155,12 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden p-4 sm:p-6 lg:p-8">
-        <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col">
-          <Outlet />
-        </div>
-      </main>
+   {/* Main content */}
+<main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden p-3 sm:p-4 md:p-6 lg:p-8">
+  <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col">
+    <Outlet />
+  </div>
+</main>
     </div>
   );
 }

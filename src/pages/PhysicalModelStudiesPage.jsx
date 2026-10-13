@@ -3,7 +3,7 @@
 
 
 
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   Waves,
   ChevronLeft,
@@ -218,108 +218,149 @@ function ProjectCarousel({ images, title }) {
 /* ============================================================
    PROJECT ROW
 ============================================================ */
+import { createPortal } from "react-dom";
+
 function VideoModal({ src, title, onClose }) {
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
+
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4"
       onClick={onClose}
     >
-      <div className="relative w-full max-w-4xl" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="relative w-full max-w-5xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close video"
-          className="absolute -top-11 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+          className="absolute -top-11 right-0 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
         >
-          <X size={18} />
+          <X size={20} />
         </button>
+
         <video
           src={src}
           controls
           autoPlay
-          className="aspect-video w-full rounded-xl bg-black"
+          playsInline
+          preload="metadata"
+          className="max-h-[80vh] w-full rounded-xl bg-black"
         />
-        <p className="mt-3 text-center text-sm text-white/80">{title}</p>
+        {title && (
+          <p className="mt-3 text-center text-sm text-white/80">{title}</p>
+        )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
-function ProjectRow({ project }) {
-    const [videoOpen, setVideoOpen] = useState(false);
+const ProjectRow = memo(function ProjectRow({ project }) {
+  const [videoOpen, setVideoOpen] = useState(false);
+
   const hasPosters = project.posters?.length > 0;
   const hasVideo = !!project.video;
+  const hasActions = hasVideo || hasPosters;
+
   return (
-    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-xl hover:shadow-slate-200/60">
-      <div className="flex flex-col lg:flex-row">
-        <ProjectCarousel
-          images={project.images}
-          title={project.title}
-        />
+    <>
+      <article className="group relative rounded-2xl border border-slate-200 bg-white transition-colors duration-200 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50">
+        <div className="flex flex-col lg:flex-row">
+          {/* Left: carousel */}
+          <ProjectCarousel images={project.images} title={project.title} />
 
-        <div className="flex flex-1 flex-col justify-center p-5 sm:p-7 lg:p-8">
-          {/* Project label */}
-          <div className="mb-4 flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+          {/* Right: content */}
+          <div className="flex flex-1 flex-col justify-center p-5 sm:p-7 lg:p-8">
+            {/* Label */}
+            <div className="mb-3 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-blue-600">
+                Project Study
+              </span>
+            </div>
 
-            <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-blue-600">
-              Project Study
-            </span>
-          </div>
+            {/* Title */}
+            <h3 className="text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl lg:text-2xl">
+              {project.title}
+            </h3>
 
-          {/* Title */}
-          <h3 className="text-xl font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
-            {project.title}
-          </h3>
+            {/* Description */}
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-[15px]">
+              {project.description}
+            </p>
 
-          {/* Description */}
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 sm:text-[15px]">
-            {project.description}
-          </p>
-{(hasVideo || hasPosters) && (
-  <div className="mt-6 flex flex-wrap gap-3">
-    {hasVideo && (
-      <button
-        type="button"
-        onClick={() => setVideoOpen(true)}
-        className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700"
-      >
-        <Play size={14} /> Watch Video
-      </button>
-    )}
-    {hasPosters && (
-      <Link
-        to={`/project-posters/${project.id}`}
-        className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
-      >
-        <Images size={14} /> View Posters ({project.posters.length})
-      </Link>
-    )}
-  </div>
+            {/* Actions */}
+            {hasActions && (
+              <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                {hasVideo && (
+                  <button
+                    type="button"
+                    onClick={() => setVideoOpen(true)}
+                    className="group/btn inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-blue-600/20 transition-all hover:bg-blue-700 hover:shadow-md hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+                  >
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition group-hover/btn:bg-white/30">
+                      <Play size={10} className="fill-white" />
+                    </span>
+                    Watch Video
+                  </button>
+                )}
+
+             {hasPosters && (
+  <Link
+    to={`/project-posters/${project.id}`}
+    className="group/btn inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-slate-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-md hover:shadow-slate-900/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
+  >
+    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/15">
+      <Images size={12} />
+    </span>
+    View Details
+    <span className="rounded-full bg-white/15 px-1.5 py-0.5 text-[10px] font-bold text-white">
+      {project.posters.length}
+    </span>
+  </Link>
 )}
-          {/* Bottom detail */}
-          <div className="mt-7 flex items-center gap-2 text-xs font-semibold text-slate-400">
-            <Layers3 size={14} />
-            Hydraulic Model Study
+              </div>
+            )}
+
+            {/* Footer meta */}
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+              <span className="inline-flex items-center gap-1.5">
+                <Layers3 size={13} />
+                Hydraulic Model Study
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+
+        {/* Left accent bar on hover */}
+        <span className="pointer-events-none absolute inset-y-4 left-0 w-0.5 rounded-full bg-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      </article>
+
+      {/* Modal — portal, so it's not constrained by row layout */}
       {videoOpen && (
-  <VideoModal src={project.video} title={project.title} onClose={() => setVideoOpen(false)} />
-)}
-    </article>
+        <VideoModal
+          src={project.video}
+          title={project.title}
+          onClose={() => setVideoOpen(false)}
+        />
+      )}
+    </>
   );
-}
+});
+
 
 /* ============================================================
    COLLAPSE
