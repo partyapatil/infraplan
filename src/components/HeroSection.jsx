@@ -262,9 +262,8 @@ export default function HeroSection() {
 
               {/* Heading */}
 
-           <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
-  Plan, Model, Construct and
-  <br />
+<h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
+  Plan, Model, Construct and{" "}
   <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
     Manage Water Infrastructure
   </span>

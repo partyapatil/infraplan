@@ -25,6 +25,8 @@ import {
   ExternalLink,
   Minimize2,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+
 // import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
 import HydraulicCTA from "../components/CTA/HydraulicCTA";
@@ -372,11 +374,7 @@ return (
             Laboratory
           </h1>
 
-          {/* Description */}
-          <p className="max-w-xl text-sm font-medium leading-6 text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)] sm:text-base md:max-w-md lg:max-w-lg">
-            State-of-the-art facility for physical and mathematical hydraulic model studies
-          </p>
-
+        
           {/* Information Meta */}
           <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
             <div className="flex items-center gap-2 text-sm font-medium text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
@@ -384,12 +382,8 @@ return (
               <span>Pune, Maharashtra</span>
             </div>
 
-            <div className="hidden h-5 w-px bg-slate-400 sm:block" />
 
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
-              <Layers size={16} className="shrink-0 text-blue-600" />
-              <span>5 Acres Facility</span>
-            </div>
+          
           </div>
         </div>
 
@@ -903,171 +897,88 @@ return (
 
     {/* Location Map */}
 
-    <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
-      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
+  <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
+  <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
+  <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
 
-      <div className="relative z-10">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-100">
-          <MapPin size={20} strokeWidth={2} />
-        </div>
-
-        <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-          Infraplan Hydraulic Laboratory
-        </p>
-
-        <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-          Location Map
-        </h3>
-
-        <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
-          Chandkhed Village, Tal-Maval,
-          <br />
-          Dist. Pune, Maharashtra, India.
-        </p>
-
-        <button
-          type="button"
-          className="group/map mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/30"
-        >
-          View Location
-          <ExternalLink
-            size={13}
-            className="transition-transform duration-300 group-hover/map:translate-x-0.5"
-          />
-        </button>
-      </div>
+  <div className="relative z-10">
+    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-100">
+      <MapPin size={20} strokeWidth={2} />
     </div>
+
+    <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
+      Infraplan Hydraulic Laboratory
+    </p>
+
+    <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+      Location Map
+    </h3>
+
+    <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+      Chandkhed Village, Tal-Maval,
+      <br />
+      Dist. Pune, Maharashtra, India.
+    </p>
+
+    <a
+      href="https://www.google.com/maps/place/Infraplan+hydraulic+laboratory/@18.658261,73.652041,201102m/data=!3m1!1e3!4m6!3m5!1s0x3bc2af01a8f265f9:0x6efc32d2aa20348c!8m2!3d18.6583125!4d73.6520625!16s%2Fg%2F11px42nzr1?hl=en-US&entry=ttu&g_ep=EgoyMDI2MTAxMS4wIKXMDSoASAFQAw%3D%3D"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group/map mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+    >
+      View Location
+      <ExternalLink
+        size={13}
+        className="transition-transform duration-300 group-hover/map:translate-x-0.5"
+      />
+    </a>
+  </div>
+</div>
 
     {/* Publications */}
 
-    <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-900/10 sm:p-8">
-      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
 
-      <div className="relative z-10">
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-indigo-100">
-          <FlaskConical size={20} strokeWidth={2} />
-        </div>
+<Link
+  to="/hydrolicpublications"
+  className="group relative block overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"
+>
+  <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
+  <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
 
-        <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
-          Hydraulic Laboratory
-        </p>
-
-        <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-          Publications
-        </h3>
-
-        <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
-          Explore research, technical studies
-          <br />
-          and hydraulic engineering publications.
-        </p>
-
-        <button
-          type="button"
-          className="group/pub mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-600/30"
-        >
-          View Publications
-          <ExternalLink
-            size={13}
-            className="transition-transform duration-300 group-hover/pub:translate-x-0.5"
-          />
-        </button>
-      </div>
+  <div className="relative z-10">
+    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-indigo-100">
+      <FlaskConical size={20} strokeWidth={2} />
     </div>
+
+    <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
+      Hydraulic Laboratory
+    </p>
+
+    <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+      Publications
+    </h3>
+
+    <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+      Explore research, technical studies
+      <br />
+      and hydraulic engineering publications.
+    </p>
+
+    <span className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg group-hover:shadow-indigo-600/30">
+      View Publications
+      <ArrowRight
+        size={13}
+        className="transition-transform duration-300 group-hover:translate-x-0.5"
+      />
+    </span>
+  </div>
+</Link>
 
   </div>
 </div>
         </div>
       </section>
 
-      {/* Location Map - Modern Design */}
-      <section className="px-5 sm:px-8 lg:px-12 py-16 bg-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10">
-            <span className="inline-block px-4 py-2 rounded-full bg-blue-600/10 text-blue-700 text-xs font-semibold tracking-wider uppercase mb-3 border border-blue-200/30">
-              Find Us
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-              Laboratory{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Location
-              </span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-lg h-[400px] bg-gradient-to-br from-blue-50 to-cyan-50 relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/20">
-                    <MapPin size={32} />
-                  </div>
-                  <p className="text-slate-600 font-medium text-lg">
-                    Interactive Map
-                  </p>
-                  <div className="mt-4 p-4 bg-white/90 backdrop-blur-sm rounded-xl border border-slate-200 shadow-sm max-w-xs mx-auto">
-                    <p className="text-sm font-semibold text-slate-800">
-                      InfraPlan Hydraulic Laboratory
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      Chandkhed Village, Tal- Maval
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      Dist. Pune, Maharashtra, India
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="p-6 bg-white rounded-xl border border-slate-200 shadow-md hover:shadow-lg transition-all">
-                <h3 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
-                  <Phone size={18} className="text-blue-600" />
-                  Contact Information
-                </h3>
-                <div className="space-y-2 text-sm text-slate-600">
-                  <p className="flex items-center gap-2">
-                    <MapPin size={16} className="text-blue-600" /> Chandkhed
-                    Village, Tal- Maval, Dist. Pune
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <Phone size={16} className="text-blue-600" /> +91 98765
-                    43210
-                  </p>
-                  <p className="flex items-center gap-2">
-                    <Mail size={16} className="text-blue-600" />{" "}
-                    lab@infraplan.in
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-200 shadow-md">
-                <h4 className="font-semibold text-slate-900 text-sm mb-3 flex items-center gap-2">
-                  <Database size={18} className="text-blue-600" />
-                  Facility Details
-                </h4>
-                <div className="grid grid-cols-2 gap-2 text-sm text-slate-600">
-                  <div className="p-2 bg-white/70 rounded-lg">
-                    🌐 Total Area: 5 Acres
-                  </div>
-                  <div className="p-2 bg-white/70 rounded-lg">
-                    💧 Discharge: 350-700 lps
-                  </div>
-                  <div className="p-2 bg-white/70 rounded-lg">
-                    📏 Available Head: 10 m
-                  </div>
-                  <div className="p-2 bg-white/70 rounded-lg">
-                    👨‍🔬 CWPRS Expert Guidance
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
 <ProjectMapSection/>
       {/* Footer - Consistent with other pages */}

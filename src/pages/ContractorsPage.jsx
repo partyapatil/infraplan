@@ -134,11 +134,11 @@ function ServiceCard({ service }) {
   const toggleAutoPlay = () => setIsAutoPlaying((prev) => !prev);
 
   return (
-    <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
+    <div className="grid grid-cols-1 items-stretch gap-6 lg:h-[420px] lg:grid-cols-2 lg:gap-8">
       {/* -----------------------------------------------
           IMAGE SLIDER
       ------------------------------------------------ */}
-      <div className="group relative h-[220px] overflow-hidden rounded-2xl bg-slate-100 shadow-lg sm:h-[300px] lg:h-[380px]">
+      <div className="group relative h-[220px] overflow-hidden rounded-2xl bg-slate-100 shadow-lg sm:h-[300px] lg:h-full">
         {images.length > 0 ? (
           <img
             src={images[currentSlide]}
@@ -229,9 +229,10 @@ function ServiceCard({ service }) {
       {/* -----------------------------------------------
           SERVICE CONTENT
       ------------------------------------------------ */}
-      <div className="flex flex-col justify-center">
-        <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-5 shadow-md sm:p-8">
-          <div className="mb-4 flex items-center gap-3">
+      <div className="flex min-h-0 flex-col">
+        <div className="flex min-h-0 flex-1 flex-col rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-5 shadow-md sm:p-8">
+          {/* Header (stays pinned) */}
+          <div className="mb-4 flex shrink-0 items-center gap-3">
             <div className="shrink-0 rounded-xl bg-blue-100 p-2 text-blue-700">
               {React.createElement(service.icon, { size: 22 })}
             </div>
@@ -247,7 +248,8 @@ function ServiceCard({ service }) {
             </div>
           </div>
 
-          <div className="mt-4 space-y-2.5 sm:space-y-3">
+          {/* Items (scrolls if content overflows) */}
+          <div className="mt-4 min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1 [scrollbar-color:theme(colors.slate.300)_transparent] [scrollbar-width:thin] sm:space-y-3">
             {service.items.map((item, idx) => (
               <div
                 key={idx}
@@ -288,10 +290,7 @@ export default function ContractorsPage() {
         <div className="absolute inset-0 bg-white/5" />
 
         <div className="relative z-10 mx-auto max-w-7xl text-center">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/50 bg-white/75 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700 shadow-sm backdrop-blur-md sm:mb-6 sm:px-4 sm:py-2 sm:text-xs">
-            <Wrench size={13} className="sm:h-[14px] sm:w-[14px]" />
-            Our Services
-          </div>
+       
 
           <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
             Engineering{" "}
@@ -300,27 +299,9 @@ export default function ContractorsPage() {
             </span>
           </h1>
 
-          <p className="mx-auto mt-3 max-w-2xl px-2 text-xs leading-relaxed text-slate-600 sm:mt-4 sm:text-base">
-            Delivering comprehensive engineering solutions for water infrastructure
-            projects with excellence and innovation.
-          </p>
+     
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
-            <div className="flex items-center gap-1.5 rounded-full border border-blue-100 bg-white/80 px-3 py-1.5 text-[10px] font-medium text-slate-600 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-              <Droplets size={13} className="shrink-0 text-blue-600 sm:h-[15px] sm:w-[15px]" />
-              Water Infrastructure
-            </div>
-
-            <div className="flex items-center gap-1.5 rounded-full border border-blue-100 bg-white/80 px-3 py-1.5 text-[10px] font-medium text-slate-600 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-              <Zap size={13} className="shrink-0 text-blue-600 sm:h-[15px] sm:w-[15px]" />
-              Electrical & Mechanical
-            </div>
-
-            <div className="flex items-center gap-1.5 rounded-full border border-blue-100 bg-white/80 px-3 py-1.5 text-[10px] font-medium text-slate-600 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:gap-2 sm:px-4 sm:py-2 sm:text-xs">
-              <Activity size={13} className="shrink-0 text-blue-600 sm:h-[15px] sm:w-[15px]" />
-              SCADA & Automation
-            </div>
-          </div>
+         
         </div>
       </section>
 
@@ -349,35 +330,7 @@ export default function ContractorsPage() {
         </div>
       </section>
 
-      {/* =========================================================
-          STATS
-      ========================================================= */}
-      <section className="border-y border-slate-100 bg-gradient-to-br from-slate-50 to-blue-50/30 px-4 py-12 sm:px-8 sm:py-16 lg:px-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
-            {[
-              { value: "150+", label: "Projects Executed", icon: Building2 },
-              { value: "50+", label: "Water Schemes", icon: Droplets },
-              { value: "30+", label: "Solar Installations", icon: Sun },
-              { value: "98%", label: "Client Satisfaction", icon: Users },
-            ].map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div key={stat.label} className="group text-center">
-                  <div className="mb-2 inline-flex rounded-xl bg-white p-2.5 text-blue-600 shadow-md transition-transform group-hover:scale-110 sm:mb-3 sm:p-3">
-                    <Icon size={20} className="sm:h-6 sm:w-6" />
-                  </div>
-                  <div className="text-xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-                    {stat.value}
-                  </div>
-                  <div className="mt-0.5 text-[10px] text-slate-500 sm:text-xs">{stat.label}</div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
+   
       {/* =========================================================
           MAP
       ========================================================= */}

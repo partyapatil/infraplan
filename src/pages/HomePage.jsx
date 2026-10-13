@@ -204,7 +204,7 @@ export default function InfraplanPage() {
 
     
 
-      <FeaturesStrip />
+      {/* <FeaturesStrip /> */}
       <ContactSection />
 
       {/* =========================================================

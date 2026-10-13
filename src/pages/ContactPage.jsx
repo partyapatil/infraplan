@@ -88,7 +88,7 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white text-slate-800 font-sans antialiased">
       <ContactHero />
       <NavigatorSection />
-      <ContactSection />
+      {/* <ContactSection /> */}
       <LocationsSection />
     </div>
   );
@@ -100,7 +100,7 @@ export default function ContactPage() {
 
 function ContactHero() {
   return (
-    <section className="relative flex h-[220px] items-center justify-center overflow-hidden sm:h-[260px] lg:h-[300px]">
+    <section className="relative flex h-[300px] items-center justify-center overflow-hidden sm:h-[380px] lg:h-[400px]">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${contactHero})` }}
@@ -380,86 +380,12 @@ function ContactSection() {
 
           <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-300 to-blue-300" />
 
-          <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-blue-100/80 sm:text-base">
-            Have a project in mind? Tell us about your requirements and our team will
-            get back to you with the right solution.
-          </p>
         </div>
 
         {/* Contact Container */}
-        <div className="overflow-hidden rounded-[28px] border border-white/15 bg-white/10 shadow-2xl shadow-black/20 backdrop-blur-sm">
-          <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
-            {/* Left Contact Info */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-blue-600/80 via-blue-700/80 to-indigo-900/90 p-7 text-white sm:p-9 lg:p-10">
-              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-cyan-300/10 blur-3xl" />
-              <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-indigo-400/20 blur-3xl" />
-
-              <div className="pointer-events-none absolute right-6 top-8 h-20 w-20 rounded-full border border-white/10">
-                <div className="absolute inset-3 rounded-full border border-white/10" />
-              </div>
-
-              <div className="relative z-10">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-blue-100 shadow-lg backdrop-blur-md">
-                  <Send size={20} />
-                </div>
-
-                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-200">
-                  Contact Infraplan
-                </span>
-
-                <h3 className="mt-3 text-2xl font-bold leading-tight sm:text-3xl">
-                  Let's discuss <br /> your next project.
-                </h3>
-
-                <p className="mt-4 max-w-sm text-sm leading-6 text-blue-100/80">
-                  From water infrastructure and engineering consultancy to digital
-                  solutions, our team is ready to help you move your project forward.
-                </p>
-
-                {/* Contact Information List */}
-                <div className="mt-8 space-y-4">
-                  {contactDetails.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <div
-                        key={item.label}
-                        className="group flex items-start gap-3 rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-white/10 hover:bg-white/5"
-                      >
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/10 text-blue-100 transition-transform duration-300 group-hover:scale-110">
-                          <Icon size={16} />
-                        </div>
-                        <div>
-                          <p className="text-[9px] font-semibold uppercase tracking-widest text-blue-300">
-                            {item.label}
-                          </p>
-                          <p className="mt-1 text-xs leading-5 text-white/90 sm:text-sm">
-                            {item.value}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Bottom Stats */}
-                <div className="mt-8 border-t border-white/10 pt-6">
-                  <div className="grid grid-cols-3 gap-3">
-                    <div>
-                      <p className="text-xl font-bold">15+</p>
-                      <p className="mt-1 text-[9px] uppercase tracking-wider text-blue-300">Years</p>
-                    </div>
-                    <div>
-                      <p className="text-xl font-bold">100+</p>
-                      <p className="mt-1 text-[9px] uppercase tracking-wider text-blue-300">Projects</p>
-                    </div>
-                    <div>
-                      <p className="text-xl font-bold">4+</p>
-                      <p className="mt-1 text-[9px] uppercase tracking-wider text-blue-300">Countries</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div className="mx-auto max-w-3xl overflow-hidden rounded-[28px] border border-white/15 bg-white/10 shadow-2xl shadow-black/20 backdrop-blur-sm">
+  <div className="grid">
+         
 
             {/* Right Form */}
             <div className="bg-white p-7 sm:p-9 lg:p-10">
@@ -703,8 +629,8 @@ function ContactSection() {
         </div>
 
         {/* Bottom Status Strip */}
-        <div className="mt-5 flex flex-col items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-md sm:flex-row">
-          <div className="flex items-center gap-2">
+<div className="mx-auto mt-5 flex max-w-3xl flex-col items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-md sm:flex-row">       
+   <div className="flex items-center gap-2">
             <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
             <span className="text-xs text-blue-100/70">
               Our team is currently accepting new projects

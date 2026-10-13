@@ -18,6 +18,7 @@ import AdminLayout from "./admin/admin/AdminLayout";
 import AdminLogin from "./admin/admin/AdminLogin";
 import AdminPublications from "./admin/admin/AdminPublications";
 import ProjectPostersPage from "./pages/ProjectPostersPage";
+import ToolBox from "./pages/ToolBox";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
       { path: "/about", element: <AboutPage /> },
       { path: "/contract", element: <ContractorsPage /> },
       { path: "/hydrolic", element: <HydraulicLabPage /> },
-      { path: "/toolbox", element: <SigmaToolboxPage /> },
+      { path: "/toolbox", element: <ToolBox /> },
+      // { path: "/toolbox", element: <SigmaToolboxPage /> },
       { path: "/contact", element: <ContactPage /> },
       { path: "/publications", element: <PublicationsPage /> },
       { path: "/hydrolicpublications", element: <PublicationsPage /> },
