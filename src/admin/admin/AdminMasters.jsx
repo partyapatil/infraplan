@@ -163,7 +163,7 @@ export default function AdminMasters() {
   const loading = categories === null || subCategories === null;
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto w-full max-w-5xl">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-slate-900">Master Data</h1>
         <Button onClick={() => setEditing({ type: tab, item: {} })}>

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import contactHero from "../assets/darker.png";
+import contactPage from "../assets/contactPage.png";
 
 /* ============================================================
    REAL CONTACT + LOCATION DATA
@@ -103,6 +104,7 @@ function ContactHero() {
     <section className="relative flex h-[300px] items-center justify-center overflow-hidden sm:h-[380px] lg:h-[400px]">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        // style={{ backgroundImage: `url(${contactPage})` }}
         style={{ backgroundImage: `url(${contactHero})` }}
       />
       <div className="absolute inset-0 bg-slate-900/55" />

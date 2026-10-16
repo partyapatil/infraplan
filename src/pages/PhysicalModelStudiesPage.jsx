@@ -274,7 +274,8 @@ const ProjectRow = memo(function ProjectRow({ project }) {
   const hasPosters = project.posters?.length > 0;
   const hasVideo = !!project.video;
   const hasActions = hasVideo || hasPosters;
-
+const base =
+  "group/btn inline-flex min-h-[40px] items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
   return (
     <>
       <article className="group relative rounded-2xl border border-slate-200 bg-white transition-colors duration-200 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50">
@@ -303,37 +304,36 @@ const ProjectRow = memo(function ProjectRow({ project }) {
             </p>
 
             {/* Actions */}
-            {hasActions && (
-              <div className="mt-6 flex flex-wrap items-center gap-2.5">
-                {hasVideo && (
-                  <button
-                    type="button"
-                    onClick={() => setVideoOpen(true)}
-                    className="group/btn inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-blue-600/20 transition-all hover:bg-blue-700 hover:shadow-md hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
-                  >
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition group-hover/btn:bg-white/30">
-                      <Play size={10} className="fill-white" />
-                    </span>
-                    Watch Video
-                  </button>
-                )}
+       
+{hasActions && (
+  <div className="mt-6 flex flex-wrap items-center gap-2.5">
+    {hasPosters && (
+     <Link
+  to={`/project-posters/${project.id}`}
+  className="group/btn inline-flex min-h-[40px] items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-blue-600/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-md hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+>
+  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
+    <Images size={12} />
+  </span>
+  View Details
+  {/* <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-[10px] font-bold">
+    {project.posters.length}
+  </span> */}
+</Link>
+    )}
 
-             {hasPosters && (
-  <Link
-    to={`/project-posters/${project.id}`}
-    className="group/btn inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-slate-900/10 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-md hover:shadow-slate-900/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
-  >
-    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/15">
-      <Images size={12} />
-    </span>
-    View Details
-    <span className="rounded-full bg-white/15 px-1.5 py-0.5 text-[10px] font-bold text-white">
-      {project.posters.length}
-    </span>
-  </Link>
+    {hasVideo && (
+  <button
+  type="button"
+  onClick={() => setVideoOpen(true)}
+  className="group/btn inline-flex min-h-[40px] items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+>
+  <Play size={12} className="fill-current" />
+  Watch Video
+</button>
+    )}
+  </div>
 )}
-              </div>
-            )}
 
             {/* Footer meta */}
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
@@ -658,56 +658,33 @@ function CategoryAccordion({
    HERO
 ============================================================ */
 
-function Hero() {
-  return (
-    <section className="relative overflow-hidden bg-slate-950">
-      {/* Background collage */}
-      <div className="grid grid-cols-1 sm:grid-cols-3">
-        {collageImages.map((src, index) => (
-          <div
-            key={index}
-            className="relative h-[180px] overflow-hidden sm:h-[260px] lg:h-[340px]"
-          >
-            <img
-              src={src}
-              alt=""
-              className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
-            />
+function Hero() { return ( <section className="relative overflow-hidden bg-slate-950"> {/* Background collage */} <div className="grid grid-cols-1 sm:grid-cols-3"> {collageImages.map((src, index) => ( <div
+key={index}
+className="relative h-[180px] overflow-hidden sm:h-[260px] lg:h-[340px]"
+> <img src={src} alt="" fetchPriority={index === 0 ? "high" : "auto"} loading={index === 0 ? "eager" : "lazy"} decoding="async" className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105" />
 
-            <div className="absolute inset-0 bg-slate-950/55" />
+        <div className="absolute inset-0 bg-slate-950/55" />
 
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950/80" />
-          </div>
-        ))}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950/80" />
       </div>
+    ))}
+  </div>
 
-      {/* Center overlay */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-5 text-center">
-        <div className="max-w-3xl">
-          {/* Badge */}
-          {/* <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-blue-100 shadow-xl backdrop-blur-md sm:text-xs">
-            <Waves size={14} />
-            Scaled Laboratory Testing
-          </div> */}
+  {/* Center overlay */}
+  <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-5 text-center">
+    <div className="max-w-3xl">
+      <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-2xl sm:text-5xl lg:text-6xl">
+        Project Showcase
+      </h1>
+    </div>
+  </div>
 
-          {/* Heading */}
-          <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-2xl sm:text-5xl lg:text-6xl">
-            Project Showcase
-          </h1>
+  {/* Bottom fade */}
+  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-950/30 to-transparent" />
+</section>
 
-          {/* Description */}
-          {/* <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-200/90 sm:text-base">
-            Physical and numerical modelling studies for hydraulic
-            structures, flow behaviour and engineering optimization.
-          </p> */}
-        </div>
-      </div>
 
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-950/30 to-transparent" />
-    </section>
-  );
-}
+); }
 
 /* ============================================================
    PAGE

@@ -30,6 +30,7 @@ import laboImage from "../assets/labo.png";
 import Tank from "../assets/tank.png";
 import Lab from "../assets/lab.png";
 import toolboxImage from "../assets/toolbox.png";
+import { Link } from "react-router-dom";
 
 const nav = [
   { label: "Home", active: true },
@@ -49,6 +50,7 @@ const verticals = [
     img: contImage,
     icon: Sun,
     color: "from-amber-600 to-orange-700",
+    href: "/contract",        // ✅ new
   },
   {
     title: "Hydraulic Laboratory",
@@ -56,6 +58,7 @@ const verticals = [
     img: laboImage,
     icon: Wind,
     color: "from-cyan-600 to-teal-700",
+    href: "/hydrolic",        // ✅ new
   },
   {
     title: "SigmaToolBox",
@@ -63,9 +66,9 @@ const verticals = [
     img: toolboxImage,
     icon: Droplets,
     color: "from-blue-600 to-blue-800",
+    href: "/toolbox",         // ✅ new
   },
 ];
-
 const testimonials = [
   {
     quote:
@@ -143,57 +146,58 @@ export default function InfraplanPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {verticals.map((v) => {
-              const Icon = v.icon;
-              return (
-                <div
-                  key={v.title}
-                  className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <div
-                      className="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                      style={{ backgroundImage: `url(${v.img})` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+  {verticals.map((v) => {
+    const Icon = v.icon;
+    return (
+      <Link
+        key={v.title}
+        to={v.href}
+        className="group relative block overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+      >
+        <div className="relative h-48 overflow-hidden">
+          <div
+            className="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+            style={{ backgroundImage: `url(${v.img})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
 
-                    {/* Corner accent glow */}
-                    <div
-                      className={`pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-gradient-to-br ${v.color} opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40`}
-                    />
+          {/* Corner accent glow */}
+          <div
+            className={`pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-gradient-to-br ${v.color} opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40`}
+          />
 
-                    <div className="absolute bottom-4 left-4 flex items-center gap-2.5">
-                      <div
-                        className={`rounded-xl bg-gradient-to-r ${v.color} p-2.5 text-white shadow-lg transition-transform duration-300 group-hover:scale-110`}
-                      >
-                        <Icon size={18} />
-                      </div>
-                      <span className="text-sm font-semibold text-white drop-shadow-sm">
-                        {v.title}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    <p className="text-sm leading-relaxed text-slate-600">{v.desc}</p>
-                    <a
-                      href="#"
-                      className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-700 transition-colors group-hover:text-blue-800"
-                    >
-                      Learn More
-                      <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
-                    </a>
-                  </div>
-
-                  {/* Bottom accent line on hover */}
-                  <div
-                    className={`h-0.5 w-0 bg-gradient-to-r ${v.color} transition-all duration-500 group-hover:w-full`}
-                  />
-                </div>
-              );
-            })}
+          <div className="absolute bottom-4 left-4 flex items-center gap-2.5">
+            <div
+              className={`rounded-xl bg-gradient-to-r ${v.color} p-2.5 text-white shadow-lg transition-transform duration-300 group-hover:scale-110`}
+            >
+              <Icon size={18} />
+            </div>
+            <span className="text-sm font-semibold text-white drop-shadow-sm">
+              {v.title}
+            </span>
           </div>
+        </div>
+
+        <div className="p-6">
+          <p className="text-sm leading-relaxed text-slate-600">{v.desc}</p>
+          <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-700 transition-colors group-hover:text-blue-800">
+            Learn More
+            <ChevronRight
+              size={16}
+              className="transition-transform group-hover:translate-x-1"
+            />
+          </span>
+        </div>
+
+        {/* Bottom accent line on hover */}
+     <div
+  className="h-0.5 w-0 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-500 group-hover:w-full"
+/>
+      </Link>
+    );
+  })}
+</div>
         </div>
       </section>
 
