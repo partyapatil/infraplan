@@ -277,8 +277,7 @@ export default function ContractorsPage() {
       {/* =========================================================
           HERO
       ========================================================= */}
-      <section className="relative overflow-hidden px-4 py-14 sm:px-8 sm:py-20 lg:px-12">
-        <div
+<section className="relative flex min-h-[300px] items-center justify-center overflow-hidden px-4 py-12 sm:min-h-[360px] sm:px-8 sm:py-16 lg:min-h-[400px] lg:px-12">          <div
           className="absolute inset-0 bg-white"
           style={{
             backgroundImage: `url(${newcontractorshero})`,
