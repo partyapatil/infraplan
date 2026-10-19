@@ -26,7 +26,7 @@ import {
   Minimize2,
   Boxes,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
@@ -253,6 +253,7 @@ const designStudies = [
 
 export default function HydraulicLabPage() {
 
+  const navigate = useNavigate();
 
 const [expandedCards, setExpandedCards] = useState({});
 
@@ -727,9 +728,11 @@ return (
           </div>
         ))}
       </div>
-      <div className="flex items-center gap-2 border-t border-blue-100 bg-blue-50/50 px-5 py-3 text-xs text-slate-500">
-  <ChevronRight size={14} className="shrink-0 text-blue-600" />
-  <span>Click the arrow on any study to expand purpose and application details.</span>
+  <div className="flex items-center gap-2 border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-700">
+  <ChevronRight size={14} className="shrink-0 text-blue-700" />
+  <span>
+    Select a study to explore its purpose and application details.
+  </span>
 </div>
     </div>
 
@@ -790,9 +793,11 @@ return (
           </div>
         ))}
       </div>
-      <div className="flex items-center gap-2 border-t border-indigo-100 bg-indigo-50/50 px-5 py-3 text-xs text-slate-500">
-  <ChevronRight size={14} className="shrink-0 text-indigo-600" />
-  <span>Click the arrow on any study to expand purpose and application details.</span>
+ <div className="flex items-center gap-2 border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-700">
+  <ChevronRight size={14} className="shrink-0 text-blue-700" />
+  <span>
+    Select a study to explore its purpose and application details.
+  </span>
 </div>
     </div>
 
@@ -864,6 +869,7 @@ return (
     {/* CTA */}
     <button
       type="button"
+      onClick={() => navigate("/physical-model-studies")}
       className="group/btn mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-blue-700"
     >
       Explore Studies

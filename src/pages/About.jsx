@@ -18,8 +18,7 @@ export default function AboutPage() {
       {/* =========================================================
           HERO SECTION
       ========================================================= */}
- <section className="relative flex min-h-[520px] items-center overflow-hidden px-5 py-20 sm:min-h-[580px] sm:px-8 lg:min-h-[640px] lg:px-12 lg:py-24">
-  {/* Background image */}
+<section className="relative flex min-h-[300px] items-center overflow-hidden px-5 py-12 sm:min-h-[360px] sm:px-8 lg:min-h-[400px] lg:px-12 lg:py-16">  {/* Background image */}
   <div
     className="absolute inset-0 bg-cover bg-center bg-no-repeat"
     style={{ backgroundImage: `url(${aboutPage})` }}
