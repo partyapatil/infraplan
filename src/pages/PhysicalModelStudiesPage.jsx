@@ -1,8 +1,3 @@
-
-
-
-
-
 import React, { memo, useEffect, useState } from "react";
 import {
   Waves,

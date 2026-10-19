@@ -254,11 +254,7 @@ export default function HeroSection() {
             <div className="max-w-3xl">
               {/* Badge */}
 
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200/30 bg-blue-600/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-blue-700">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-blue-600" />
-
-                Building Tomorrow's Infrastructure
-              </div>
+            
 
               {/* Heading */}
 

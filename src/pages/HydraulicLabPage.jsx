@@ -24,6 +24,7 @@ import {
   FlaskConical,
   ExternalLink,
   Minimize2,
+  Boxes,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -46,7 +47,11 @@ import ProjectMapSection from "../components/ProjectMapSection";
 
 // add this instead:
 const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791533589/COMP150MB_1_e2utgv.mp4";
-
+const showcaseImages = [
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791546418/infraplan/projects/dj4rscp6gngjtsmtl3as.png",
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791541557/infraplan/projects/rghh3fjexnus88nakzzw.png",
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791537010/infraplan/projects/dn5plqqfv3csuyohpyyc.jpg",
+];
 const projectShowcase = [
   {
     title: "Physical Model Studies",
@@ -663,11 +668,10 @@ return (
       </h2>
     </div>
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
     {/* Physical Models */}
-    <div className="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
+<div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
         <div className="rounded-xl bg-blue-600 p-2 text-white">
           <Waves size={20} />
         </div>
@@ -677,8 +681,8 @@ return (
         </span>
       </div>
 
-      <div className="p-3">
-        {modelStudies.physicalModels.map((item) => (
+<div className="flex-1 p-3 pb-5">
+          {modelStudies.physicalModels.map((item) => (
           <div
             key={item.id}
             className={`overflow-hidden rounded-xl border transition-all ${
@@ -723,11 +727,14 @@ return (
           </div>
         ))}
       </div>
+      <div className="flex items-center gap-2 border-t border-blue-100 bg-blue-50/50 px-5 py-3 text-xs text-slate-500">
+  <ChevronRight size={14} className="shrink-0 text-blue-600" />
+  <span>Click the arrow on any study to expand purpose and application details.</span>
+</div>
     </div>
 
     {/* Mathematical Models */}
-    <div className="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-      <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
+<div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">      <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
         <div className="rounded-xl bg-indigo-600 p-2 text-white">
           <Calculator size={20} />
         </div>
@@ -737,7 +744,7 @@ return (
         </span>
       </div>
 
-      <div className="p-3">
+      <div className="flex-1 p-3 pb-5">
         {modelStudies.mathematicalModels.map((item) => (
           <div
             key={item.id}
@@ -783,6 +790,10 @@ return (
           </div>
         ))}
       </div>
+      <div className="flex items-center gap-2 border-t border-indigo-100 bg-indigo-50/50 px-5 py-3 text-xs text-slate-500">
+  <ChevronRight size={14} className="shrink-0 text-indigo-600" />
+  <span>Click the arrow on any study to expand purpose and application details.</span>
+</div>
     </div>
 
   </div>
@@ -792,193 +803,162 @@ return (
       {/* =========================================================
     PROJECT SHOWCASE
 ========================================================= */}
+<section className="relative overflow-hidden border-y border-slate-100 bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+  {/* Background Decoration */}
+  <div className="pointer-events-none absolute inset-0 overflow-hidden">
+    <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
+    <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
+    <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.025] blur-3xl" />
+  </div>
 
-      <section className="relative overflow-hidden border-y border-slate-100 bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-        {/* Background Decoration */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
-
-          <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
-
-          <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.025] blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto max-w-7xl">
-          {/* =====================================================
+  <div className="relative mx-auto max-w-7xl">
+    {/* =====================================================
         SECTION HEADER
     ====================================================== */}
-
-          <div className="mx-auto mb-12 max-w-3xl text-center">
-         
-
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-             Project Showcase
-           
-            </h2>
-
-          </div>
-
-          {/* =====================================================
-        FEATURED PROJECT CARDS
-    ====================================================== */}
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {projectShowcase.map(
-              ({ title, description, icon: Icon, gradient, images }) => (
-                <div
-                  key={title}
-                  className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10"
-                >
-                  {/* Image Grid */}
-
-                  <div className="grid h-52 grid-cols-3 gap-2 overflow-hidden rounded-2xl bg-slate-100">
-                    {images.map((image, index) => (
-                      <div key={image} className="relative overflow-hidden">
-                        <img
-                          src={image}
-                          alt={`${title} ${index + 1}`}
-                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Card Content */}
-
-                  <div className="px-2 pb-2 pt-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-3">
-                        <div
-                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-lg`}
-                        >
-                          <Icon size={20} />
-                        </div>
-
-                        <div>
-                          <h3 className="text-lg font-bold text-slate-900">
-                            {title}
-                          </h3>
-
-                          <p className="mt-1 text-xs leading-5 text-slate-500">
-                            {description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* CTA */}
-
-                    <button
-                      type="button"
-                      className="group/btn mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-blue-700"
-                    >
-                      Explore Studies
-                      <ArrowRight
-                        size={14}
-                        className="transition-transform duration-300 group-hover/btn:translate-x-1"
-                      />
-                    </button>
-                  </div>
-                </div>
-              ),
-            )}
-          </div>
-
-          {/* =====================================================
-        DIVIDER / INTRO
-    ====================================================== */}
-
-        
-
-<div className="mx-auto mt-12 w-full max-w-5xl">
-  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-
-    {/* Location Map */}
-
-  <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
-  <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
-  <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
-
-  <div className="relative z-10">
-    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-100">
-      <MapPin size={20} strokeWidth={2} />
+    <div className="mx-auto mb-12 max-w-3xl text-center">
+      <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        Project Showcase
+      </h2>
     </div>
 
-    <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-      Infraplan Hydraulic Laboratory
-    </p>
+    {/* =====================================================
+        UNIFIED FEATURED PROJECT CARD
+    ====================================================== */}
+{/* =====================================================
+    FEATURED PROJECT CARD
+====================================================== */}
+<div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-6">
 
-    <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-      Location Map
-    </h3>
+  {/* Image Grid */}
+ {/* Image Grid */}
+<div className="grid h-52 grid-cols-3 gap-2 overflow-hidden rounded-2xl bg-slate-100">
+  {showcaseImages.map((image, idx) => (
+    <div key={image} className="relative overflow-hidden">
+      <img
+        src={image}
+        alt={`Project showcase ${idx + 1}`}
+        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
+    </div>
+  ))}
+</div>
 
-    <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
-      Chandkhed Village, Tal-Maval,
-      <br />
-      Dist. Pune, Maharashtra, India.
-    </p>
+  {/* Card Content */}
+  <div className="px-2 pb-2 pt-6">
+    <div className="flex items-start gap-3">
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
+        <Boxes size={20} />
+      </div>
 
-    <a
-      href="https://www.google.com/maps/place/Infraplan+hydraulic+laboratory/@18.658261,73.652041,201102m/data=!3m1!1e3!4m6!3m5!1s0x3bc2af01a8f265f9:0x6efc32d2aa20348c!8m2!3d18.6583125!4d73.6520625!16s%2Fg%2F11px42nzr1?hl=en-US&entry=ttu&g_ep=EgoyMDI2MTAxMS4wIKXMDSoASAFQAw%3D%3D"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group/map mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+      <div>
+        <h3 className="text-lg font-bold text-slate-900">
+          Hydraulic Model Studies
+        </h3>
+        <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-500">
+          Comprehensive hydraulic modeling services for complex water infrastructure projects.
+        </p>
+      </div>
+    </div>
+
+    {/* CTA */}
+    <button
+      type="button"
+      className="group/btn mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-blue-700"
     >
-      View Location
-      <ExternalLink
-        size={13}
-        className="transition-transform duration-300 group-hover/map:translate-x-0.5"
-      />
-    </a>
-  </div>
-</div>
-
-    {/* Publications */}
-
-
-<Link
-  to="/hydrolicpublications"
-  className="group relative block overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"
->
-  <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
-  <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
-
-  <div className="relative z-10">
-    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-indigo-100">
-      <FlaskConical size={20} strokeWidth={2} />
-    </div>
-
-    <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
-      Hydraulic Laboratory
-    </p>
-
-    <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-      Publications
-    </h3>
-
-    <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
-      Explore research, technical studies
-      <br />
-      and hydraulic engineering publications.
-    </p>
-
-    <span className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg group-hover:shadow-indigo-600/30">
-      View Publications
+      Explore Studies
       <ArrowRight
-        size={13}
-        className="transition-transform duration-300 group-hover:translate-x-0.5"
+        size={14}
+        className="transition-transform duration-300 group-hover/btn:translate-x-1"
       />
-    </span>
-  </div>
-</Link>
-
+    </button>
   </div>
 </div>
-        </div>
-      </section>
 
+    {/* =====================================================
+        LOCATION MAP & PUBLICATIONS
+    ====================================================== */}
+    <div className="mx-auto mt-12 w-full max-w-5xl">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {/* Location Map */}
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
+
+          <div className="relative z-10">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-100">
+              <MapPin size={20} strokeWidth={2} />
+            </div>
+
+            <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
+              Infraplan Hydraulic Laboratory
+            </p>
+
+            <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+              Location Map
+            </h3>
+
+            <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+              Chandkhed Village, Tal-Maval,
+              <br />
+              Dist. Pune, Maharashtra, India.
+            </p>
+
+            <a
+              href="https://www.google.com/maps/place/Infraplan+hydraulic+laboratory/@18.658261,73.652041,201102m/data=!3m1!1e3!4m6!3m5!1s0x3bc2af01a8f265f9:0x6efc32d2aa20348c!8m2!3d18.6583125!4d73.6520625!16s%2Fg%2F11px42nzr1?hl=en-US&entry=ttu&g_ep=EgoyMDI2MTAxMS4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/map mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+            >
+              View Location
+              <ExternalLink
+                size={13}
+                className="transition-transform duration-300 group-hover/map:translate-x-0.5"
+              />
+            </a>
+          </div>
+        </div>
+
+        {/* Publications */}
+        <Link
+          to="/hydrolicpublications"
+          className="group relative block overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"
+        >
+          <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
+          <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
+
+          <div className="relative z-10">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-indigo-100">
+              <FlaskConical size={20} strokeWidth={2} />
+            </div>
+
+            <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
+              Hydraulic Laboratory
+            </p>
+
+            <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+              Publications
+            </h3>
+
+            <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+              Explore research, technical studies
+              <br />
+              and hydraulic engineering publications.
+            </p>
+
+            <span className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg group-hover:shadow-indigo-600/30">
+              View Publications
+              <ArrowRight
+                size={13}
+                className="transition-transform duration-300 group-hover:translate-x-0.5"
+              />
+            </span>
+          </div>
+        </Link>
+      </div>
+    </div>
+  </div>
+</section>
 
 <ProjectMapSection/>
       {/* Footer - Consistent with other pages */}

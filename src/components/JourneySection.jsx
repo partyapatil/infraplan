@@ -14,14 +14,12 @@ import {
   Zap,
   BriefcaseBusiness,
   Droplets,
+  Gauge,
+  GlassWater,
 } from "lucide-react";
 
 /* ============================================================
    JOURNEY DATA
-   NOTE: shadowColor added as a STATIC class string because
-   Tailwind JIT cannot resolve dynamically-built class names
-   like `shadow-${item.color.split(' ')[1]}/30`. That pattern
-   was silently producing an empty/invalid class before.
 ============================================================ */
 
 const journey = [
@@ -29,7 +27,7 @@ const journey = [
     year: "2010",
     label: "Water Sector Focus",
     desc: "InfraPlan was incepted to cater for the water sector in India.",
-    icon: Building2,
+    icon: Droplets,
     color: "from-blue-600 to-blue-800",
     bgColor: "bg-blue-50",
     borderColor: "border-blue-200",
@@ -51,7 +49,7 @@ const journey = [
     year: "2012",
     label: "Drinking Water Sector",
     desc: "Started multiple activities including planning, construction, and operational services for the drinking water sector.",
-    icon: Droplets,
+    icon: GlassWater,
     color: "from-sky-600 to-cyan-800",
     bgColor: "bg-sky-50",
     borderColor: "border-sky-200",
@@ -128,7 +126,7 @@ const journey = [
     year: "2023",
     label: "Pakal Dul Hydrodynamic Studies",
     desc: "Studies for estimation of hydrodynamic forces on gates for a 165 m high dam (Pakal Dul HEP, 1000 MW) in India.",
-    icon: Waves,
+    icon: Gauge,
     color: "from-orange-600 to-red-800",
     bgColor: "bg-orange-50",
     borderColor: "border-orange-200",
@@ -160,8 +158,7 @@ const journey = [
 ];
 
 /* ============================================================
-   FULL HISTORY CARD (modal) — fixed min-height + line-clamp
-   so cards line up regardless of description length
+   FULL HISTORY CARD (modal)
 ============================================================ */
 
 function HistoryCard({ item, align = "left" }) {
@@ -196,7 +193,7 @@ function HistoryCard({ item, align = "left" }) {
               align === "right" ? "justify-end" : ""
             }`}
           >
-            <span className="text-xs font-bold text-slate-400">{item.year}</span>
+            <span className="text-xs font-bold text-slate-500">{item.year}</span>
           </div>
 
           <h3 className={`text-base font-bold leading-snug ${item.textColor}`}>
@@ -223,8 +220,7 @@ function HistoryCard({ item, align = "left" }) {
 }
 
 /* ============================================================
-   MARQUEE NODE — extracted so each of the 3 duplicated sets
-   renders identically; fixed card height via flex + line-clamp
+   MARQUEE NODE
 ============================================================ */
 
 function MarqueeNode({ item, isActive, onEnter, onLeave }) {
@@ -271,7 +267,7 @@ function MarqueeNode({ item, isActive, onEnter, onLeave }) {
         />
       </div>
 
-      {/* CARD — fixed height so every card matches regardless of text length */}
+      {/* CARD */}
       <div
         className={`
           flex h-[130px] w-full flex-col rounded-xl border ${item.borderColor}
@@ -283,7 +279,9 @@ function MarqueeNode({ item, isActive, onEnter, onLeave }) {
         `}
       >
         <div className="flex h-full items-start gap-2 sm:gap-3">
-          <div className={`h-8 w-0.5 shrink-0 rounded-full bg-gradient-to-b ${item.color} sm:h-10 sm:w-1`} />
+          <div
+            className={`h-8 w-0.5 shrink-0 rounded-full bg-gradient-to-b ${item.color} sm:h-10 sm:w-1`}
+          />
 
           <div className="flex min-w-0 flex-1 flex-col">
             <h3
@@ -295,12 +293,6 @@ function MarqueeNode({ item, isActive, onEnter, onLeave }) {
             <p className="mt-0.5 line-clamp-3 text-[10px] leading-relaxed text-slate-500 sm:mt-1 sm:text-xs md:text-sm">
               {item.desc}
             </p>
-
-            {/* <div className="mt-auto flex items-center gap-1 pt-1 text-[8px] text-slate-400 sm:pt-2 sm:text-[10px]">
-              <MapPin size={10} className="sm:h-3 sm:w-3" />
-              <span className="hidden xs:inline">Global Impact</span>
-              <ChevronRight size={10} className="transition-transform group-hover:translate-x-1 sm:h-3 sm:w-3" />
-            </div> */}
           </div>
         </div>
       </div>
@@ -324,7 +316,8 @@ export default function JourneySection() {
       setIsPaused(document.hidden);
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
   useEffect(() => {
@@ -366,14 +359,10 @@ export default function JourneySection() {
                 Excellence
               </span>
             </h2>
-
-          
           </div>
         </div>
 
-        {/* MARQUEE — 3 explicit sets, each a fixed-width flex row.
-            This makes `-33.333%` an exact match to one set's width,
-            which is what removes the stutter/jump on loop. */}
+        {/* MARQUEE — Reversed array means newest (2025) enters first */}
         <div className="relative z-10 w-full overflow-hidden">
           <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-20 w-12 bg-gradient-to-r from-slate-50/90 via-slate-50/50 to-transparent sm:w-20 md:w-32" />
           <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-20 w-12 bg-gradient-to-l from-slate-50/90 via-slate-50/50 to-transparent sm:w-20 md:w-32" />
@@ -395,7 +384,7 @@ export default function JourneySection() {
                 key={setIndex}
                 className="flex items-start gap-4 pr-4 sm:gap-6 sm:pr-6 md:gap-8 md:pr-8"
               >
-                {journey.map((item, i) => {
+                {[...journey].reverse().map((item, i) => {
                   const key = `${setIndex}-${i}`;
                   return (
                     <MarqueeNode
@@ -420,7 +409,10 @@ export default function JourneySection() {
             className="group inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/40 sm:rounded-xl sm:px-8 sm:py-3 sm:text-sm"
           >
             View Full History
-            <ChevronRight size={16} className="transition-transform duration-300 group-hover:translate-x-1 sm:h-[18px] sm:w-[18px]" />
+            <ChevronRight
+              size={16}
+              className="transition-transform duration-300 group-hover:translate-x-1 sm:h-[18px] sm:w-[18px]"
+            />
           </button>
         </div>
       </section>
@@ -435,6 +427,7 @@ export default function JourneySection() {
             className="relative mx-auto min-h-full max-w-6xl overflow-hidden rounded-3xl bg-white shadow-2xl sm:min-h-0 animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* MODAL HEADER */}
             <div className="relative overflow-hidden border-b border-slate-100 bg-gradient-to-br from-blue-50 via-white to-indigo-50 px-6 py-8 sm:px-10 sm:py-10">
               <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl" />
               <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-indigo-500/10 blur-3xl" />
@@ -454,39 +447,52 @@ export default function JourneySection() {
                   <Calendar size={14} />
                   Our Journey
                 </div>
-
-                <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-                  Fifteen Years of{" "}
-                  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                    Excellence
-                  </span>
-                </h2>
+<h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+  A Legacy of{" "}
+  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+    Excellence
+  </span>
+</h2>
 
                 <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-500 sm:text-base">
-                  From a vision in 2010 to delivering innovative water infrastructure and digital solutions across the world.
+                  From a vision in 2010 to delivering innovative water
+                  infrastructure and digital solutions across the world.
                 </p>
               </div>
             </div>
 
+            {/* TIMELINE — Reversed here so 2025 is at the top */}
             <div className="px-4 py-8 sm:px-8 lg:px-12 xl:px-16">
               <div className="relative">
-                <div className="absolute bottom-0 left-5 top-0 w-0.5 bg-gradient-to-b from-blue-200 via-indigo-200 to-blue-100 sm:left-1/2 sm:-translate-x-1/2">
-                  <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 rounded-full bg-blue-500 shadow-lg shadow-blue-500/50" />
-                  <div className="absolute bottom-0 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-indigo-500 shadow-lg shadow-indigo-500/50" />
-                </div>
+                {/* Center line */}
+                <div className="absolute bottom-5 left-5 top-5 w-0.5 bg-gradient-to-b from-blue-200 via-indigo-200 to-blue-100 sm:left-1/2 sm:-translate-x-1/2" />
 
-                {journey.map((item, index) => {
+                {[...journey].reverse().map((item, index) => {
                   const isLeft = index % 2 === 0;
                   const isLast = index === journey.length - 1;
+                  const NodeIcon = item.icon;
 
                   return (
-                    <div key={item.year} className={`relative mb-10 last:mb-0 sm:mb-14 ${isLast ? "pb-0" : ""}`}>
+                    <div
+                      key={item.year}
+                      className={`relative mb-10 last:mb-0 sm:mb-14 ${
+                        isLast ? "pb-0" : ""
+                      }`}
+                    >
                       {/* DESKTOP */}
                       <div className="hidden sm:grid sm:grid-cols-2 sm:gap-8 lg:gap-12">
-                        <div className={isLeft ? "flex justify-end pr-4 lg:pr-8" : "invisible"}>
+                        <div
+                          className={
+                            isLeft ? "flex justify-end pr-4 lg:pr-8" : "invisible"
+                          }
+                        >
                           {isLeft && <HistoryCard item={item} align="right" />}
                         </div>
-                        <div className={!isLeft ? "flex justify-start pl-4 lg:pl-8" : "invisible"}>
+                        <div
+                          className={
+                            !isLeft ? "flex justify-start pl-4 lg:pl-8" : "invisible"
+                          }
+                        >
                           {!isLeft && <HistoryCard item={item} align="left" />}
                         </div>
                       </div>
@@ -496,7 +502,7 @@ export default function JourneySection() {
                         <HistoryCard item={item} align="left" />
                       </div>
 
-                      {/* CENTER NODE — uses static shadowColor class now */}
+                      {/* CENTER NODE */}
                       <div
                         className={`
                           absolute left-5 top-5 z-20 flex h-11 w-11 -translate-x-1/2
@@ -506,11 +512,16 @@ export default function JourneySection() {
                           sm:left-1/2
                         `}
                       >
-                        <item.icon size={18} />
+                        <NodeIcon size={18} />
                       </div>
 
-                      <div className="absolute left-1/2 top-5 -mt-7 hidden -translate-x-1/2 sm:block">
-                        <span className="text-[10px] font-bold tracking-wider text-slate-400">{item.year}</span>
+                      {/* YEAR PILL */}
+                      <div className="absolute left-5 top-[70px] z-20 -translate-x-1/2 sm:left-1/2">
+                        <span
+                          className={`block rounded-full bg-gradient-to-r ${item.color} px-2.5 py-0.5 text-[11px] font-bold tracking-wide text-white shadow-md ring-2 ring-white`}
+                        >
+                          {item.year}
+                        </span>
                       </div>
                     </div>
                   );
@@ -518,36 +529,22 @@ export default function JourneySection() {
               </div>
             </div>
 
-            <div className="border-t border-slate-100 bg-gradient-to-r from-slate-50/90 to-white px-6 py-6 sm:px-10">
-              <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-                <div className="text-center sm:text-left">
-                  <p className="text-sm font-semibold text-slate-900">Building the future, one milestone at a time.</p>
-                  <div className="mt-1.5 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
-                    <span className="flex items-center gap-1 text-xs text-slate-500">
-                      <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-                      15+ years
-                    </span>
-                    <span className="flex items-center gap-1 text-xs text-slate-500">
-                      <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
-                      300+ projects
-                    </span>
-                    <span className="flex items-center gap-1 text-xs text-slate-500">
-                      <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" />
-                      20+ countries
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setShowFullHistory(false)}
-                  className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/30 active:scale-95"
-                >
-                  Close History
-                  <X size={16} className="transition-transform duration-300 group-hover:rotate-90" />
-                </button>
-              </div>
-            </div>
+            {/* MODAL FOOTER */}
+       <div className="border-t border-slate-100 bg-gradient-to-r from-slate-50/90 to-white px-6 py-6 sm:px-10">
+  <div className="flex justify-center sm:justify-end">
+    <button
+      type="button"
+      onClick={() => setShowFullHistory(false)}
+      className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:scale-105 hover:shadow-blue-600/30 active:scale-95"
+    >
+      Close History
+      <X
+        size={16}
+        className="transition-transform duration-300 group-hover:rotate-90"
+      />
+    </button>
+  </div>
+</div>
           </div>
         </div>
       )}
@@ -576,9 +573,6 @@ export default function JourneySection() {
         }
         .animate-scale-in {
           animation: scaleIn 0.2s ease-out;
-        }
-        @media (min-width: 480px) {
-          .xs\\:inline { display: inline; }
         }
       `}</style>
     </>

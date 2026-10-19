@@ -19,7 +19,6 @@ const navItems = [
   },
   {
     label: "Hydraulic Laboratory",
-    path: "/hydrolic",
     dropdown: true,
     subItems: [
       {
@@ -52,9 +51,6 @@ const navItems = [
     label: "Admin",
     path: "/admin",
   },
-  {
-
-  }
 ];
 
 export default function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
@@ -68,6 +64,11 @@ export default function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
     }
     return location.pathname.startsWith(path);
   };
+
+  const isItemActive = (item) =>
+    item.dropdown
+      ? item.subItems.some((sub) => isActive(sub.path))
+      : isActive(item.path);
 
   const isSubItemActive = (path) => {
     return location.pathname + location.hash === path;
@@ -107,7 +108,7 @@ export default function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
       {/* Desktop Navigation */}
       <nav className="hidden lg:flex items-center gap-7 text-sm">
         {navItems.map((item) => {
-          const active = isActive(item.path);
+          const active = isItemActive(item);
 
           if (item.dropdown) {
             return (
@@ -117,42 +118,27 @@ export default function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
                 onMouseEnter={() => handleMouseEnter(item.label)}
                 onMouseLeave={handleMouseLeave}
               >
-                <Link
-                  to={item.path}
-                  onClick={() => setOpenDropdown(null)}
-                  className={`relative flex items-center py-2 pr-0.5 whitespace-nowrap transition-colors duration-200 ${
+                <button
+                  type="button"
+                  onClick={() => toggleDropdown(item.label)}
+                  className={`relative flex items-center gap-1 py-2 whitespace-nowrap transition-colors duration-200 ${
                     active
                       ? "text-blue-700 font-semibold"
                       : "text-slate-600 font-medium hover:text-blue-700"
                   }`}
-                >
-                  {item.label}
-                  <span
-                    className={`absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 origin-left transition-transform duration-200 ${
-                      active ? "scale-x-100" : "scale-x-0"
-                    }`}
-                  />
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    toggleDropdown(item.label);
-                  }}
-                  className={`ml-0.5 p-1 rounded-md transition-all duration-200 ${
-                    openDropdown === item.label
-                      ? "text-blue-700 bg-blue-50"
-                      : "text-slate-500 hover:text-blue-700 hover:bg-blue-50"
-                  }`}
-                  aria-label={`Toggle ${item.label} submenu`}
+                  aria-haspopup="true"
                   aria-expanded={openDropdown === item.label}
                 >
+                  {item.label}
                   <ChevronDown
                     size={14}
                     className={`transition-transform duration-200 ${
                       openDropdown === item.label ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
+                  <span
+                    className={`absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 origin-left transition-transform duration-200 ${
+                      active ? "scale-x-100" : "scale-x-0"
                     }`}
                   />
                 </button>
@@ -234,48 +220,29 @@ export default function Navigation({ mobileMenuOpen, setMobileMenuOpen }) {
         <div className="lg:hidden fixed inset-x-0 top-[73px] z-40 bg-white/98 backdrop-blur-lg border-b border-slate-100 px-5 py-6 shadow-lg animate-slide-down max-h-[80vh] overflow-y-auto">
           <div className="flex flex-col gap-1.5 text-sm text-slate-600">
             {navItems.map((item) => {
-              const active = isActive(item.path);
+              const active = isItemActive(item);
 
               if (item.dropdown) {
                 return (
                   <div key={item.label}>
-                    <div
-                      className={`flex items-center w-full rounded-xl transition-colors ${
-                        active ? "bg-blue-50 text-blue-700" : "hover:bg-slate-50"
+                    <button
+                      type="button"
+                      onClick={() => toggleDropdown(item.label)}
+                      className={`flex items-center justify-between w-full rounded-xl py-3 px-3.5 font-medium transition-colors ${
+                        active
+                          ? "bg-blue-50 text-blue-700 font-semibold"
+                          : "hover:bg-slate-50"
                       }`}
+                      aria-expanded={openDropdown === item.label}
                     >
-                      <Link
-                        to={item.path}
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                          setOpenDropdown(null);
-                        }}
-                        className={`flex-1 py-3 px-3.5 font-medium ${
-                          active ? "font-semibold" : ""
+                      <span>{item.label}</span>
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform duration-200 ${
+                          openDropdown === item.label ? "rotate-180" : ""
                         }`}
-                      >
-                        {item.label}
-                      </Link>
-
-                      <button
-                        type="button"
-                        onClick={(event) => {
-                          event.preventDefault();
-                          event.stopPropagation();
-                          toggleDropdown(item.label);
-                        }}
-                        className="p-3 mr-1 rounded-lg hover:bg-blue-100 transition-colors"
-                        aria-label={`Toggle ${item.label} submenu`}
-                        aria-expanded={openDropdown === item.label}
-                      >
-                        <ChevronDown
-                          size={16}
-                          className={`transition-transform duration-200 ${
-                            openDropdown === item.label ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-                    </div>
+                      />
+                    </button>
 
                     {openDropdown === item.label && (
                       <div className="ml-3.5 mt-1 mb-2 pl-3.5 border-l-2 border-blue-100 space-y-1">
