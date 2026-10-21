@@ -201,8 +201,8 @@ export default function InfraplanPage() {
         </div>
       </section>
 
+      <TrustedBySection />x
       <JourneySection />
-      <TrustedBySection />
 
 
 

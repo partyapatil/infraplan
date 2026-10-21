@@ -728,11 +728,8 @@ return (
           </div>
         ))}
       </div>
-<div className="flex items-center gap-2 border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
-  <ChevronRight size={14} className="shrink-0 text-blue-800" />
-  <span>
-    Select a study to explore its purpose and application details.
-  </span>
+<div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
+  Select a study to explore its purpose and application details.
 </div>
     </div>
 
@@ -793,11 +790,8 @@ return (
           </div>
         ))}
       </div>
- <div className="flex items-center gap-2 border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
-  <ChevronRight size={14} className="shrink-0 text-blue-800" />
-  <span>
-    Select a study to explore its purpose and application details.
-  </span>
+<div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
+  Select a study to explore its purpose and application details.
 </div>
     </div>
 
@@ -884,7 +878,7 @@ return (
     {/* =====================================================
         LOCATION MAP & PUBLICATIONS
     ====================================================== */}
-    <div className="mx-auto mt-12 w-full max-w-5xl">
+    <div className="mx-auto mt-12 w-full max-w-7xl">
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* Location Map */}
         <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
@@ -925,7 +919,6 @@ return (
           </div>
         </div>
 
-        {/* Publications */}
         <Link
           to="/hydrolicpublications"
           className="group relative block overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"
