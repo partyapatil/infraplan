@@ -28,15 +28,9 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-// import heroVideo from "../assets/videos/hydrolicVideo.mp4";
-
-import HydraulicCTA from "../components/CTA/HydraulicCTA";
-import hydraulicLabHeroBg3 from "../assets/hydrolic-3.png";
-import hydrolicBG from "../assets/hydrolicBG.png";
-import hydrolicTop from "../assets/hydrolicTop.png"; 
-import hydroLast from "../assets/hydroLast.png"; 
-import last4 from "../assets/last4.png"; 
-import newCropped from "../assets/newCropped.png"; 
+const last4 =
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1792678835/last4_c7xo75.jpg";
+  // import last4 from "../assets/last4.png"; 
 import physical1 from "../assets/phy1.png";
 import physical2 from "../assets/phy2.png";
 import physical3 from "../assets/phy3.png";
@@ -46,7 +40,11 @@ import ProjectMapSection from "../components/ProjectMapSection";
 // import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 
 // add this instead:
-const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791533589/COMP150MB_1_e2utgv.mp4";
+// const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791533589/COMP150MB_1_e2utgv.mp4";
+
+const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/f_auto/q_auto/v1791533589/COMP150MB_1_e2utgv.mp4";
+
+
 const showcaseImages = [
   "https://res.cloudinary.com/ddpunpqre/image/upload/v1791546418/infraplan/projects/dj4rscp6gngjtsmtl3as.png",
   "https://res.cloudinary.com/ddpunpqre/image/upload/v1791541557/infraplan/projects/rghh3fjexnus88nakzzw.png",
@@ -734,7 +732,8 @@ return (
     </div>
 
     {/* Mathematical Models */}
-<div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">      <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
+<div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+     <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
         <div className="rounded-xl bg-indigo-600 p-2 text-white">
           <Calculator size={20} />
         </div>

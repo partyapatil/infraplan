@@ -5,16 +5,28 @@ import {
   CheckCircle,
   FileText,
   X,
-  Phone,
-  Mail,
-  MapPin,
   Clock,
-  Building2,
-  Users,
-  Award,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
+
+/* ============================================================
+   API CONFIG
+============================================================ */
+
+const CONTACT_API_URL = "https://staging.infraplan.co.in:7052/api/contactus";
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+// Swagger expects an int32 for "Service". Adjust to match backend enum values.
+const SERVICE_MAPPING = {
+  engineering: 1,
+  hydraulic: 2,
+  digital: 3,
+  consulting: 4,
+  empanelment: 5,
+  partner: 6,
+  other: 7,
+};
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -26,6 +38,7 @@ export default function ContactSection() {
   });
 
   const [file, setFile] = useState(null);
+  const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [dragActive, setDragActive] = useState(false);
@@ -36,12 +49,17 @@ export default function ContactSection() {
   };
 
   const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.size <= 10 * 1024 * 1024) {
-      setFile(selectedFile);
+    const selectedFile = e.target.files?.[0];
+    if (!selectedFile) return;
+
+    if (selectedFile.size > MAX_FILE_SIZE) {
+      setError("File size must be less than 10MB.");
     } else {
-      alert("File size must be less than 10MB");
+      setError(null);
+      setFile(selectedFile);
     }
+    // Allow re-selecting the same file after removing it
+    e.target.value = "";
   };
 
   const removeFile = () => setFile(null);
@@ -60,40 +78,69 @@ export default function ContactSection() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.size <= 10 * 1024 * 1024) {
-      setFile(droppedFile);
-    } else {
-      alert("File size must be less than 10MB");
+
+    const droppedFile = e.dataTransfer.files?.[0];
+    if (!droppedFile) return;
+
+    if (droppedFile.size > MAX_FILE_SIZE) {
+      setError("File size must be less than 10MB.");
+      return;
+    }
+    setError(null);
+    setFile(droppedFile);
+  };
+
+  /* ---------------- API INTEGRATION ---------------- */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    // Field names must match the Swagger definition exactly
+    const payload = new FormData();
+    payload.append("FullName", formData.name);
+    payload.append("Email", formData.email);
+    payload.append("Phone", formData.phone);
+    payload.append("Service", SERVICE_MAPPING[formData.service] || 1); // defaults to 1 if empty
+    payload.append("ProjectDetails", formData.message);
+
+    if (file) {
+      payload.append("Attachment", file);
+    }
+
+    try {
+      // Do NOT set Content-Type manually with FormData;
+      // the browser adds multipart/form-data with the correct boundary.
+      const response = await fetch(CONTACT_API_URL, {
+        method: "POST",
+        body: payload,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setError("Something went wrong. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-    }, 1500);
+  const resetForm = () => {
+    setSubmitted(false);
+    setError(null);
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      service: "",
+    });
+    setFile(null);
   };
-
-  const stats = [
-    {
-      icon: Building2,
-      value: "100+",
-      label: "Projects Delivered",
-    },
-    {
-      icon: Users,
-      value: "98%",
-      label: "Client Satisfaction",
-    },
-    {
-      icon: Award,
-      value: "12",
-      label: "Industry Awards",
-    },
-  ];
 
   return (
     <section className="relative w-full overflow-hidden bg-slate-950">
@@ -166,10 +213,8 @@ export default function ContactSection() {
       <div className="relative z-20 mx-auto max-w-7xl px-5 pb-24 pt-28 sm:px-8 sm:pb-32 sm:pt-36 lg:px-12 lg:pt-40">
         {/* Header */}
         <div className="mb-14 text-center">
-        
-
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            Reach Out To  <span className="text-blue-200">Us</span>
+            Reach Out To <span className="text-blue-200">Us</span>
           </h2>
 
           <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-300 to-blue-300" />
@@ -179,287 +224,289 @@ export default function ContactSection() {
           </p>
         </div>
 
-{/* Single Centered Form */}
-<div className="mx-auto w-full max-w-2xl">
-  <div className="relative overflow-hidden rounded-[2rem] border border-white/30 bg-white/[0.96] p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 md:p-10">
-    <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-400/15 blur-3xl" />
-    <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-cyan-400/10 blur-3xl" />
+        {/* Single Centered Form */}
+        <div className="mx-auto w-full max-w-2xl">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/30 bg-white/[0.96] p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 md:p-10">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-400/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-cyan-400/10 blur-3xl" />
 
-    {submitted ? (
-      /* Success State */
-      <div className="relative flex h-full flex-col items-center justify-center py-12 text-center">
-        <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-emerald-400/20 blur-2xl" />
-          <div className="relative mb-6 flex h-20 w-20 animate-bounce items-center justify-center rounded-full border border-emerald-200 bg-emerald-100/80 text-emerald-600 backdrop-blur-md">
-            <CheckCircle size={40} strokeWidth={1.5} />
-          </div>
-        </div>
+            {submitted ? (
+              /* Success State */
+              <div className="relative flex h-full flex-col items-center justify-center py-12 text-center">
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-full bg-emerald-400/20 blur-2xl" />
+                  <div className="relative mb-6 flex h-20 w-20 animate-bounce items-center justify-center rounded-full border border-emerald-200 bg-emerald-100/80 text-emerald-600 backdrop-blur-md">
+                    <CheckCircle size={40} strokeWidth={1.5} />
+                  </div>
+                </div>
 
-        <h3 className="text-2xl font-bold text-slate-900">Message Sent!</h3>
-        <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-500">
-          Thank you for contacting Infraplan. Our team will review your inquiry and respond within 24 hours.
-        </p>
+                <h3 className="text-2xl font-bold text-slate-900">Message Sent!</h3>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-500">
+                  Thank you for contacting Infraplan. Our team will review your inquiry and respond within 24 hours.
+                </p>
 
-        <div className="mt-6 flex items-center gap-2 text-xs text-slate-400">
-          <Clock size={14} />
-          <span>Response time: ~4 hours</span>
-        </div>
+                <div className="mt-6 flex items-center gap-2 text-xs text-slate-400">
+                  <Clock size={14} />
+                  <span>Usually responds within 24 hours</span>
+                </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            setSubmitted(false);
-            setFormData({
-              name: "",
-              email: "",
-              phone: "",
-              message: "",
-              service: "",
-            });
-            setFile(null);
-          }}
-          className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition-colors hover:text-blue-800"
-        >
-          Send another message
-          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-        </button>
-      </div>
-    ) : (
-      /* Input Form */
-      <form onSubmit={handleSubmit} className="relative space-y-6">
-        {/* Name & Email */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <div>
-            <label
-              htmlFor="name"
-              className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
-            >
-              Full Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder="e.g. Rahul Sharma"
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-            />
-          </div>
+                <button
+                  type="button"
+                  onClick={resetForm}
+                  className="group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 transition-colors hover:text-blue-800"
+                >
+                  Send another message
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
+            ) : (
+              /* Input Form */
+              <form onSubmit={handleSubmit} className="relative space-y-6">
+                {/* Name & Email */}
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
+                    >
+                      Full Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Rahul Sharma"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
+                    />
+                  </div>
 
-          <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
-            >
-              Email Address <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="e.g. rahul@company.com"
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-            />
-          </div>
-        </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
+                    >
+                      Email Address <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="e.g. rahul@company.com"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
+                    />
+                  </div>
+                </div>
 
-        {/* Phone & Service */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <div>
-            <label
-              htmlFor="phone"
-              className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
-            >
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              placeholder="+91 98765 43210"
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-            />
-          </div>
+                {/* Phone & Service */}
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="phone"
+                      className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="+91 98765 43210"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
+                    />
+                  </div>
 
-          <div>
-            <label
-              htmlFor="service"
-              className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
-            >
-              Service Interested In
-            </label>
-            <select
-              id="service"
-              name="service"
-              value={formData.service}
-              onChange={handleInputChange}
-              className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-            >
-              <option value="">Select a service</option>
-              <option value="consultancy">Consultancy</option>
-              <option value="feasibility">Feasibility Studies</option>
-              <option value="execution">Project Execution</option>
-              <option value="maintenance">Maintenance</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
+                  <div>
+                    <label
+                      htmlFor="service"
+                      className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
+                    >
+                      Service Interested In
+                    </label>
+                    <select
+                      id="service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleInputChange}
+                      className="w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
+                    >
+                      <option value="">Select a service</option>
+                      <option value="engineering">Engineering & Construction</option>
+                      <option value="hydraulic">Hydraulic Laboratory</option>
+                      <option value="digital">SigmaToolBox</option>
+                      <option value="consulting">Engineering Consultancy</option>
+                      <option value="empanelment">Expert Empanelment</option>
+                      <option value="partner">Sales Partner</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
 
-        {/* Message */}
-        <div>
-          <label
-            htmlFor="message"
-            className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
-          >
-            Message / Project Details <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            required
-            rows={4}
-            value={formData.message}
-            onChange={handleInputChange}
-            placeholder="Tell us about your requirements, project scope, or any questions..."
-            className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
-          />
-        </div>
-
-        {/* File Upload */}
-        <div>
-          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700">
-            Attach Documents (Optional)
-          </label>
-
-          {!file ? (
-            <div
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-              className={`relative cursor-pointer rounded-xl border-2 border-dashed p-8 text-center transition-all duration-300 ${
-                dragActive
-                  ? "border-blue-400 bg-blue-50"
-                  : "border-slate-200 bg-slate-50/70 hover:border-blue-300 hover:bg-blue-50/40"
-              }`}
-            >
-              <input
-                type="file"
-                id="file-upload"
-                onChange={handleFileChange}
-                className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.zip,.rar"
-              />
-              <UploadCloud
-                size={36}
-                className={`mx-auto mb-3 transition-colors duration-300 ${
-                  dragActive ? "text-blue-600" : "text-slate-400"
-                }`}
-              />
-              <p className="text-sm font-semibold text-slate-700">
-                {dragActive ? "Drop your file here" : "Upload your file"}
-              </p>
-              <p className="mt-1 text-xs text-slate-400">
-                Drag & drop or click to browse
-              </p>
-
-              <div className="mt-3 flex flex-wrap justify-center gap-2">
-                {["PDF", "DOCX", "Images", "ZIP"].map((type) => (
-                  <span
-                    key={type}
-                    className="rounded-full border border-slate-200 bg-white px-2 py-1 text-[10px] text-slate-600"
+                {/* Message */}
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700"
                   >
-                    {type}
-                  </span>
-                ))}
-              </div>
+                    Message / Project Details <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Tell us about your requirements, project scope, or any questions..."
+                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 transition-all duration-300 hover:border-slate-300 focus:border-blue-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400/20"
+                  />
+                </div>
 
-              <p className="mt-2 text-[10px] text-slate-400">
-                Max file size: 10MB
-              </p>
-            </div>
-          ) : (
-            <div className="group flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50 p-4">
-              <div className="flex min-w-0 items-center gap-4 overflow-hidden">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-white text-blue-700">
-                  <FileText size={22} />
+                {/* File Upload */}
+                <div>
+                  <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-slate-700">
+                    Attach Documents (Optional)
+                  </label>
+
+                  {!file ? (
+                    <div
+                      onDragEnter={handleDrag}
+                      onDragLeave={handleDrag}
+                      onDragOver={handleDrag}
+                      onDrop={handleDrop}
+                      className={`relative cursor-pointer rounded-xl border-2 border-dashed p-8 text-center transition-all duration-300 ${
+                        dragActive
+                          ? "border-blue-400 bg-blue-50"
+                          : "border-slate-200 bg-slate-50/70 hover:border-blue-300 hover:bg-blue-50/40"
+                      }`}
+                    >
+                      <input
+                        type="file"
+                        id="file-upload"
+                        onChange={handleFileChange}
+                        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.zip,.rar"
+                      />
+                      <UploadCloud
+                        size={36}
+                        className={`mx-auto mb-3 transition-colors duration-300 ${
+                          dragActive ? "text-blue-600" : "text-slate-400"
+                        }`}
+                      />
+                      <p className="text-sm font-semibold text-slate-700">
+                        {dragActive ? "Drop your file here" : "Upload your file"}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-400">
+                        Drag & drop or click to browse
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap justify-center gap-2">
+                        {["PDF", "DOCX", "Images", "ZIP"].map((type) => (
+                          <span
+                            key={type}
+                            className="rounded-full border border-slate-200 bg-white px-2 py-1 text-[10px] text-slate-600"
+                          >
+                            {type}
+                          </span>
+                        ))}
+                      </div>
+
+                      <p className="mt-2 text-[10px] text-slate-400">
+                        Max file size: 10MB
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="group flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50 p-4">
+                      <div className="flex min-w-0 items-center gap-4 overflow-hidden">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-white text-blue-700">
+                          <FileText size={22} />
+                        </div>
+                        <div className="min-w-0 truncate">
+                          <p className="truncate text-sm font-semibold text-slate-800">
+                            {file.name}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            {(file.size / (1024 * 1024)).toFixed(2)} MB
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={removeFile}
+                        className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-200 hover:text-red-500"
+                        title="Remove file"
+                      >
+                        <X size={18} />
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <div className="min-w-0 truncate">
-                  <p className="truncate text-sm font-semibold text-slate-800">
-                    {file.name}
+
+                {/* Error Message */}
+                {error && (
+                  <p
+                    role="alert"
+                    className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600"
+                  >
+                    {error}
                   </p>
-                  <p className="text-xs text-slate-500">
-                    {(file.size / (1024 * 1024)).toFixed(2)} MB
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={removeFile}
-                className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-200 hover:text-red-500"
-                title="Remove file"
-              >
-                <X size={18} />
-              </button>
-            </div>
-          )}
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:from-blue-700 hover:to-indigo-700 hover:shadow-blue-500/40 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <svg
+                        className="h-5 w-5 animate-spin text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      <span>Sending Message...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send
+                        size={18}
+                        className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                      />
+                    </>
+                  )}
+                </button>
+
+                <p className="text-center text-[11px] text-slate-400">
+                  By submitting this form, you agree to our Privacy Policy. We'll never share your data.
+                </p>
+              </form>
+            )}
+          </div>
         </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:from-blue-700 hover:to-indigo-700 hover:shadow-blue-500/40 disabled:cursor-not-allowed disabled:opacity-70"
-        >
-          {isSubmitting ? (
-            <>
-              <svg
-                className="h-5 w-5 animate-spin text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
-              <span>Sending Message...</span>
-            </>
-          ) : (
-            <>
-              <span>Send Message</span>
-              <Send
-                size={18}
-                className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-              />
-            </>
-          )}
-        </button>
-
-        <p className="text-center text-[11px] text-slate-400">
-          By submitting this form, you agree to our Privacy Policy. We'll never share your data.
-        </p>
-      </form>
-    )}
-  </div>
-</div>
       </div>
 
       {/* Floating Animation Styles */}
