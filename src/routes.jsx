@@ -19,6 +19,8 @@ import AdminLogin from "./admin/admin/AdminLogin";
 import AdminPublications from "./admin/admin/AdminPublications";
 import ProjectPostersPage from "./pages/ProjectPostersPage";
 import ToolBox from "./pages/ToolBox";
+import SalesPartnerPage from "./pages/Salespartnerpage";
+import ContactSection from "./components/ContactSection";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,9 @@ const router = createBrowserRouter([
       { path: "/toolbox", element: <ToolBox /> },
       // { path: "/toolbox", element: <SigmaToolboxPage /> },
       { path: "/contact", element: <ContactPage /> },
+      { path: "/contactform", element: <ContactSection /> },
       { path: "/publications", element: <PublicationsPage /> },
+      { path: "/sales", element: <SalesPartnerPage /> },
       { path: "/hydrolicpublications", element: <PublicationsPage /> },
       { path: "/mathematical-model-studies", element: <MathematicalModelStudiesPage /> },
       { path: "/physical-model-studies", element: <PhysicalModelStudiesPage /> },

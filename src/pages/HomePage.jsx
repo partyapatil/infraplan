@@ -25,7 +25,7 @@ import ContactSection from "../components/ContactSection";
 import JourneySection from "../components/JourneySection";
 import FeaturesStrip from "../components/FeaturesStrip";
 import HeroSection from "../components/HeroSection";
-import contImage from "../assets/infraplanCont.png";
+// import contImage from "../assets/infraplanCont.png";
 import laboImage from "../assets/labo.png";
 import Tank from "../assets/tank.png";
 import Lab from "../assets/lab.png";
@@ -42,7 +42,7 @@ const nav = [
   { label: "Careers" },
 ];
 
-
+const contImage="https://res.cloudinary.com/ddpunpqre/image/upload/v1792995652/Infraplan_Engineering_Construction_Site_ljywhl.jpg"
 const verticals = [
   {
     title: "Engineering Contractors",

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   ArrowRight,
   CheckCircle,
@@ -51,17 +53,21 @@ const navigatorOptions = [
     icon: MessageSquare,
     title: "Contact Us",
     description: "Fill out the form to get in touch with our team.",
+    navigateTo: "/contactform",
   },
   {
     icon: Users2,
     title: "Expert Empanelment",
     description:
       "We are seeking experts in various hydraulic subfields for empanelment. Please complete the form for consideration.",
+    externalUrl:
+      "https://docs.google.com/forms/d/e/1FAIpQLSexXju1RCKBUXc4xa5eruc_wrpLK6HlpoM1xj4XQKvq3WX-fw/viewform?usp=send_form",
   },
   {
     icon: Handshake,
     title: "Sales Partner",
     description: "Join the AquaBill / Sigma ToolBox partner network.",
+    navigateTo: "/sales",
   },
 ];
 
@@ -121,6 +127,16 @@ function ContactHero() {
 ============================================================ */
 
 function NavigatorSection() {
+  const navigate = useNavigate();
+
+  const handleClick = (option) => {
+    if (option.externalUrl) {
+      window.open(option.externalUrl, "_blank", "noopener,noreferrer");
+    } else if (option.navigateTo) {
+      navigate(option.navigateTo);
+    }
+  };
+
   return (
     <section className="border-b border-slate-100 bg-white px-5 py-14 sm:px-8 sm:py-16 lg:px-12">
       <div className="mx-auto max-w-6xl">
@@ -135,9 +151,7 @@ function NavigatorSection() {
               <button
                 key={option.title}
                 type="button"
-                onClick={() =>
-                  document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })
-                }
+                onClick={() => handleClick(option)}
                 className="group flex flex-col items-start rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
               >
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 transition-transform duration-300 group-hover:scale-110">
@@ -151,7 +165,10 @@ function NavigatorSection() {
 
                 <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-blue-600">
                   Get started
-                  <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight
+                    size={13}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
                 </span>
               </button>
             );

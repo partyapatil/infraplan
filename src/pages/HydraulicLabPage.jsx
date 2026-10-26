@@ -29,7 +29,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 
 const last4 =
-  "https://res.cloudinary.com/ddpunpqre/image/upload/v1792678835/last4_c7xo75.jpg";
+  "https://res.cloudinary.com/ddpunpqre/image/upload/f_auto,q_auto,w_1600/v1792996868/last4_c7xo75_2_lahfuj.jpg";
   // import last4 from "../assets/last4.png"; 
 import physical1 from "../assets/phy1.png";
 import physical2 from "../assets/phy2.png";
@@ -47,27 +47,29 @@ const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/f_auto/q_au
 
 const showcaseImages = [
   "https://res.cloudinary.com/ddpunpqre/image/upload/v1791546418/infraplan/projects/dj4rscp6gngjtsmtl3as.png",
-  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791541557/infraplan/projects/rghh3fjexnus88nakzzw.png",
+  // "https://res.cloudinary.com/ddpunpqre/image/upload/v1791541557/infraplan/projects/rghh3fjexnus88nakzzw.png",
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1792996516/1_1_mqn4ii.jpg",
   "https://res.cloudinary.com/ddpunpqre/image/upload/v1791537010/infraplan/projects/dn5plqqfv3csuyohpyyc.jpg",
 ];
-const projectShowcase = [
-  {
-    title: "Physical Model Studies",
-    description:
-      "Laboratory-based physical modelling for hydraulic structures, spillways, energy dissipation and flow behaviour.",
-    icon: FlaskConical,
-    gradient: "from-blue-600 to-cyan-600",
-    images: [physical1, physical2, physical3],
-  },
-  {
-    title: "Mathematical Model Studies",
-    description:
-      "Advanced mathematical and numerical modelling for hydraulic systems, river behaviour and water infrastructure.",
-    icon: Cpu,
-    gradient: "from-indigo-600 to-blue-700",
-    images: [math1, math1, math1],
-  },
-];
+
+// const projectShowcase = [
+//   {
+//     title: "Physical Model Studies",
+//     description:
+//       "Laboratory-based physical modelling for hydraulic structures, spillways, energy dissipation and flow behaviour.",
+//     icon: FlaskConical,
+//     gradient: "from-blue-600 to-cyan-600",
+//     images: [physical1, physical2, physical3],
+//   },
+//   {
+//     title: "Mathematical Model Studies",
+//     description:
+//       "Advanced mathematical and numerical modelling for hydraulic systems, river behaviour and water infrastructure.",
+//     icon: Cpu,
+//     gradient: "from-indigo-600 to-blue-700",
+//     images: [math1, math1, math1],
+//   },
+// ];
 
 const modelStudies = {
   physicalModels: [
@@ -344,10 +346,15 @@ return (
     <section className="relative flex min-h-[550px] items-center overflow-hidden px-5 py-12 sm:px-8 lg:pl-24 lg:pr-12 lg:py-16 lg:pb-24">
       
         {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${last4})` }}
-      />
+  {/* Optimized Hero Background Image */}
+<img
+  src={last4}
+  alt=""
+  fetchPriority="high"
+  loading="eager"
+  decoding="async"
+  className="absolute inset-0 h-full w-full object-cover object-center"
+/>
 
       {/* 1. Light Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/30 to-transparent" />
