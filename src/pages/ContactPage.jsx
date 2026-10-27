@@ -6,10 +6,8 @@ import {
   CheckCircle,
   Clock,
   FileText,
-  Mail,
   MapPin,
-  Phone,
-  Send,
+
   Sparkles,
   UploadCloud,
   X,
@@ -18,35 +16,8 @@ import {
   MessageSquare,
 } from "lucide-react";
 
-import contactHero from "../assets/darker.png";
-import contactPage from "../assets/contactPage.png";
 
-/* ============================================================
-   REAL CONTACT + LOCATION DATA
-============================================================ */
 
-const contactDetails = [
-  {
-    icon: MapPin,
-    label: "Visit Us",
-    value: "109, Raoji Complex, 1st Lane, Shahupuri, Kolhapur – 416001",
-  },
-  {
-    icon: Phone,
-    label: "Call Us",
-    value: "+91-231-2655151",
-  },
-  {
-    icon: Mail,
-    label: "Email Us",
-    value: "contactus@infraplan.in",
-  },
-  {
-    icon: Clock,
-    label: "Working Hours",
-    value: "Mon - Sat · 9:00 AM - 6:00 PM",
-  },
-];
 
 const navigatorOptions = [
   {
@@ -107,17 +78,14 @@ export default function ContactPage() {
 
 function ContactHero() {
   return (
-    <section className="relative flex h-[300px] items-center justify-center overflow-hidden sm:h-[380px] lg:h-[400px]">
+    <section className="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-[400px]">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        // style={{ backgroundImage: `url(${contactPage})` }}
-        style={{ backgroundImage: `url(${contactHero})` }}
+        style={{
+          backgroundImage:
+            "url('https://res.cloudinary.com/ddpunpqre/image/upload/v1793078132/cFinal_uet0tm.png')",
+        }}
       />
-      <div className="absolute inset-0 bg-slate-900/55" />
-
-      <h1 className="relative z-10 text-2xl font-bold uppercase tracking-[0.15em] text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] sm:text-3xl lg:text-4xl">
-        Contact Us
-      </h1>
     </section>
   );
 }
