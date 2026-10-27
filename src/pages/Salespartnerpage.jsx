@@ -152,42 +152,42 @@ export default function SalesPartnerPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-800 via-blue-700 to-indigo-800 text-white">
-        {/* Decorative background */}
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white">
+        {/* Subtle decorative background */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-indigo-400/20 blur-3xl" />
+          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-blue-50 blur-3xl" />
+          <div className="absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-indigo-50 blur-3xl" />
           <div
-            className="absolute inset-0 opacity-[0.06]"
+            className="absolute inset-0 opacity-[0.03]"
             style={{
               backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+                "linear-gradient(rgba(15,23,42,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.6) 1px, transparent 1px)",
               backgroundSize: "44px 44px",
             }}
           />
         </div>
 
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center sm:py-28">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md">
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-700">
             <Sparkles size={13} />
             Join the AquaBill Partner Network
           </span>
 
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
             Sales Partner
-            <span className="block bg-gradient-to-r from-cyan-200 via-white to-blue-100 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
               (AquaBill)
             </span>
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base font-medium text-blue-100/90 sm:text-lg">
+          <p className="mx-auto mt-5 max-w-2xl text-base font-medium text-slate-600 sm:text-lg">
             Empower Villages · Earn Income · Support Digital India
           </p>
 
-          {/* <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-blue-700 shadow-xl shadow-blue-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50 hover:shadow-2xl"
+              className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
             >
               Apply Now
               <ArrowRight
@@ -197,12 +197,12 @@ export default function SalesPartnerPage() {
             </Link>
             <Link
               to="/contactform"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/20"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:border-slate-300 hover:bg-slate-50"
             >
               <MessageCircle size={16} />
               Talk to Us
             </Link>
-          </div> */}
+          </div>
         </div>
       </section>
 
@@ -282,7 +282,7 @@ export default function SalesPartnerPage() {
         />
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <table className="w-full text-left text-sm">
-            <thead className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white">
+            <thead className="bg-slate-50 text-slate-700">
               <tr>
                 <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider">
                   Task
@@ -334,26 +334,26 @@ export default function SalesPartnerPage() {
 
       {/* ================= CLOSING CTA ================= */}
       <section className="mx-auto max-w-5xl px-6 pb-20">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 px-6 py-14 text-center text-white shadow-2xl shadow-blue-900/20 sm:px-12">
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-14 text-center shadow-xl shadow-slate-200/60 sm:px-12">
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-            <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-indigo-400/20 blur-3xl" />
+            <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-blue-50 blur-3xl" />
+            <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-indigo-50 blur-3xl" />
           </div>
 
           <div className="relative">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] backdrop-blur-md">
+            <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-blue-700">
               <Sparkles size={12} />
               Ready to Join?
             </span>
 
-            <p className="mx-auto mt-5 max-w-2xl text-xl font-semibold leading-snug sm:text-2xl">
+            <p className="mx-auto mt-5 max-w-2xl text-xl font-semibold leading-snug text-slate-900 sm:text-2xl">
               Be part of the rural digitization revolution — where technology meets community
               impact.
             </p>
 
             <Link
               to="/contact"
-              className="group mt-9 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-blue-700 shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50 hover:shadow-2xl"
+              className="group mt-9 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
             >
               Apply Now
               <ArrowRight

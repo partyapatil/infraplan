@@ -146,54 +146,63 @@ export default function InfraplanPage() {
             </p>
           </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+<div className="grid grid-cols-1 gap-6 md:grid-cols-3">
   {verticals.map((v) => {
     const Icon = v.icon;
+
     return (
       <Link
         key={v.title}
         to={v.href}
-        className="group relative block overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
       >
-        <div className="relative h-48 overflow-hidden">
+        {/* Image Section */}
+        <div className="relative h-48 shrink-0 overflow-hidden">
           <div
             className="h-full w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
             style={{ backgroundImage: `url(${v.img})` }}
           />
+
+          {/* Image Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
 
-          {/* Corner accent glow */}
+          {/* Corner Accent Glow */}
           <div
             className={`pointer-events-none absolute -right-6 -top-6 h-28 w-28 rounded-full bg-gradient-to-br ${v.color} opacity-20 blur-2xl transition-opacity duration-500 group-hover:opacity-40`}
           />
 
+          {/* Icon and Title */}
           <div className="absolute bottom-4 left-4 flex items-center gap-2.5">
             <div
               className={`rounded-xl bg-gradient-to-r ${v.color} p-2.5 text-white shadow-lg transition-transform duration-300 group-hover:scale-110`}
             >
               <Icon size={18} />
             </div>
+
             <span className="text-sm font-semibold text-white drop-shadow-sm">
               {v.title}
             </span>
           </div>
         </div>
 
-        <div className="p-6">
-          <p className="text-sm leading-relaxed text-slate-600">{v.desc}</p>
-          <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-700 transition-colors group-hover:text-blue-800">
+        {/* Content Section */}
+        <div className="flex flex-1 flex-col p-6">
+          <p className="text-sm leading-relaxed text-slate-600">
+            {v.desc}
+          </p>
+
+          {/* Learn More */}
+          <span className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold text-blue-700 transition-colors group-hover:text-blue-800">
             Learn More
             <ChevronRight
               size={16}
-              className="transition-transform group-hover:translate-x-1"
+              className="transition-transform duration-300 group-hover:translate-x-1"
             />
           </span>
         </div>
 
-        {/* Bottom accent line on hover */}
-     <div
-  className="h-0.5 w-0 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-500 group-hover:w-full"
-/>
+        {/* Bottom Accent Line */}
+        <div className="mt-auto h-0.5 w-0 shrink-0 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-500 group-hover:w-full" />
       </Link>
     );
   })}
