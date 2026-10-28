@@ -152,59 +152,34 @@ export default function SalesPartnerPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {/* ================= HERO ================= */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-white">
-        {/* Subtle decorative background */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-blue-50 blur-3xl" />
-          <div className="absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-indigo-50 blur-3xl" />
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(15,23,42,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,0.6) 1px, transparent 1px)",
-              backgroundSize: "44px 44px",
-            }}
-          />
-        </div>
+<section
+  className="relative overflow-hidden border-b border-slate-200 bg-cover bg-center"
+  style={{
+    backgroundImage:
+      "url('https://res.cloudinary.com/ddpunpqre/image/upload/v1793168882/AquaBill_Sales_Partner_Waves_lns1gn.jpg')",
+  }}
+>
+  {/* Light overlay to keep text readable */}
+  <div className="absolute inset-0 bg-white/25" aria-hidden="true" />
 
-        <div className="relative mx-auto max-w-5xl px-6 py-20 text-center sm:py-28">
-          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-700">
-            <Sparkles size={13} />
-            Join the AquaBill Partner Network
-          </span>
+  <div className="relative mx-auto max-w-5xl px-6 py-20 text-center sm:py-28">
+    <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-700">
+      <Sparkles size={13} />
+      Join the AquaBill Partner Network
+    </span>
 
-          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-            Sales Partner
-            <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
-              (AquaBill)
-            </span>
-          </h1>
+    <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+      Sales Partner
+      <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
+        (AquaBill)
+      </span>
+    </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base font-medium text-slate-600 sm:text-lg">
-            Empower Villages · Earn Income · Support Digital India
-          </p>
-
-          <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
-            >
-              Apply Now
-              <ArrowRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
-            <Link
-              to="/contactform"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:border-slate-300 hover:bg-slate-50"
-            >
-              <MessageCircle size={16} />
-              Talk to Us
-            </Link>
-          </div>
-        </div>
-      </section>
+    <p className="mx-auto mt-5 max-w-2xl text-base font-medium text-slate-700 sm:text-lg">
+      Empower Villages · Earn Income · Support Digital India
+    </p>
+  </div>
+</section>
 
       {/* ================= ABOUT + QUICK FACTS ================= */}
       <section className="relative -mt-12 px-6 pb-14">
@@ -237,7 +212,6 @@ export default function SalesPartnerPage() {
               </p>
             </div>
 
-            {/* Quick facts */}
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               {quickFacts.map(({ icon: Icon, label, value }) => (
                 <div
@@ -256,6 +230,16 @@ export default function SalesPartnerPage() {
         </div>
       </section>
 
+
+{/* ================= HERO IMAGE ONLY ================= */}
+{/* <section className="w-full overflow-hidden">
+  <img
+    src="https://res.cloudinary.com/ddpunpqre/image/upload/v1793167829/AquaBill_Rural_Partner_Network_ewpfg9.jpg"
+    alt="AquaBill Sales Partner Network"
+    className="block h-auto w-full object-cover"
+    fetchPriority="high"
+  />
+</section> */}
       {/* ================= WHO CAN APPLY + RESPONSIBILITIES ================= */}
       <section className="mx-auto max-w-5xl px-6 pb-14">
         <SectionHeading

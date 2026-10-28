@@ -1,21 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import {
   Building2,
-  Droplets,
   Sun,
-  Zap,
   Gauge,
-  Wrench,
-  Activity,
+
   CheckCircle,
-  ArrowRight,
-  Award,
-  Users,
+
   ChevronLeft,
   ChevronRight,
   Play,
   Pause,
-  Shield,
 } from "lucide-react";
 
 import newcontractorshero from "../assets/new-contractors-hero.png";

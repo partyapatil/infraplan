@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import {
 
   MapPin,
-  Mail,
-  Phone,
+
   ChevronDown,
   CheckCircle,
   ArrowRight,
@@ -17,9 +16,7 @@ import {
   Maximize2,
     Volume2,
   VolumeX,
-  Layers,
-  Database,
-  Cpu,
+
 
   FlaskConical,
   ExternalLink,
@@ -31,10 +28,7 @@ import { Link, useNavigate } from "react-router-dom";
 const last4 =
   "https://res.cloudinary.com/ddpunpqre/image/upload/f_auto,q_auto,w_1600/v1792996868/last4_c7xo75_2_lahfuj.jpg";
   // import last4 from "../assets/last4.png"; 
-import physical1 from "../assets/phy1.png";
-import physical2 from "../assets/phy2.png";
-import physical3 from "../assets/phy3.png";
-import math1 from "../assets/math1.png";
+
 import ProjectMapSection from "../components/ProjectMapSection";
 // remove this line:
 // import heroVideo from "../assets/videos/hydrolicVideo.mp4";
@@ -52,24 +46,7 @@ const showcaseImages = [
   "https://res.cloudinary.com/ddpunpqre/image/upload/v1791537010/infraplan/projects/dn5plqqfv3csuyohpyyc.jpg",
 ];
 
-// const projectShowcase = [
-//   {
-//     title: "Physical Model Studies",
-//     description:
-//       "Laboratory-based physical modelling for hydraulic structures, spillways, energy dissipation and flow behaviour.",
-//     icon: FlaskConical,
-//     gradient: "from-blue-600 to-cyan-600",
-//     images: [physical1, physical2, physical3],
-//   },
-//   {
-//     title: "Mathematical Model Studies",
-//     description:
-//       "Advanced mathematical and numerical modelling for hydraulic systems, river behaviour and water infrastructure.",
-//     icon: Cpu,
-//     gradient: "from-indigo-600 to-blue-700",
-//     images: [math1, math1, math1],
-//   },
-// ];
+
 
 const modelStudies = {
   physicalModels: [
@@ -808,8 +785,7 @@ return (
       {/* =========================================================
     PROJECT SHOWCASE
 ========================================================= */}
-<section className="relative overflow-hidden border-y border-slate-100 bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-  {/* Background Decoration */}
+<section className="relative overflow-hidden border-y border-slate-200 bg-slate-100 px-5 py-16 sm:px-8 lg:px-12 lg:py-20">  {/* Background Decoration */}
   <div className="pointer-events-none absolute inset-0 overflow-hidden">
     <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
     <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
@@ -832,7 +808,7 @@ return (
 {/* =====================================================
     FEATURED PROJECT CARD
 ====================================================== */}
-<div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-6">
+<div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-md shadow-slate-900/5 transition-all duration-500 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 sm:p-6">
 
   {/* Image Grid */}
  {/* Image Grid */}
@@ -887,7 +863,7 @@ return (
     <div className="mx-auto mt-12 w-full max-w-7xl">
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* Location Map */}
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-300 bg-white p-7 shadow-md shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
           <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
 
@@ -927,8 +903,7 @@ return (
 
         <Link
           to="/hydrolicpublications"
-          className="group relative block overflow-hidden rounded-2xl border border-slate-200/70 bg-white p-7 shadow-lg shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"
-        >
+className="group relative block overflow-hidden rounded-2xl border border-slate-300 bg-white p-7 shadow-md shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"        >
           <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
 

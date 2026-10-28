@@ -3,7 +3,6 @@ import {
   Calculator,
   ChevronLeft,
   ChevronRight,
-  ArrowRight,
   Waves,
   BarChart3,
   Activity,

@@ -8,10 +8,9 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/About";
 import ContractorsPage from "./pages/ContractorsPage";
 import HydraulicLabPage from "./pages/HydraulicLabPage";
-import SigmaToolboxPage from "./pages/SigmaToolboxPage";
 import ContactPage from "./pages/ContactPage";
 import PublicationsPage from "./pages/Publicationspage";
-import MathematicalModelStudiesPage from "./pages/MathematicalModelStudiesPage";
+// import MathematicalModelStudiesPage from "./pages/MathematicalModelStudiesPage";
 import PhysicalModelStudiesPage from "./pages/PhysicalModelStudiesPage";
 
 import AdminLayout from "./admin/admin/AdminLayout";
@@ -37,7 +36,7 @@ const router = createBrowserRouter([
       { path: "/publications", element: <PublicationsPage /> },
       { path: "/sales", element: <SalesPartnerPage /> },
       { path: "/hydrolicpublications", element: <PublicationsPage /> },
-      { path: "/mathematical-model-studies", element: <MathematicalModelStudiesPage /> },
+      // { path: "/mathematical-model-studies", element: <MathematicalModelStudiesPage /> },
       { path: "/physical-model-studies", element: <PhysicalModelStudiesPage /> },
       { path: "/project-posters/:id", element: <ProjectPostersPage /> },
     ],

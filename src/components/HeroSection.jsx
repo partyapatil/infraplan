@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import {
-  ChevronRight,
   Play,
   Maximize2,
   Minimize2,
@@ -15,7 +14,6 @@ import {
 } from "lucide-react";
 
 import blueprintBg from "../assets/engineering-blueprint-bg.png";
-import heroVideo from "../assets/videos/hydrolicVideo.mp4";
 const heroVideo2 = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791607793/hydrolicVideo_pqzp6r.mp4";
 export default function HeroSection() {
   const [isFullscreen, setIsFullscreen] = useState(false);

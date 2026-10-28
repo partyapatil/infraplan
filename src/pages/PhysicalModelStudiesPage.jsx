@@ -1,6 +1,5 @@
-import React, { memo, useEffect, useState } from "react";
+import  { memo, useEffect, useState } from "react";
 import {
-  Waves,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -17,7 +16,7 @@ import {
 import { Link } from "react-router-dom";
 
 import trenchWeir3 from "../assets/physicalModelImages/trench-weir/second.png";
-import namBeng1 from "../assets/mathematicalModel/Nam-Beng-Dam/1.png";
+import namBeng1 from "../assets/1.png";
 import upperIntake1 from "../assets/physicalModelImages/upper-intake-structure/1.png";
 
 const collageImages = [
@@ -25,7 +24,8 @@ upperIntake1,
 namBeng1,
 trenchWeir3
 ];
-
+const FALLBACK_IMAGE =
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1793081581/Aerial_Farm_Facility_No_Preview_dkfrno.jpg";
 const parseDescription = (description = "") => {
   const text = description.replace(/\\n/g, "\n");
 
@@ -42,23 +42,6 @@ const parseDescription = (description = "") => {
     application: applicationMatch?.[1]?.trim().replace(/^[•\t\s]+/, "") || "",
   };
 };
-/* ============================================================
-   IMAGE HELPER
-============================================================ */
-
-const img = (seed) =>
-  `https://picsum.photos/seed/${seed}/1000/650`;
-
-/* Hero collage images */
-// const collageImages = [
-//   img("hydraulic-hero-1"),
-//   img("hydraulic-hero-2"),
-//   img("hydraulic-hero-3"),
-// ];
-
-/* ============================================================
-   DUMMY DATA
-============================================================ */
 
 
 
@@ -130,50 +113,61 @@ function buildModelCategories(projects, categories, subCategories) {
    PROJECT IMAGE CAROUSEL
 ============================================================ */
 
+
 function ProjectCarousel({ images, title }) {
   const [index, setIndex] = useState(0);
+  const [broken, setBroken] = useState({}); // { [index]: true } for failed images
 
-  const next = () => {
-    setIndex((prev) => (prev + 1) % images.length);
-  };
+  const list = Array.isArray(images) ? images.filter(Boolean) : [];
+  const hasImages = list.length > 0;
+  const hasMultiple = list.length > 1;
 
-  const prev = () => {
-    setIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
-  if (!images.length) {
-  return (
-    <div className="flex h-[240px] w-full items-center justify-center rounded-2xl bg-slate-100 text-slate-300 sm:h-[300px] lg:h-[320px] lg:w-[430px] lg:shrink-0">
-      <Box size={40} strokeWidth={1.5} />
-    </div>
-  );
-}
+  const next = () => setIndex((prev) => (prev + 1) % list.length);
+  const prev = () => setIndex((prev) => (prev - 1 + list.length) % list.length);
+
+  const showFallback = !hasImages || broken[index];
+  const src = showFallback ? FALLBACK_IMAGE : list[index];
 
   return (
     <div className="group relative w-full overflow-hidden rounded-2xl bg-slate-100 shadow-sm lg:w-[430px] lg:shrink-0">
-      {/* Image */}
       <div className="relative h-[240px] sm:h-[300px] lg:h-[320px]">
         <img
-          src={images[index]}
-          alt={`${title} ${index + 1}`}
+          src={src}
+          alt={showFallback ? `${title} – no preview available` : `${title} ${index + 1}`}
+          loading="lazy"
+          onError={() => {
+            // Only mark as broken if we were showing a real image (prevents loops)
+            if (hasImages && !broken[index]) {
+              setBroken((b) => ({ ...b, [index]: true }));
+            }
+          }}
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
         />
 
-        {/* Image overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent" />
 
-        {/* Image counter */}
-        <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-md">
-          {index + 1} / {images.length}
-        </div>
+        {/* Counter: only for real images */}
+        {hasImages && !showFallback && (
+          <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-md">
+            {index + 1} / {list.length}
+          </div>
+        )}
 
-        {/* Controls */}
-        {images.length > 1 && (
+        {/* Label on fallback */}
+        {showFallback && (
+          <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-md">
+            No preview available
+          </div>
+        )}
+
+        {/* Controls: only when there are multiple real images */}
+        {hasMultiple && (
           <>
             <button
               type="button"
               onClick={prev}
               aria-label="Previous image"
-              className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white opacity-100 shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/65 sm:h-10 sm:w-10 lg:opacity-0 lg:group-hover:opacity-100"
+              className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/65 sm:h-10 sm:w-10 lg:opacity-0 lg:group-hover:opacity-100"
             >
               <ChevronLeft size={18} />
             </button>
@@ -182,23 +176,20 @@ function ProjectCarousel({ images, title }) {
               type="button"
               onClick={next}
               aria-label="Next image"
-              className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white opacity-100 shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/65 sm:h-10 sm:w-10 lg:opacity-0 lg:group-hover:opacity-100"
+              className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/65 sm:h-10 sm:w-10 lg:opacity-0 lg:group-hover:opacity-100"
             >
               <ChevronRight size={18} />
             </button>
 
-            {/* Dots */}
             <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
-              {images.map((_, i) => (
+              {list.map((_, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => setIndex(i)}
                   aria-label={`Show image ${i + 1}`}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === index
-                      ? "w-6 bg-white"
-                      : "w-1.5 bg-white/50 hover:bg-white/80"
+                    i === index ? "w-6 bg-white" : "w-1.5 bg-white/50 hover:bg-white/80"
                   }`}
                 />
               ))}
@@ -269,8 +260,7 @@ const ProjectRow = memo(function ProjectRow({ project }) {
   const hasPosters = project.posters?.length > 0;
   const hasVideo = !!project.video;
   const hasActions = hasVideo || hasPosters;
-const base =
-  "group/btn inline-flex min-h-[40px] items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+
   return (
     <>
       <article className="group relative rounded-2xl border border-slate-200 bg-white transition-colors duration-200 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50">
@@ -684,14 +674,44 @@ className="relative h-[180px] overflow-hidden sm:h-[260px] lg:h-[340px]"
 /* ============================================================
    PAGE
 ============================================================ */
+const OPEN_KEY = "modelStudies:open";
+const SCROLL_KEY = "modelStudies:scroll";
 
+const readSaved = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem(OPEN_KEY)) ?? {};
+  } catch {
+    return {};
+  }
+};
 export default function ModelStudiesPage() {
   const [modelCategories, setModelCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [openCategoryId, setOpenCategoryId] = useState(null);
-  const [openSubId, setOpenSubId] = useState(null);
+  const [openCategoryId, setOpenCategoryId] = useState(() => readSaved().cat ?? null);
+  const [openSubId, setOpenSubId] = useState(() => readSaved().sub ?? null);
 
+
+    useEffect(() => {
+    try {
+      sessionStorage.setItem(
+        OPEN_KEY,
+        JSON.stringify({ cat: openCategoryId, sub: openSubId })
+      );
+    } catch {
+      /* storage unavailable, ignore */
+    }
+  }, [openCategoryId, openSubId]);
+
+  // Restore scroll position once data has loaded and the accordions are rendered
+  useEffect(() => {
+    if (loading) return;
+    const y = sessionStorage.getItem(SCROLL_KEY);
+    if (y !== null) {
+      window.scrollTo(0, Number(y));
+      sessionStorage.removeItem(SCROLL_KEY);
+    }
+  }, [loading]);
   useEffect(() => {
     let cancelled = false;
     (async () => {
