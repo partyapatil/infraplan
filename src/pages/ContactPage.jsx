@@ -45,18 +45,26 @@ const navigatorOptions = [
 const locations = [
   {
     title: "Kolhapur Office",
-    address: "109, Raoji Complex, 1st Lane, E Ward, Shahupuri, Kolhapur, Maharashtra 416001",
+    address:
+      "109, Raoji Complex, 1st Lane, E Ward, Shahupuri, Kolhapur, Maharashtra 416001",
+    mapUrl:
+      "https://www.google.com/maps?ll=16.701231,74.239337&z=10&t=m&hl=en-US&gl=US&mapclient=embed&cid=6389657255265852478",
   },
   {
     title: "Pune Office",
-    address: "Office No. 215, 2nd Floor, Kohinoor Majestic, Thermax Chowk, M.I.D.C. Chinchwad, Pune",
+    address:
+      "Office No. 215, 2nd Floor, Kohinoor Majestic, Thermax Chowk, M.I.D.C. Chinchwad, Pune",
+    mapUrl:
+      "https://www.google.com/maps?ll=18.662589,73.792738&z=10&t=m&hl=en-US&gl=US&mapclient=embed&cid=17567991279525501266",
   },
   {
     title: "Hydraulic Laboratory",
-    address: "Chandkhed Village, Tal-Maval, Dist. Pune, Maharashtra, India",
+    address:
+      "Chandkhed Village, Tal-Maval, Dist. Pune, Maharashtra, India",
+    mapUrl:
+      "https://www.google.com/maps/place/Infraplan+hydraulic+laboratory/@18.658261,73.652041,105615m/data=!3m1!1e3!4m6!3m5!1s0x3bc2af01a8f265f9:0x6efc32d2aa20348c!8m2!3d18.6582609!4d73.6520407!16s%2Fg%2F11px42nzr1?hl=en-US&entry=ttu&g_ep=EgoyMDI0MDkxNi4wIKXMDSoASAFQAw%3D%3D",
   },
 ];
-
 /* ============================================================
    PAGE
 ============================================================ */
@@ -661,25 +669,44 @@ function LocationsSection() {
           Our Locations
         </h2>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
-          {locations.map((loc) => (
-            <div
-              key={loc.title}
-              className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <h3 className="text-base font-bold text-slate-900">{loc.title}</h3>
-              <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-500 sm:text-sm">
-                {loc.address}
-              </p>
+      <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
+  {locations.map((loc) => (
+    <div
+      key={loc.title}
+      className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+    >
+      <h3 className="text-base font-bold text-slate-900">
+        {loc.title}
+      </h3>
 
-              <div className="mt-4 flex justify-center">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-50 text-blue-600">
-                  <MapPin size={17} />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <p className="mt-2 flex-1 text-xs leading-relaxed text-slate-500 sm:text-sm">
+        {loc.address}
+      </p>
+
+      <div className="mt-4 flex justify-center">
+        <a
+          href={loc.mapUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Navigate to ${loc.title} on Google Maps`}
+          title="Navigate with Google Maps"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-all duration-200 hover:scale-110 hover:bg-blue-600 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        >
+          <MapPin size={17} />
+        </a>
+      </div>
+
+      <a
+        href={loc.mapUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 text-sm font-semibold text-blue-600 transition hover:text-blue-800"
+      >
+        Get Directions →
+      </a>
+    </div>
+  ))}
+</div>
       </div>
     </section>
   );

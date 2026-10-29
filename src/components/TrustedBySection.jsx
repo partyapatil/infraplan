@@ -60,11 +60,6 @@ export default function TrustedBySection() {
             </span>
           </h2>
 
-          {/* Description */}
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-500 sm:text-base">
-            Partnering with leading organizations to deliver sustainable water
-            infrastructure solutions across the globe.
-          </p>
         </div>
 
         {/* =========================================================
