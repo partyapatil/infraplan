@@ -19,10 +19,13 @@ export default function AboutPage() {
           HERO SECTION
       ========================================================= */}
 <section className="relative flex min-h-[300px] items-center overflow-hidden px-5 py-12 sm:min-h-[360px] sm:px-8 lg:min-h-[400px] lg:px-12 lg:py-16">  {/* Background image */}
-  <div
-    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-    style={{ backgroundImage: `url(${aboutPage})` }}
-  />
+<div
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage:
+      "url('https://res.cloudinary.com/ddpunpqre/image/upload/v1793172475/aboutPage_ykh1yl.jpg')",
+  }}
+/>
 
   {/* Multi-layer scrim for depth + readability */}
   <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/60 via-black/45 to-black/70" />
