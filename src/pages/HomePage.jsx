@@ -7,10 +7,12 @@ import ContactSection from "../components/ContactSection";
 import JourneySection from "../components/JourneySection";
 import HeroSection from "../components/HeroSection";
 import laboImage from "../assets/labo.png";
-import toolboxImage from "../assets/toolbox.png";
+// import toolboxImage from "../assets/toolbox.png";
 
 const contImage =
-  "https://res.cloudinary.com/ddpunpqre/image/upload/v1792995652/Infraplan_Engineering_Construction_Site_ljywhl.jpg";
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1793276279/Elevated_Water_Tank_Construction_Site_cn4tur.jpg";
+const toolboxImage =
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1793276455/Smart_Water_Network_Dashboard_kxhhs8.jpg";
 
 const verticals = [
   {

@@ -193,8 +193,7 @@ function HistoryCard({ item, align = "left" }) {
               align === "right" ? "justify-end" : ""
             }`}
           >
-            <span className="text-xs font-bold text-slate-500">{item.year}</span>
-          </div>
+<span className="text-sm font-bold text-slate-500 sm:text-base">{item.year}</span>          </div>
 
           <h3 className={`text-base font-bold leading-snug ${item.textColor}`}>
             {item.label}
@@ -252,10 +251,9 @@ function MarqueeNode({ item, isActive, onEnter, onLeave }) {
           />
           <div className="absolute inset-0 animate-pulse rounded-full border-2 border-white/30 group-hover:animate-none" />
         </div>
-
-        <div className="absolute -bottom-3 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-slate-200 bg-white/95 px-2.5 py-0.5 text-[9px] font-extrabold text-slate-700 shadow-md backdrop-blur-sm sm:px-3 sm:text-[10px]">
-          {item.year}
-        </div>
+<div className="absolute -bottom-3 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-slate-200 bg-white/95 px-3 py-1 text-[11px] font-extrabold text-slate-700 shadow-md backdrop-blur-sm sm:px-4 sm:text-xs md:text-sm">
+  {item.year}
+</div>
       </div>
 
       {/* CONNECTOR */}
@@ -516,13 +514,14 @@ export default function JourneySection() {
                       </div>
 
                       {/* YEAR PILL */}
-                      <div className="absolute left-5 top-[70px] z-20 -translate-x-1/2 sm:left-1/2">
-                        <span
-                          className={`block rounded-full bg-gradient-to-r ${item.color} px-2.5 py-0.5 text-[11px] font-bold tracking-wide text-white shadow-md ring-2 ring-white`}
-                        >
-                          {item.year}
-                        </span>
-                      </div>
+                   {/* YEAR PILL */}
+<div className="absolute left-5 top-[70px] z-20 -translate-x-1/2 sm:left-1/2">
+  <span
+    className={`block rounded-full bg-gradient-to-r ${item.color} px-4 py-1 text-sm font-bold tracking-wide text-white shadow-md ring-2 ring-white sm:px-5 sm:py-1.5 sm:text-base`}
+  >
+    {item.year}
+  </span>
+</div>
                     </div>
                   );
                 })}

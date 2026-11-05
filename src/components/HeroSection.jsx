@@ -13,7 +13,8 @@ import {
   VolumeX,
 } from "lucide-react";
 
-import blueprintBg from "../assets/engineering-blueprint-bg.png";
+// import blueprintBg from "../assets/engineering-blueprint-bg.png";
+// import blueprintBg from "../assets/engineering-blueprint-bg.png";
 const heroVideo2 = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791607793/hydrolicVideo_pqzp6r.mp4";
 export default function HeroSection() {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -198,7 +199,7 @@ export default function HeroSection() {
           <div
             className="absolute inset-0 z-0 bg-white"
             style={{
-              backgroundImage: `url(${blueprintBg})`,
+  backgroundImage: `url("https://res.cloudinary.com/ddpunpqre/image/upload/v1793430036/Water_Infrastructure_Blueprint_Panorama_bw2s9p.jpg")`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
@@ -257,9 +258,9 @@ export default function HeroSection() {
               {/* Heading */}
 
 <h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
-  Plan, Model, Construct and{" "}
+  Plan, Model, Construct and Manage{" "}
   <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-    Manage Water Infrastructure
+     Water Infrastructure
   </span>
 </h1>
 
@@ -458,32 +459,29 @@ export default function HeroSection() {
             STATS GRID
         ============================================================ */}
 
-        {!isFullscreen && (
-          <div className="relative mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-4 rounded-2xl border border-slate-200/60 bg-white/80 p-6 shadow-xl backdrop-blur-lg sm:grid-cols-4">
-            {stats.map((s) => {
-              const Icon = s.icon;
+     {!isFullscreen && (
+  <div className="relative mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-3 rounded-xl border border-slate-200/60 bg-white/80 p-4 shadow-lg backdrop-blur-lg sm:grid-cols-4">
+    {stats.map((s) => {
+      const Icon = s.icon;
 
-              return (
-                <div
-                  key={s.label}
-                  className="group text-center"
-                >
-                  <div className="mb-2 inline-flex rounded-xl bg-blue-50 p-2 text-blue-600 transition-transform group-hover:scale-110">
-                    <Icon size={20} />
-                  </div>
-
-                  <div className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-                    {s.value}
-                  </div>
-
-                  <div className="mt-0.5 text-xs text-slate-500">
-                    {s.label}
-                  </div>
-                </div>
-              );
-            })}
+      return (
+        <div key={s.label} className="group text-center">
+          <div className="mb-1.5 inline-flex rounded-lg bg-blue-50 p-1.5 text-blue-600 transition-transform group-hover:scale-110">
+            <Icon size={16} />
           </div>
-        )}
+
+          <div className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+            {s.value}
+          </div>
+
+          <div className="mt-0.5 text-[11px] text-slate-500">
+            {s.label}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+)}
       </div>
     </section>
   );

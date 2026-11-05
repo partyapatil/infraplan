@@ -184,7 +184,7 @@ export default function AboutPage() {
           REACH & OTHER ACTIVITIES
       ========================================================= */}
       <section className="bg-white px-5 py-16 sm:px-8 lg:px-12">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 ">
           {/* Reach */}
           <div className="group rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-teal-50/50 p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl sm:p-8">
             <div className="mb-6 flex items-center gap-3">
@@ -217,57 +217,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Other Activities */}
-          <div className="group rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 to-orange-50/50 p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl sm:p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-700 transition-transform group-hover:scale-110">
-                <Award size={24} />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 sm:text-2xl">
-                Other Activities
-              </h3>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-white p-4 shadow-sm">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700">
-                  <Users size={16} />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-800">
-                    Support for 'Baba Redikar Go Gita Sanstha'
-                  </p>
-                  <p className="text-xs text-slate-500 sm:text-sm">
-                    Kolhapur
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-white p-4 shadow-sm">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700">
-                  <Building2 size={16} />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-800">
-                    Land / Property Development Works
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-white p-4 shadow-sm">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700">
-                  <Droplets size={16} />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-slate-800">
-                    Mango Orchard
-                  </p>
-                  <p className="text-xs text-slate-500 sm:text-sm">
-                    Specialisation in Alphonso Mango at Devgad, Maharashtra
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
     </div>

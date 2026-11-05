@@ -325,7 +325,7 @@ return (
         {/* Background Image */}
   {/* Optimized Hero Background Image */}
 <img
-  src={last4}
+  src={"https://res.cloudinary.com/ddpunpqre/image/upload/v1793427911/hydraulic_lab_original_photos_collage_dhwq7r.jpg"}
   alt=""
   fetchPriority="high"
   loading="eager"

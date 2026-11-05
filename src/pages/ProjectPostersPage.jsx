@@ -164,14 +164,17 @@ export default function ProjectPostersPage() {
       {/* Sticky header bar */}
       <div className="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-10">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-medium text-slate-600 transition hover:border-blue-300 hover:text-blue-600"
-          >
-            <ArrowLeft size={16} />
-            <span className="hidden sm:inline">Back</span>
-          </button>
+       <button
+  type="button"
+  onClick={() => navigate(-1)}
+  className="group inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:translate-y-0"
+>
+  <ArrowLeft
+    size={16}
+    className="transition-transform duration-300 group-hover:-translate-x-1"
+  />
+  <span>Back</span>
+</button>
 
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-sm font-semibold text-slate-900 sm:text-base">
@@ -253,11 +256,25 @@ export default function ProjectPostersPage() {
               ))}
             </div>
 
-            {/* Bottom hint */}
-            <p className="mt-10 text-center text-xs text-slate-400">
-              End of posters · {posters.length}{" "}
-              {posters.length === 1 ? "poster" : "posters"}
-            </p>
+         {/* Bottom hint + Back button */}
+<div className="mt-10 flex flex-col items-center gap-4">
+  <p className="text-center text-xs text-slate-400">
+    End of posters · {posters.length}{" "}
+    {posters.length === 1 ? "poster" : "posters"}
+  </p>
+
+<button
+  type="button"
+  onClick={() => navigate(-1)}
+  className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 active:translate-y-0"
+>
+  <ArrowLeft
+    size={17}
+    className="transition-transform duration-300 group-hover:-translate-x-1"
+  />
+  Back to Projects
+</button>
+</div>
           </>
         )}
       </main>

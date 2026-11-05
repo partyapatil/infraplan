@@ -385,7 +385,7 @@ function SubCategoryAccordion({
     >
       <button
         type="button"
-        onClick={onToggle}
+onClick={(e) => onToggle(e.currentTarget)}
         aria-expanded={open}
         className="flex w-full items-center gap-4 p-4 text-left sm:p-5"
       >
@@ -548,9 +548,9 @@ function CategoryAccordion({
       }`}
     >
       {/* Header */}
-      <button
+            <button
         type="button"
-        onClick={onToggle}
+        onClick={(e) => onToggle(e.currentTarget)}
         aria-expanded={open}
         className="group flex w-full items-center gap-4 p-5 text-left sm:gap-5 sm:p-6 lg:p-7"
       >
@@ -629,7 +629,7 @@ function CategoryAccordion({
                 sub={sub}
                 index={index}
                 open={openSubId === sub.id}
-                onToggle={() => onToggleSub(sub.id)}
+onToggle={(el) => onToggleSub(sub.id, el)}
               />
             ))}
           </div>
@@ -684,6 +684,21 @@ const readSaved = () => {
     return {};
   }
 };
+
+
+// Put this above ModelStudiesPage
+const keepInPlace = (el) => {
+  if (!el) return;
+  const startTop = el.getBoundingClientRect().top;
+  const startTime = performance.now();
+
+  const tick = () => {
+    const delta = el.getBoundingClientRect().top - startTop;
+    if (delta !== 0) window.scrollBy({ top: delta, behavior: "instant" });
+    if (performance.now() - startTime < 600) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
 export default function ModelStudiesPage() {
   const [modelCategories, setModelCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -732,14 +747,16 @@ export default function ModelStudiesPage() {
     return () => { cancelled = true; };
   }, []);
 
-  const toggleCategory = (id) => {
-    setOpenCategoryId((prev) => (prev === id ? null : id));
-    setOpenSubId(null);
-  };
+const toggleCategory = (id, el) => {
+  keepInPlace(el);
+  setOpenCategoryId((prev) => (prev === id ? null : id));
+  setOpenSubId(null);
+};
 
-  const toggleSub = (id) => {
-    setOpenSubId((prev) => (prev === id ? null : id));
-  };
+const toggleSub = (id, el) => {
+  keepInPlace(el);
+  setOpenSubId((prev) => (prev === id ? null : id));
+};
 
   /* Stats */
   const totalProjects = modelCategories.reduce(
@@ -813,8 +830,7 @@ export default function ModelStudiesPage() {
       </section>
 
       {/* ACCORDION */}
-      <main className="px-4 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16">
-        <div className="mx-auto max-w-8xl">
+<main style={{ overflowAnchor: "none" }} className="px-4 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16">        <div className="mx-auto max-w-8xl">
       {loading ? (
   <p className="text-center text-sm text-slate-500">Loading projects...</p>
 ) : error ? (
@@ -828,7 +844,7 @@ export default function ModelStudiesPage() {
         key={category.id}
         category={category}
         open={openCategoryId === category.id}
-        onToggle={() => toggleCategory(category.id)}
+onToggle={(el) => toggleCategory(category.id, el)}
         openSubId={openSubId}
         onToggleSub={toggleSub}
       />
