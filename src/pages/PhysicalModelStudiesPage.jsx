@@ -18,9 +18,10 @@ import { Link } from "react-router-dom";
 import trenchWeir3 from "../assets/physicalModelImages/trench-weir/second.png";
 import namBeng1 from "../assets/1.png";
 import upperIntake1 from "../assets/physicalModelImages/upper-intake-structure/1.png";
-
+// import upperIntake1 from "../assets/physicalModelImages/upper-intake-structure/1.png";
+const b="https://res.cloudinary.com/ddpunpqre/image/upload/v1791527012/infraplan/projects/vjdptcnpx1zzltunzly4.png"
 const collageImages = [
-upperIntake1,
+b,
 namBeng1,
 trenchWeir3
 ];
@@ -677,6 +678,17 @@ className="relative h-[180px] overflow-hidden sm:h-[260px] lg:h-[340px]"
 const OPEN_KEY = "modelStudies:open";
 const SCROLL_KEY = "modelStudies:scroll";
 
+// Runs once when the page first loads. On a hard reload, forget what was open.
+try {
+  const navType = performance.getEntriesByType("navigation")[0]?.type;
+  if (navType === "reload") {
+    sessionStorage.removeItem(OPEN_KEY);
+    sessionStorage.removeItem(SCROLL_KEY);
+  }
+} catch {
+  /* ignore */
+}
+
 const readSaved = () => {
   try {
     return JSON.parse(sessionStorage.getItem(OPEN_KEY)) ?? {};
@@ -684,7 +696,6 @@ const readSaved = () => {
     return {};
   }
 };
-
 
 // Put this above ModelStudiesPage
 const keepInPlace = (el) => {

@@ -320,32 +320,30 @@ return (
   
     {/* Hero Section with Video - New Design */}
     {/* CHANGED: Added lg:pl-24 lg:pb-24 to push content right and up */}
-    <section className="relative flex min-h-[550px] items-center overflow-hidden px-5 py-12 sm:px-8 lg:pl-24 lg:pr-12 lg:py-16 lg:pb-24">
-      
-        {/* Background Image */}
-  {/* Optimized Hero Background Image */}
-<img
-  src={"https://res.cloudinary.com/ddpunpqre/image/upload/v1793427911/hydraulic_lab_original_photos_collage_dhwq7r.jpg"}
-  alt=""
-  fetchPriority="high"
-  loading="eager"
-  decoding="async"
-  className="absolute inset-0 h-full w-full object-cover object-center"
-/>
+<section className="relative flex min-h-0 items-center overflow-hidden px-4 py-10 sm:px-8 md:min-h-[550px] lg:pl-24 lg:pr-12 lg:py-16 lg:pb-24">
+      {/* Mobile background: clean gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-blue-50 md:hidden" />
 
-      {/* 1. Light Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/30 to-transparent" />
+      {/* Tablet/desktop background: collage */}
+      <img
+        src="https://res.cloudinary.com/ddpunpqre/image/upload/v1793427911/hydraulic_lab_original_photos_collage_dhwq7r.jpg"
+        alt=""
+        fetchPriority="high"
+        loading="eager"
+        decoding="async"
+        className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+      />
 
-      {/* 2. Bottom Fade */}
-      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white/40 to-transparent" />
+      {/* Overlays (tablet and up only) */}
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-white/70 via-white/30 to-transparent md:block" />
+      <div className="absolute inset-x-0 bottom-0 hidden h-20 bg-gradient-to-t from-white/40 to-transparent md:block" />
 
       {/* Main Content */}
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-8 md:flex-row md:gap-8 lg:gap-12">
-
         {/* Left Content */}
-        <div className="relative w-full min-w-0 md:w-[48%] md:flex-none lg:w-[46%]">
-          {/* Soft glow behind text */}
-          <div className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[2.5rem] bg-white/50 blur-2xl" />
+        <div className="relative w-full min-w-0 text-center md:w-[48%] md:flex-none md:text-left lg:w-[46%]">
+          {/* Soft glow behind text (tablet and up only) */}
+          <div className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 hidden rounded-[2.5rem] bg-white/50 blur-2xl md:block" />
 
           {/* Badge */}
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-blue-700 shadow-sm backdrop-blur-sm">
@@ -362,16 +360,12 @@ return (
             Laboratory
           </h1>
 
-        
           {/* Information Meta */}
-          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 md:justify-start">
+            <div className="flex items-center gap-2 text-sm font-medium text-slate-900 md:[text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
               <MapPin size={16} className="shrink-0 text-blue-600" />
               <span>Pune, Maharashtra</span>
             </div>
-
-
-          
           </div>
         </div>
 
@@ -379,7 +373,7 @@ return (
         <div className="w-full min-w-0 md:w-[52%] md:flex-1 lg:w-[54%] lg:flex-none">
           <div
             ref={videoContainerRef}
-            className={`relative mx-auto w-full max-w-[620px] overflow-hidden bg-slate-100 shadow-xl shadow-slate-900/10 ${
+            className={`relative mx-auto w-full max-w-[620px] overflow-hidden bg-slate-900 shadow-xl shadow-slate-900/10 ${
               isVideoFullscreen
                 ? "h-screen max-w-none rounded-none"
                 : "aspect-video rounded-2xl border border-slate-200/70"
@@ -388,7 +382,9 @@ return (
             <video
               ref={videoRef}
               className={`absolute inset-0 h-full w-full ${
-                isVideoFullscreen ? "object-contain bg-black" : "object-cover"
+                isVideoFullscreen
+                  ? "object-contain bg-black"
+                  : "scale-[1.18] object-cover"
               }`}
               autoPlay
               muted={isMuted}
@@ -406,14 +402,6 @@ return (
 
             {/* Video Gradient */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-
-            {/* Video Badge */}
-            {!isVideoFullscreen && (
-              <div className="absolute left-3 top-3 z-20 flex max-w-[85%] items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1.5 text-[10px] font-medium text-slate-700 shadow-sm backdrop-blur-md sm:left-4 sm:top-4">
-                <div className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-red-500" />
-                <span className="truncate">Infraplan Hydraulic Laboratory</span>
-              </div>
-            )}
 
             {/* Fullscreen Overlay Text */}
             {isVideoFullscreen && (
