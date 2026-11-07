@@ -20,6 +20,7 @@ import ProjectPostersPage from "./pages/ProjectPostersPage";
 import ToolBox from "./pages/ToolBox";
 import SalesPartnerPage from "./pages/Salespartnerpage";
 import ContactSection from "./components/ContactSection";
+import PosterBuilderTest from "./pages/Posterbuildertest";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
       { path: "projects", element: <AdminProjects /> },
       { path: "publications", element: <AdminPublications /> },
       { path: "masters", element: <AdminMasters /> },
+      { path: "t", element: <PosterBuilderTest /> },
     ],
   },
 ]);

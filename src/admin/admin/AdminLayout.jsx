@@ -79,7 +79,8 @@ export default function AdminLayout() {
   const closeDrawer = () => setMobileOpen(false);
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-50 md:h-screen md:flex-row md:overflow-hidden">
+    // <div className="flex ">
+   <div className="flex min-h-screen flex-col bg-slate-50 md:h-screen md:flex-row md:overflow-hidden"> 
       {/* Mobile top bar */}
       <header className="sticky top-0 z-30 flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-3 py-2.5 sm:px-4 sm:py-3 md:hidden">
         <div className="flex min-w-0 items-center gap-2">
