@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   Menu,
   X,
+  LayoutTemplate,
 } from "lucide-react";
 import { auth } from "./lib/adminApi";
 
@@ -16,6 +17,8 @@ const links = [
   { to: "/admin/projects", label: "Projects", icon: FolderKanban },
   { to: "/admin/publications", label: "Publications", icon: BookOpen },
   { to: "/admin/masters", label: "Masters", icon: GraduationCap },
+    { to: "/admin/posters", label: "Posters", icon: LayoutTemplate },
+
 ];
 
 function NavItems({ onNavigate }) {
@@ -75,7 +78,7 @@ export default function AdminLayout() {
     await auth.logout();
     navigate("/admin/login");
   };
-
+const wide = /^\/admin\/posters\/(new|[^/]+\/edit)$/.test(location.pathname);
   const closeDrawer = () => setMobileOpen(false);
 
   return (
@@ -158,9 +161,9 @@ export default function AdminLayout() {
       {/* Main content */}
    {/* Main content */}
 <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden p-3 sm:p-4 md:p-6 lg:p-8">
-  <div className="mx-auto flex h-full min-h-0 w-full max-w-6xl flex-col">
-    <Outlet />
-  </div>
+<div className={`mx-auto flex h-full min-h-0 w-full flex-col ${wide ? "" : "max-w-6xl"}`}>
+  <Outlet />
+</div>
 </main>
     </div>
   );

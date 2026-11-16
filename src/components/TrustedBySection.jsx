@@ -2,7 +2,7 @@
 export default function TrustedBySection() {
 
   const partnerImages = import.meta.glob(
-    "/src/assets/partners/*.{png,jpg,jpeg,webp,gif,svg}",
+    "/src/assets/logos/*.{png,jpg,jpeg,webp,gif,svg}",
     {
       eager: true,
       query: "?url",

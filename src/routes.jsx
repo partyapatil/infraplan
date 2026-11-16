@@ -21,6 +21,8 @@ import ToolBox from "./pages/ToolBox";
 import SalesPartnerPage from "./pages/Salespartnerpage";
 import ContactSection from "./components/ContactSection";
 import PosterBuilderTest from "./pages/Posterbuildertest";
+import AdminPosters from "./AdminPosters";
+import AdminPosterEditor from "./admin/admin/AdminPosterEditor";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,9 @@ const router = createBrowserRouter([
       { path: "publications", element: <AdminPublications /> },
       { path: "masters", element: <AdminMasters /> },
       { path: "t", element: <PosterBuilderTest /> },
+      { path: "posters", element: <AdminPosters /> },
+{ path: "posters/new", element: <AdminPosterEditor /> },
+{ path: "posters/:id/edit", element: <AdminPosterEditor /> },
     ],
   },
 ]);

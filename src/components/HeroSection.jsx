@@ -256,11 +256,13 @@ export default function HeroSection() {
             
 
               {/* Heading */}
-
-<h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
+<h1 className="text-balance text-4xl font-bold leading-tight tracking-tight text-slate-950 drop-shadow-sm sm:text-5xl lg:text-[3.5rem]">
   Plan, Model, Construct and Manage{" "}
-  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-     Water Infrastructure
+  <span className="bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+    Water
+  </span>{" "}
+  <span className="bg-gradient-to-r from-indigo-600 to-purple-500 bg-clip-text text-transparent">
+    Infrastructure
   </span>
 </h1>
 

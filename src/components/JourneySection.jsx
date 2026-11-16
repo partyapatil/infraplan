@@ -378,26 +378,26 @@ export default function JourneySection() {
       willChange: "transform",
     }}
   >
-    {[0, 1, 2].map((setIndex) => (
-      <div
-        key={setIndex}
-        className="flex items-start gap-4 pr-4 sm:gap-6 sm:pr-6 md:gap-8 md:pr-8"
-      >
-        {journey.map((item, i) => {
-          const key = `${setIndex}-${i}`;
+{[0, 1, 2].map((setIndex) => (
+  <div
+    key={setIndex}
+    className="flex items-start gap-4 pr-4 sm:gap-6 sm:pr-6 md:gap-8 md:pr-8"
+  >
+    {[...journey].reverse().map((item, i) => {
+      const key = `${setIndex}-${i}`;
 
-          return (
-            <MarqueeNode
-              key={key}
-              item={item}
-              isActive={activeKey === key}
-              onEnter={() => setActiveKey(key)}
-              onLeave={() => setActiveKey(null)}
-            />
-          );
-        })}
-      </div>
-    ))}
+      return (
+        <MarqueeNode
+          key={key}
+          item={item}
+          isActive={activeKey === key}
+          onEnter={() => setActiveKey(key)}
+          onLeave={() => setActiveKey(null)}
+        />
+      );
+    })}
+  </div>
+))}
   </div>
 </div>
 
@@ -550,32 +550,32 @@ export default function JourneySection() {
         </div>
       )}
 
-      <style>{`
-        @keyframes timelineScroll {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-33.3333%); }
-        }
-        .animate-timeline-scroll {
-          animation: timelineScroll 35s linear infinite;
-        }
-        @media (max-width: 640px) {
-          .animate-timeline-scroll {
-            animation: timelineScroll 25s linear infinite;
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .animate-timeline-scroll {
-            animation: none;
-          }
-        }
-        @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.96); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        .animate-scale-in {
-          animation: scaleIn 0.2s ease-out;
-        }
-      `}</style>
+   <style>{`
+  @keyframes timelineScroll {
+    0%   { transform: translateX(-33.3333%); }
+    100% { transform: translateX(0%); }
+  }
+  .animate-timeline-scroll {
+    animation: timelineScroll 35s linear infinite;
+  }
+  @media (max-width: 640px) {
+    .animate-timeline-scroll {
+      animation: timelineScroll 25s linear infinite;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-timeline-scroll {
+      animation: none;
+    }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+`}</style>
     </>
   );
 }

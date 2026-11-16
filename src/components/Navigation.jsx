@@ -43,7 +43,7 @@ const navItems = [
     ],
   },
   {
-    label: "Sigma ToolBox",
+    label: "Aquentra",
     path: "/toolbox",
   },
   {

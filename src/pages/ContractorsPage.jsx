@@ -12,7 +12,7 @@ import {
   Pause,
 } from "lucide-react";
 
-import newcontractorshero from "../assets/con1.png";
+import newcontractorshero from "../assets/con3.jpg";
 import ProjectMapSection from "../components/ProjectMapSection";
 
 const contractorImages = import.meta.glob(

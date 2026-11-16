@@ -64,45 +64,47 @@ const getJson = async (path) => {
 };
 
 // Flat projects -> category -> subCategory -> projects
+// Flat projects -> category -> subCategory -> projects
 function buildModelCategories(projects, categories, subCategories) {
-  const catInfo = new Map(categories.map((c) => [c.id, c]));
   const subInfo = new Map(subCategories.map((s) => [s.id, s]));
-  const grouped = new Map();
 
-  projects.forEach((p) => {
-    if (!grouped.has(p.categoryId)) {
-      grouped.set(p.categoryId, {
-        id: p.categoryId,
-        title: p.categoryName,
-        description: catInfo.get(p.categoryId)?.description ?? "",
-        icon: ICONS[grouped.size % ICONS.length],
-        subs: new Map(),
+  // 1. Loop over the API categories directly to guarantee the exact API order
+  return categories.map((cat, index) => {
+    // Find all projects that belong to this category
+    const catProjects = projects.filter((p) => p.categoryId === cat.id);
+    
+    // Group these projects by subcategory
+    const subsMap = new Map();
+    
+    catProjects.forEach((p) => {
+      if (!subsMap.has(p.subCategoryId)) {
+        subsMap.set(p.subCategoryId, {
+          id: p.subCategoryId,
+          title: p.subCategoryName,
+          description: subInfo.get(p.subCategoryId)?.description ?? "",
+          projects: [],
+        });
+      }
+      
+      subsMap.get(p.subCategoryId).projects.push({
+        id: p.id,
+        title: p.title,
+        description: p.description,
+        images: (p.imagePaths ?? []).map(fileUrl),
+        posters: (p.posterImagePaths ?? []).map(fileUrl),
+        video: p.videoPath ? fileUrl(p.videoPath) : "",
       });
-    }
-    const cat = grouped.get(p.categoryId);
-
-    if (!cat.subs.has(p.subCategoryId)) {
-      cat.subs.set(p.subCategoryId, {
-        id: p.subCategoryId,
-        title: p.subCategoryName,
-        description: subInfo.get(p.subCategoryId)?.description ?? "",
-        projects: [],
-      });
-    }
-    cat.subs.get(p.subCategoryId).projects.push({
-      id: p.id,
-      title: p.title,
-      description: p.description,
-      images: (p.imagePaths ?? []).map(fileUrl),
-      posters: (p.posterImagePaths ?? []).map(fileUrl), // NEW
-      video: p.videoPath ? fileUrl(p.videoPath) : "",
     });
-  });
 
-  return [...grouped.values()].map(({ subs, ...cat }) => ({
-    ...cat,
-    subCategories: [...subs.values()],
-  }));
+    // Return the category object in the exact structure your UI expects
+    return {
+      id: cat.id,
+      title: cat.name, // Map the API 'name' to the UI 'title'
+      description: cat.description ?? "",
+      icon: ICONS[index % ICONS.length],
+      subCategories: [...subsMap.values()],
+    };
+  }).filter(cat => cat.subCategories.length > 0); // Optional: hide categories with 0 projects
 }
 /* ============================================================
    PROJECT IMAGE CAROUSEL
@@ -303,85 +305,83 @@ const ProjectRow = memo(function ProjectRow({ project }) {
   const hasPosters = project.posters?.length > 0;
   const hasVideo = !!project.video;
   const hasActions = hasVideo || hasPosters;
+return (
+  <>
+    <article className="group relative rounded-2xl border border-slate-200 bg-white transition-colors duration-200 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50">
+      <div className="flex flex-col lg:flex-row">
+        {/* Left: carousel */}
+        <ProjectCarousel images={project.images} title={project.title} />
 
-  return (
-    <>
-      <article className="group relative rounded-2xl border border-slate-200 bg-white transition-colors duration-200 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50">
-        <div className="flex flex-col lg:flex-row">
-          {/* Left: carousel */}
-          <ProjectCarousel images={project.images} title={project.title} />
+        {/* Right: content */}
+        <div className="flex flex-1 flex-col justify-center p-5 sm:p-7 lg:p-8">
+          {/* Label */}
+          <div className="mb-3 flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-blue-600">
+              Project Study
+            </span>
+          </div>
 
-          {/* Right: content */}
-          <div className="flex flex-1 flex-col justify-center p-5 sm:p-7 lg:p-8">
-            {/* Label */}
-            <div className="mb-3 flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
-              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-blue-600">
-                Project Study
-              </span>
+          {/* Title */}
+          <h3 className="text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl lg:text-2xl">
+            {project.title}
+          </h3>
+
+          {/* Description - Removed max-w-2xl here */}
+          <p className="mt-3 text-sm leading-7 text-slate-600 sm:text-[15px]">
+            {project.description}
+          </p>
+
+          {/* Actions */}
+          {hasActions && (
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {hasPosters && (
+                <Link
+                  to={`/project-posters/${project.id}`}
+                  className="group/btn inline-flex min-h-[44px] items-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+                >
+                  <Images size={17} />
+                  View Details
+                </Link>
+              )}
+
+              {hasVideo && (
+                <button
+                  type="button"
+                  onClick={() => setVideoOpen(true)}
+                  className="group/btn inline-flex min-h-[44px] items-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+                >
+                  <Play size={17} className="fill-current" />
+                  Watch Video
+                </button>
+              )}
             </div>
+          )}
 
-            {/* Title */}
-            <h3 className="text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl lg:text-2xl">
-              {project.title}
-            </h3>
-
-            {/* Description */}
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-[15px]">
-              {project.description}
-            </p>
-
-            {/* Actions */}
-
-           {hasActions && (
-  <div className="mt-6 flex flex-wrap items-center gap-3">
-    {hasPosters && (
-      <Link
-        to={`/project-posters/${project.id}`}
-        className="group/btn inline-flex min-h-[44px] items-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
-      >
-        <Images size={17} />
-        View Details
-      </Link>
-    )}
-
-    {hasVideo && (
-      <button
-        type="button"
-        onClick={() => setVideoOpen(true)}
-        className="group/btn inline-flex min-h-[44px] items-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
-      >
-        <Play size={17} className="fill-current" />
-        Watch Video
-      </button>
-    )}
-  </div>
-)}
-
-            {/* Footer meta */}
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-              <span className="inline-flex items-center gap-1.5">
-                <Layers3 size={13} />
-                Hydraulic Model Study
-              </span>
-            </div>
+          {/* Footer meta */}
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+            <span className="inline-flex items-center gap-1.5">
+              <Layers3 size={13} />
+              Hydraulic Model Study
+            </span>
           </div>
         </div>
+      </div>
 
-        {/* Left accent bar on hover */}
-        <span className="pointer-events-none absolute inset-y-4 left-0 w-0.5 rounded-full bg-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      </article>
+      {/* Left accent bar on hover */}
+      <span className="pointer-events-none absolute inset-y-4 left-0 w-0.5 rounded-full bg-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+    </article>
 
-      {/* Modal — portal, so it's not constrained by row layout */}
-      {videoOpen && (
-        <VideoModal
-          src={project.video}
-          title={project.title}
-          onClose={() => setVideoOpen(false)}
-        />
-      )}
-    </>
-  );
+    {/* Modal — portal, so it's not constrained by row layout */}
+    {videoOpen && (
+      <VideoModal
+        src={project.video}
+        title={project.title}
+        onClose={() => setVideoOpen(false)}
+      />
+    )}
+  </>
+);
 });
 
 /* ============================================================
@@ -745,6 +745,7 @@ const keepInPlace = (el) => {
 };
 export default function ModelStudiesPage() {
   const [modelCategories, setModelCategories] = useState([]);
+  console.log("modelCategories", modelCategories);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [openCategoryId, setOpenCategoryId] = useState(

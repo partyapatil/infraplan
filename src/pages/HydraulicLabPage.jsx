@@ -843,13 +843,13 @@ export default function HydraulicLabPage() {
               </div>
 
               {/* CTA */}
-             <button
+<button
   type="button"
   onClick={() => navigate("/physical-model-studies")}
-className="group/btn mt-7 inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-7 py-4 text-base font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30">
+className="group/btn mt-7 inline-flex w-full max-w-xs items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30">
   Explore Studies
   <ArrowRight
-    size={19}
+    size={22}
     strokeWidth={2.5}
     className="transition-transform duration-300 group-hover/btn:translate-x-1.5"
   />
