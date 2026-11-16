@@ -361,43 +361,45 @@ export default function JourneySection() {
         </div>
 
         {/* MARQUEE — Reversed array means newest (2025) enters first */}
-        <div className="relative z-10 w-full overflow-hidden">
-          <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-20 w-12 bg-gradient-to-r from-slate-50/90 via-slate-50/50 to-transparent sm:w-20 md:w-32" />
-          <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-20 w-12 bg-gradient-to-l from-slate-50/90 via-slate-50/50 to-transparent sm:w-20 md:w-32" />
+       <div className="relative z-10 w-full overflow-hidden">
+  <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-20 w-12 bg-gradient-to-r from-slate-50/90 via-slate-50/50 to-transparent sm:w-20 md:w-32" />
 
-          <div
-            ref={marqueeRef}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={() => setIsPaused(true)}
-            onTouchEnd={() => setIsPaused(false)}
-            className="flex w-max animate-timeline-scroll py-4 sm:py-6"
-            style={{
-              animationPlayState: isPaused ? "paused" : "running",
-              willChange: "transform",
-            }}
-          >
-            {[0, 1, 2].map((setIndex) => (
-              <div
-                key={setIndex}
-                className="flex items-start gap-4 pr-4 sm:gap-6 sm:pr-6 md:gap-8 md:pr-8"
-              >
-                {[...journey].reverse().map((item, i) => {
-                  const key = `${setIndex}-${i}`;
-                  return (
-                    <MarqueeNode
-                      key={key}
-                      item={item}
-                      isActive={activeKey === key}
-                      onEnter={() => setActiveKey(key)}
-                      onLeave={() => setActiveKey(null)}
-                    />
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-        </div>
+  <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-20 w-12 bg-gradient-to-l from-slate-50/90 via-slate-50/50 to-transparent sm:w-20 md:w-32" />
+
+  <div
+    ref={marqueeRef}
+    onMouseEnter={() => setIsPaused(true)}
+    onMouseLeave={() => setIsPaused(false)}
+    onTouchStart={() => setIsPaused(true)}
+    onTouchEnd={() => setIsPaused(false)}
+    className="flex w-max animate-timeline-scroll py-4 sm:py-6"
+    style={{
+      animationPlayState: isPaused ? "paused" : "running",
+      willChange: "transform",
+    }}
+  >
+    {[0, 1, 2].map((setIndex) => (
+      <div
+        key={setIndex}
+        className="flex items-start gap-4 pr-4 sm:gap-6 sm:pr-6 md:gap-8 md:pr-8"
+      >
+        {journey.map((item, i) => {
+          const key = `${setIndex}-${i}`;
+
+          return (
+            <MarqueeNode
+              key={key}
+              item={item}
+              isActive={activeKey === key}
+              onEnter={() => setActiveKey(key)}
+              onLeave={() => setActiveKey(null)}
+            />
+          );
+        })}
+      </div>
+    ))}
+  </div>
+</div>
 
         {/* CTA */}
         <div className="relative z-10 mx-auto mt-8 max-w-7xl px-4 text-center sm:mt-10 sm:px-6 md:mt-12 lg:px-12">

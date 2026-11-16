@@ -1,33 +1,28 @@
 import { useState, useRef, useEffect } from "react";
 import {
-
   MapPin,
-
   ChevronDown,
   CheckCircle,
   ArrowRight,
   Microscope,
   Calculator,
   Waves,
-
   ChevronRight,
   Play,
   Pause,
   Maximize2,
-    Volume2,
+  Volume2,
   VolumeX,
-
-
   FlaskConical,
   ExternalLink,
   Minimize2,
   Boxes,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import lab1 from "../assets/lab2.jpg";
 
 const last4 =
   "https://res.cloudinary.com/ddpunpqre/image/upload/f_auto,q_auto,w_1600/v1792996868/last4_c7xo75_2_lahfuj.jpg";
-  // import last4 from "../assets/last4.png"; 
 
 import ProjectMapSection from "../components/ProjectMapSection";
 // remove this line:
@@ -36,17 +31,15 @@ import ProjectMapSection from "../components/ProjectMapSection";
 // add this instead:
 // const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791533589/COMP150MB_1_e2utgv.mp4";
 
-const heroVideo = "https://res.cloudinary.com/ddpunpqre/video/upload/f_auto/q_auto/v1791533589/COMP150MB_1_e2utgv.mp4";
-
+const heroVideo =
+  "https://res.cloudinary.com/ddpunpqre/video/upload/f_auto/q_auto/v1791533589/COMP150MB_1_e2utgv.mp4";
 
 const showcaseImages = [
-  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791546418/infraplan/projects/dj4rscp6gngjtsmtl3as.png",
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791528941/infraplan/projects/j48afemc2ju0ltuchooy.png",
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791537010/infraplan/projects/dn5plqqfv3csuyohpyyc.jpg",
   // "https://res.cloudinary.com/ddpunpqre/image/upload/v1791541557/infraplan/projects/rghh3fjexnus88nakzzw.png",
   "https://res.cloudinary.com/ddpunpqre/image/upload/v1792996516/1_1_mqn4ii.jpg",
-  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791537010/infraplan/projects/dn5plqqfv3csuyohpyyc.jpg",
 ];
-
-
 
 const modelStudies = {
   physicalModels: [
@@ -140,7 +133,6 @@ const modelStudies = {
   ],
 };
 
-
 // Hydraulic structures data
 const structures = [
   {
@@ -229,259 +221,263 @@ const designStudies = [
 ];
 
 export default function HydraulicLabPage() {
-
   const navigate = useNavigate();
 
-const [expandedCards, setExpandedCards] = useState({});
+  const [expandedCards, setExpandedCards] = useState({});
 
-const [isVideoPlaying, setIsVideoPlaying] = useState(true);
-const [isVideoFullscreen, setIsVideoFullscreen] = useState(false);
-const [isMuted, setIsMuted] = useState(true);
-const videoRef = useRef(null);
-const videoContainerRef = useRef(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(true);
+  const [isVideoFullscreen, setIsVideoFullscreen] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef(null);
+  const videoContainerRef = useRef(null);
 
+  const toggleCard = (id) => {
+    setExpandedCards((prev) => ({
+      [id]: !prev[id],
+    }));
+  };
+  const toggleMute = async () => {
+    const video = videoRef.current;
 
+    if (!video) return;
 
-const toggleCard = (id) => {
-  setExpandedCards((prev) => ({
-    ...prev,
-    [id]: !prev[id],
-  }));
-};
-const toggleMute = async () => {
-  const video = videoRef.current;
+    try {
+      const newMutedState = !video.muted;
 
-  if (!video) return;
+      video.muted = newMutedState;
+      setIsMuted(newMutedState);
 
-  try {
-    const newMutedState = !video.muted;
-
-    video.muted = newMutedState;
-    setIsMuted(newMutedState);
-
-    if (video.paused) {
-      await video.play();
+      if (video.paused) {
+        await video.play();
+      }
+    } catch (error) {
+      console.error("Audio error:", error);
     }
-  } catch (error) {
-    console.error("Audio error:", error);
-  }
-};
-const toggleVideo = async () => {
-  const video = videoRef.current;
+  };
+  const toggleVideo = async () => {
+    const video = videoRef.current;
 
-  if (!video) return;
+    if (!video) return;
 
-  try {
-    if (video.paused) {
-      await video.play();
-    } else {
-      video.pause();
+    try {
+      if (video.paused) {
+        await video.play();
+      } else {
+        video.pause();
+      }
+    } catch (error) {
+      console.error("Video playback error:", error);
     }
-  } catch (error) {
-    console.error("Video playback error:", error);
-  }
-};
-
-const toggleVideoFullscreen = async () => {
-  const container = videoContainerRef.current;
-
-  if (!container) return;
-
-  try {
-    if (!document.fullscreenElement) {
-      await container.requestFullscreen();
-    } else {
-      await document.exitFullscreen();
-    }
-  } catch (error) {
-    console.error("Fullscreen error:", error);
-  }
-};
-
-useEffect(() => {
-  const handleFullscreenChange = () => {
-    setIsVideoFullscreen(!!document.fullscreenElement);
   };
 
-  document.addEventListener(
-    "fullscreenchange",
-    handleFullscreenChange
-  );
+  const toggleVideoFullscreen = async () => {
+    const container = videoContainerRef.current;
 
-  return () => {
-    document.removeEventListener(
-      "fullscreenchange",
-      handleFullscreenChange
-    );
+    if (!container) return;
+
+    try {
+      if (!document.fullscreenElement) {
+        await container.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (error) {
+      console.error("Fullscreen error:", error);
+    }
   };
-}, []);
-return (
-  <div className="min-h-screen bg-white text-slate-800 font-sans antialiased">
-  
-    {/* Hero Section with Video - New Design */}
-    {/* CHANGED: Added lg:pl-24 lg:pb-24 to push content right and up */}
-<section className="relative flex min-h-0 items-center overflow-hidden px-4 py-10 sm:px-8 md:min-h-[550px] lg:pl-24 lg:pr-12 lg:py-16 lg:pb-24">
-      {/* Mobile background: clean gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-blue-50 md:hidden" />
 
-      {/* Tablet/desktop background: collage */}
-      <img
-        src="https://res.cloudinary.com/ddpunpqre/image/upload/v1793427911/hydraulic_lab_original_photos_collage_dhwq7r.jpg"
-        alt=""
-        fetchPriority="high"
-        loading="eager"
-        decoding="async"
-        className="absolute inset-0 hidden h-full w-full object-cover object-center md:block"
-      />
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsVideoFullscreen(!!document.fullscreenElement);
+    };
 
-      {/* Overlays (tablet and up only) */}
-      <div className="absolute inset-0 hidden bg-gradient-to-r from-white/70 via-white/30 to-transparent md:block" />
-      <div className="absolute inset-x-0 bottom-0 hidden h-20 bg-gradient-to-t from-white/40 to-transparent md:block" />
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
 
-      {/* Main Content */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-8 md:flex-row md:gap-8 lg:gap-12">
-        {/* Left Content */}
-        <div className="relative w-full min-w-0 text-center md:w-[48%] md:flex-none md:text-left lg:w-[46%]">
-          {/* Soft glow behind text (tablet and up only) */}
-          <div className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 hidden rounded-[2.5rem] bg-white/50 blur-2xl md:block" />
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+  return (
+    <div className="min-h-screen bg-white text-slate-800 font-sans antialiased">
+      {/* Hero Section with Video - New Design */}
+      {/* CHANGED: Added lg:pl-24 lg:pb-24 to push content right and up */}
 
-          {/* Badge */}
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-blue-700 shadow-sm backdrop-blur-sm">
-            <Microscope size={14} className="shrink-0 text-blue-600" />
-            Hydraulic Laboratory
-          </div>
-
-          {/* Heading */}
-          <h1 className="mb-4 max-w-xl text-4xl font-bold leading-[1.08] tracking-tight text-slate-950 sm:text-[2.75rem] md:text-[2.55rem] lg:text-[3.2rem] xl:text-[3.35rem]">
-            InfraPlan{" "}
-            <span className="bg-gradient-to-r from-blue-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Hydraulic
-            </span>{" "}
-            Laboratory
-          </h1>
-
-          {/* Information Meta */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 md:justify-start">
-            <div className="flex items-center gap-2 text-sm font-medium text-slate-900 md:[text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
-              <MapPin size={16} className="shrink-0 text-blue-600" />
-              <span>Pune, Maharashtra</span>
-            </div>
-          </div>
+      <section className="relative flex min-h-[550px] items-center overflow-hidden px-5 py-12 sm:px-8 lg:py-16 lg:pl-24 lg:pr-12 lg:pb-24">
+        {/* Background collage */}
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src={lab1}
+            // src="https://res.cloudinary.com/ddpunpqre/image/upload/v1793427911/hydraulic_lab_original_photos_collage_dhwq7r.jpg"
+            alt=""
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
         </div>
 
-        {/* Video Section */}
-        <div className="w-full min-w-0 md:w-[52%] md:flex-1 lg:w-[54%] lg:flex-none">
-          <div
-            ref={videoContainerRef}
-            className={`relative mx-auto w-full max-w-[620px] overflow-hidden bg-slate-900 shadow-xl shadow-slate-900/10 ${
-              isVideoFullscreen
-                ? "h-screen max-w-none rounded-none"
-                : "aspect-video rounded-2xl border border-slate-200/70"
-            }`}
-          >
-            <video
-              ref={videoRef}
-              className={`absolute inset-0 h-full w-full ${
-                isVideoFullscreen
-                  ? "object-contain bg-black"
-                  : "scale-[1.18] object-cover"
-              }`}
-              autoPlay
-              muted={isMuted}
-              playsInline
-              loop
-              preload="auto"
-              controls={false}
-              onPlay={() => setIsVideoPlaying(true)}
-              onPause={() => setIsVideoPlaying(false)}
-              onEnded={() => setIsVideoPlaying(false)}
-            >
-              <source src={heroVideo} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+        {/* Light gradient overlay */}
+        {/* <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/70 via-white/30 to-transparent" /> */}
 
-            {/* Video Gradient */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+        {/* Bottom fade */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white/40 to-transparent" />
 
-            {/* Fullscreen Overlay Text */}
-            {isVideoFullscreen && (
-              <div className="absolute bottom-24 left-6 right-6 z-20 text-white sm:left-10 sm:right-10">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-300">
-                  Infraplan · Engineering & Infrastructure
-                </p>
-                <h2 className="mt-2 max-w-3xl text-2xl font-bold sm:text-4xl">
-                  Engineering Tomorrow's Infrastructure
-                </h2>
-                <p className="mt-2 text-sm text-white/60">
-                  Watch our latest project showcase
-                </p>
+        {/* Main content */}
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-8 md:flex-row lg:gap-12">
+          {/* Left content */}
+          <div className="relative w-full min-w-0 md:w-[48%] md:flex-none lg:w-[46%]">
+            {/* Text glow */}
+            <div className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[2.5rem] bg-white/50 blur-2xl" />
+
+            {/* Badge */}
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/90 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-blue-700 shadow-sm backdrop-blur-sm">
+              <Microscope size={14} className="shrink-0 text-blue-600" />
+              Hydraulic Laboratory
+            </div>
+
+            {/* Heading */}
+            <h1 className="mb-4 max-w-xl text-4xl font-bold leading-[1.08] tracking-tight text-slate-950 sm:text-[2.75rem] md:text-[2.55rem] lg:text-[3.2rem] xl:text-[3.35rem]">
+              InfraPlan{" "}
+              <span className="bg-gradient-to-r from-blue-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                Hydraulic
+              </span>{" "}
+              Laboratory
+            </h1>
+
+            {/* Location */}
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <div className="flex items-center gap-2 text-sm font-medium text-slate-900 [text-shadow:0_0_10px_rgba(255,255,255,0.9)]">
+                <MapPin size={16} className="shrink-0 text-blue-600" />
+                <span>Pune, Maharashtra</span>
               </div>
-            )}
+            </div>
+          </div>
 
-            {/* Center Play Button */}
-            {!isVideoPlaying && (
-              <button
-                type="button"
-                onClick={toggleVideo}
-                aria-label="Play video"
-                className="absolute left-1/2 top-1/2 z-30 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-slate-700 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 sm:h-16 sm:w-16"
+          {/* Video section */}
+          <div className="w-full min-w-0 md:flex-1">
+            <div
+              ref={videoContainerRef}
+              className={`relative mx-auto w-full max-w-[620px] overflow-hidden bg-slate-100 shadow-xl shadow-slate-900/10 ${
+                isVideoFullscreen
+                  ? "h-screen max-w-none rounded-none"
+                  : "aspect-video rounded-2xl border border-slate-200/70"
+              }`}
+            >
+              {/* Video */}
+              <video
+                ref={videoRef}
+                className={`absolute inset-0 h-full w-full ${
+                  isVideoFullscreen ? "object-contain bg-black" : "object-cover"
+                }`}
+                autoPlay
+                muted={isMuted}
+                playsInline
+                loop
+                preload="auto"
+                controls={true}
+                onPlay={() => setIsVideoPlaying(true)}
+                onPause={() => setIsVideoPlaying(false)}
+                onEnded={() => setIsVideoPlaying(false)}
               >
-                <Play size={25} className="ml-0.5" fill="currentColor" />
-              </button>
-            )}
+                <source src={heroVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
 
-            {/* Video Controls Bar */}
-            <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-between sm:bottom-4 sm:left-4 sm:right-4">
-              {/* LEFT CONTROLS */}
-              <div className="flex items-center gap-2">
-                {/* PLAY / PAUSE */}
+              {/* Video gradient */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+
+              {/* Video badge */}
+              {!isVideoFullscreen && (
+                <div className="absolute left-3 top-3 z-20 flex max-w-[85%] items-center gap-2 rounded-full border border-white/70 bg-white/90 px-3 py-1.5 text-[10px] font-medium text-slate-700 shadow-sm backdrop-blur-md sm:left-4 sm:top-4">
+                  <div className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-red-500" />
+                  <span className="truncate">
+                    Infraplan Hydraulic Laboratory
+                  </span>
+                </div>
+              )}
+
+              {/* Fullscreen text */}
+              {isVideoFullscreen && (
+                <div className="absolute bottom-24 left-6 right-6 z-20 text-white sm:left-10 sm:right-10">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-blue-300">
+                    Infraplan · Engineering & Infrastructure
+                  </p>
+
+                  <h2 className="mt-2 max-w-3xl text-2xl font-bold sm:text-4xl">
+                    Engineering Tomorrow's Infrastructure
+                  </h2>
+
+                  <p className="mt-2 text-sm text-white/60">
+                    Watch our latest project showcase
+                  </p>
+                </div>
+              )}
+
+              {/* Center play button */}
+              {!isVideoPlaying && (
                 <button
                   type="button"
                   onClick={toggleVideo}
-                  aria-label={isVideoPlaying ? "Pause video" : "Play video"}
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+                  aria-label="Play video"
+                  className="absolute left-1/2 top-1/2 z-30 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/90 text-slate-700 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-white active:scale-95 sm:h-16 sm:w-16"
                 >
-                  {isVideoPlaying ? (
-                    <Pause size={15} strokeWidth={2.3} />
-                  ) : (
-                    <Play size={15} className="ml-0.5" fill="currentColor" />
-                  )}
+                  <Play size={25} className="ml-0.5" fill="currentColor" />
                 </button>
+              )}
 
-                {/* MUTE / UNMUTE */}
+              {/* Video controls */}
+              <div className="absolute bottom-3 left-3 right-3 z-30 flex items-center justify-between sm:bottom-4 sm:left-4 sm:right-4">
+                {/* Left controls */}
+                <div className="flex items-center gap-2">
+                  {/* Play / Pause */}
+                  <button
+                    type="button"
+                    onClick={toggleVideo}
+                    aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+                  >
+                    {isVideoPlaying ? (
+                      <Pause size={15} strokeWidth={2.3} />
+                    ) : (
+                      <Play size={15} className="ml-0.5" fill="currentColor" />
+                    )}
+                  </button>
+
+                  {/* Mute / Unmute */}
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    aria-label={isMuted ? "Unmute video" : "Mute video"}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
+                  >
+                    {isMuted ? (
+                      <VolumeX size={15} strokeWidth={2.3} />
+                    ) : (
+                      <Volume2 size={15} strokeWidth={2.3} />
+                    )}
+                  </button>
+                </div>
+
+                {/* Fullscreen */}
                 <button
                   type="button"
-                  onClick={toggleMute}
-                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                  onClick={toggleVideoFullscreen}
+                  aria-label={
+                    isVideoFullscreen ? "Exit fullscreen" : "Enter fullscreen"
+                  }
                   className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
                 >
-                  {isMuted ? (
-                    <VolumeX size={15} strokeWidth={2.3} />
+                  {isVideoFullscreen ? (
+                    <Minimize2 size={15} />
                   ) : (
-                    <Volume2 size={15} strokeWidth={2.3} />
+                    <Maximize2 size={15} />
                   )}
                 </button>
               </div>
-
-              {/* FULLSCREEN */}
-              <button
-                type="button"
-                onClick={toggleVideoFullscreen}
-                aria-label={isVideoFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70 bg-white/90 text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:bg-white active:scale-95 sm:h-9 sm:w-9"
-              >
-                {isVideoFullscreen ? (
-                  <Minimize2 size={15} />
-                ) : (
-                  <Maximize2 size={15} />
-                )}
-              </button>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
+      </section>
 
       {/* Hydraulic Engineering Capabilities */}
       <section className="px-5 sm:px-8 lg:px-12 py-20 bg-slate-50">
@@ -556,11 +552,9 @@ return (
         </div>
       </section>
 
-    {/* Laboratory Overview - Modern Card Design */}
+      {/* Laboratory Overview - Modern Card Design */}
       <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 border-b border-slate-100">
         <div className="max-w-7xl mx-auto">
-         
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="group relative p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all" />
@@ -629,306 +623,325 @@ return (
         </div>
       </section>
       {/* Model Studies - Accordion Style with Expandable Cards */}
-<section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 to-blue-50/30 border-y border-slate-100">
-  <div className="max-w-7xl mx-auto">
-    <div className="text-center mb-12">
-  
-      <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-   Model Studies Conducted at Infraplan Hydraulic Laboratory, Pune, India for Various Aspects of the Design Parameters
-
-      </h2>
-    </div>
-
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-    {/* Physical Models */}
-<div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-        <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
-        <div className="rounded-xl bg-blue-600 p-2 text-white">
-          <Waves size={20} />
-        </div>
-        <h3 className="text-lg font-bold text-slate-900">Physical Models</h3>
-        <span className="rounded-full bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-700">
-          {modelStudies.physicalModels.length}
-        </span>
-      </div>
-
-<div className="flex-1 p-3 pb-5">
-          {modelStudies.physicalModels.map((item) => (
-          <div
-            key={item.id}
-            className={`overflow-hidden rounded-xl border transition-all ${
-              expandedCards[item.id] ? "border-blue-200 bg-blue-50/30" : "border-transparent"
-            }`}
-          >
-            <button
-              type="button"
-              onClick={() => toggleCard(item.id)}
-              className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
-            >
-              {expandedCards[item.id] ? (
-                <ChevronDown size={17} className="shrink-0 text-blue-600" />
-              ) : (
-                <ChevronRight size={17} className="shrink-0 text-blue-600" />
-              )}
-              <span className="text-sm font-semibold leading-snug text-slate-900">
-                {item.title}
-              </span>
-            </button>
-
-            {expandedCards[item.id] && (
-              <div className="mx-3 mb-3 rounded-xl border border-blue-100 bg-white p-4 space-y-4">
-                <div>
-                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
-                    Purpose
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-600">
-                    {item.purpose}
-                  </p>
-                </div>
-                <div>
-                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Application
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-600">
-                    {item.application}
-                  </p>
-                </div>
-              </div>
-            )}
+      <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 to-blue-50/30 border-y border-slate-100">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
+              Model Studies Conducted at Infraplan Hydraulic Laboratory, Pune,
+              India for Various Aspects of the Design Parameters
+            </h2>
           </div>
-        ))}
-      </div>
-<div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
-  Select a study to explore its purpose and application details.
-</div>
-    </div>
 
-    {/* Mathematical Models */}
-<div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-     <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
-        <div className="rounded-xl bg-indigo-600 p-2 text-white">
-          <Calculator size={20} />
-        </div>
-        <h3 className="text-lg font-bold text-slate-900">Mathematical Models</h3>
-        <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-xs font-semibold text-indigo-700">
-          {modelStudies.mathematicalModels.length}
-        </span>
-      </div>
-
-      <div className="flex-1 p-3 pb-5">
-        {modelStudies.mathematicalModels.map((item) => (
-          <div
-            key={item.id}
-            className={`overflow-hidden rounded-xl border transition-all ${
-              expandedCards[item.id] ? "border-indigo-200 bg-indigo-50/30" : "border-transparent"
-            }`}
-          >
-            <button
-              type="button"
-              onClick={() => toggleCard(item.id)}
-              className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
-            >
-              {expandedCards[item.id] ? (
-                <ChevronDown size={17} className="shrink-0 text-indigo-600" />
-              ) : (
-                <ChevronRight size={17} className="shrink-0 text-indigo-600" />
-              )}
-              <span className="text-sm font-semibold leading-snug text-slate-900">
-                {item.title}
-              </span>
-            </button>
-
-            {expandedCards[item.id] && (
-              <div className="mx-3 mb-3 rounded-xl border border-indigo-100 bg-white p-4 space-y-4">
-                <div>
-                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-indigo-600">
-                    Purpose
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-600">
-                    {item.purpose}
-                  </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* Physical Models */}
+            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
+                <div className="rounded-xl bg-blue-600 p-2 text-white">
+                  <Waves size={20} />
                 </div>
-                <div>
-                  <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Application
-                  </div>
-                  <p className="text-sm leading-relaxed text-slate-600">
-                    {item.application}
-                  </p>
-                </div>
+                <h3 className="text-lg font-bold text-slate-900">
+                  Physical Models
+                </h3>
+                <span className="rounded-full bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-700">
+                  {modelStudies.physicalModels.length}
+                </span>
               </div>
-            )}
+
+              <div className="flex-1 p-3 pb-5">
+                {modelStudies.physicalModels.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`overflow-hidden rounded-xl border transition-all ${
+                      expandedCards[item.id]
+                        ? "border-blue-200 bg-blue-50/30"
+                        : "border-transparent"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleCard(item.id)}
+                      className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
+                    >
+                      {expandedCards[item.id] ? (
+                        <ChevronDown
+                          size={17}
+                          className="shrink-0 text-blue-600"
+                        />
+                      ) : (
+                        <ChevronRight
+                          size={17}
+                          className="shrink-0 text-blue-600"
+                        />
+                      )}
+                      <span className="text-sm font-semibold leading-snug text-slate-900">
+                        {item.title}
+                      </span>
+                    </button>
+
+                    {expandedCards[item.id] && (
+                      <div className="mx-3 mb-3 rounded-xl border border-blue-100 bg-white p-4 space-y-4">
+                        <div>
+                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
+                            Purpose
+                          </div>
+                          <p className="text-sm leading-relaxed text-slate-600">
+                            {item.purpose}
+                          </p>
+                        </div>
+                        <div>
+                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                            Application
+                          </div>
+                          <p className="text-sm leading-relaxed text-slate-600">
+                            {item.application}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
+                Select a study to explore its purpose and application details.
+              </div>
+            </div>
+
+            {/* Mathematical Models */}
+            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+              <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
+                <div className="rounded-xl bg-indigo-600 p-2 text-white">
+                  <Calculator size={20} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900">
+                  Mathematical Models
+                </h3>
+                <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-xs font-semibold text-indigo-700">
+                  {modelStudies.mathematicalModels.length}
+                </span>
+              </div>
+
+              <div className="flex-1 p-3 pb-5">
+                {modelStudies.mathematicalModels.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`overflow-hidden rounded-xl border transition-all ${
+                      expandedCards[item.id]
+                        ? "border-indigo-200 bg-indigo-50/30"
+                        : "border-transparent"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleCard(item.id)}
+                      className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
+                    >
+                      {expandedCards[item.id] ? (
+                        <ChevronDown
+                          size={17}
+                          className="shrink-0 text-indigo-600"
+                        />
+                      ) : (
+                        <ChevronRight
+                          size={17}
+                          className="shrink-0 text-indigo-600"
+                        />
+                      )}
+                      <span className="text-sm font-semibold leading-snug text-slate-900">
+                        {item.title}
+                      </span>
+                    </button>
+
+                    {expandedCards[item.id] && (
+                      <div className="mx-3 mb-3 rounded-xl border border-indigo-100 bg-white p-4 space-y-4">
+                        <div>
+                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-indigo-600">
+                            Purpose
+                          </div>
+                          <p className="text-sm leading-relaxed text-slate-600">
+                            {item.purpose}
+                          </p>
+                        </div>
+                        <div>
+                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                            Application
+                          </div>
+                          <p className="text-sm leading-relaxed text-slate-600">
+                            {item.application}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
+                Select a study to explore its purpose and application details.
+              </div>
+            </div>
           </div>
-        ))}
-      </div>
-<div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
-  Select a study to explore its purpose and application details.
-</div>
-    </div>
-
-  </div>
-  </div>
-
-</section>
+        </div>
+      </section>
       {/* =========================================================
     PROJECT SHOWCASE
 ========================================================= */}
-<section className="relative overflow-hidden border-y border-slate-200 bg-slate-100 px-5 py-16 sm:px-8 lg:px-12 lg:py-20">  {/* Background Decoration */}
-  <div className="pointer-events-none absolute inset-0 overflow-hidden">
-    <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
-    <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
-    <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.025] blur-3xl" />
-  </div>
-
-  <div className="relative mx-auto max-w-7xl">
-    {/* =====================================================
+      <section className="relative overflow-hidden border-y border-slate-200 bg-slate-100 px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+        {" "}
+        {/* Background Decoration */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -left-40 top-20 h-80 w-80 rounded-full bg-blue-500/5 blur-3xl" />
+          <div className="absolute -right-40 bottom-10 h-80 w-80 rounded-full bg-cyan-500/5 blur-3xl" />
+          <div className="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.025] blur-3xl" />
+        </div>
+        <div className="relative mx-auto max-w-7xl">
+          {/* =====================================================
         SECTION HEADER
     ====================================================== */}
-    <div className="mx-auto mb-12 max-w-3xl text-center">
-      <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-        Project Showcase
-      </h2>
-    </div>
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Project Showcase
+            </h2>
+          </div>
 
-    {/* =====================================================
+          {/* =====================================================
         UNIFIED FEATURED PROJECT CARD
     ====================================================== */}
-{/* =====================================================
+          {/* =====================================================
     FEATURED PROJECT CARD
 ====================================================== */}
-<div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-md shadow-slate-900/5 transition-all duration-500 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 sm:p-6">
+          <div className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-4 shadow-md shadow-slate-900/5 transition-all duration-500 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 sm:p-6">
+            {/* Image Grid */}
+            {/* Image Grid */}
+            <div className="grid h-52 grid-cols-3 gap-2 overflow-hidden rounded-2xl bg-slate-100">
+              {showcaseImages.map((image, idx) => (
+                <div key={image} className="relative overflow-hidden">
+                  <img
+                    src={image}
+                    alt={`Project showcase ${idx + 1}`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
+                </div>
+              ))}
+            </div>
 
-  {/* Image Grid */}
- {/* Image Grid */}
-<div className="grid h-52 grid-cols-3 gap-2 overflow-hidden rounded-2xl bg-slate-100">
-  {showcaseImages.map((image, idx) => (
-    <div key={image} className="relative overflow-hidden">
-      <img
-        src={image}
-        alt={`Project showcase ${idx + 1}`}
-        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
-    </div>
-  ))}
-</div>
+            {/* Card Content */}
+            <div className="px-2 pb-2 pt-6">
+              <div className="flex items-start gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
+                  <Boxes size={20} />
+                </div>
 
-  {/* Card Content */}
-  <div className="px-2 pb-2 pt-6">
-    <div className="flex items-start gap-3">
-      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
-        <Boxes size={20} />
-      </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">
+                    Hydraulic Model Studies
+                  </h3>
+                  <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-500">
+                    Comprehensive hydraulic modeling services for complex water
+                    infrastructure projects.
+                  </p>
+                </div>
+              </div>
 
-      <div>
-        <h3 className="text-lg font-bold text-slate-900">
-          Hydraulic Model Studies
-        </h3>
-        <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-500">
-          Comprehensive hydraulic modeling services for complex water infrastructure projects.
-        </p>
-      </div>
-    </div>
+              {/* CTA */}
+             <button
+  type="button"
+  onClick={() => navigate("/physical-model-studies")}
+className="group/btn mt-7 inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-7 py-4 text-base font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30">
+  Explore Studies
+  <ArrowRight
+    size={19}
+    strokeWidth={2.5}
+    className="transition-transform duration-300 group-hover/btn:translate-x-1.5"
+  />
+</button>
+            </div>
+          </div>
 
-    {/* CTA */}
-    <button
-      type="button"
-      onClick={() => navigate("/physical-model-studies")}
-      className="group/btn mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:bg-blue-700"
-    >
-      Explore Studies
-      <ArrowRight
-        size={14}
-        className="transition-transform duration-300 group-hover/btn:translate-x-1"
-      />
-    </button>
-  </div>
-</div>
-
-    {/* =====================================================
+          {/* =====================================================
         LOCATION MAP & PUBLICATIONS
     ====================================================== */}
-    <div className="mx-auto mt-12 w-full max-w-7xl">
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {/* Location Map */}
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-300 bg-white p-7 shadow-md shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
-          <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
+          <div className="mx-auto mt-12 w-full max-w-7xl">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              {/* Location Map */}
+              <div className="group relative overflow-hidden rounded-2xl border border-slate-300 bg-white p-7 shadow-md shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-900/10 sm:p-8">
+                <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-blue-500/10" />
+                <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl" />
 
-          <div className="relative z-10">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-100">
-              <MapPin size={20} strokeWidth={2} />
+                <div className="relative z-10">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-blue-100">
+                    <MapPin size={20} strokeWidth={2} />
+                  </div>
+
+                  <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
+                    Infraplan Hydraulic Laboratory
+                  </p>
+
+                  <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+                    Location Map
+                  </h3>
+
+                  <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+                    Chandkhed Village, Tal-Maval,
+                    <br />
+                    Dist. Pune, Maharashtra, India.
+                  </p>
+
+                  <a
+                    href="https://www.google.com/maps/place/Infraplan+hydraulic+laboratory/@18.658261,73.652041,201102m/data=!3m1!1e3!4m6!3m5!1s0x3bc2af01a8f265f9:0x6efc32d2aa20348c!8m2!3d18.6583125!4d73.6520625!16s%2Fg%2F11px42nzr1?hl=en-US&entry=ttu&g_ep=EgoyMDI2MTAxMS4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/map mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+                  >
+                    View Location
+                    <ExternalLink
+                      size={13}
+                      className="transition-transform duration-300 group-hover/map:translate-x-0.5"
+                    />
+                  </a>
+                </div>
+              </div>
+
+              <Link
+                to="/hydrolicpublications"
+                className="group relative block overflow-hidden rounded-2xl border border-slate-300 bg-white p-7 shadow-md shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"
+              >
+                <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
+                <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
+
+                <div className="relative z-10">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-indigo-100">
+                    <FlaskConical size={20} strokeWidth={2} />
+                  </div>
+
+                  <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
+                    Hydraulic Laboratory
+                  </p>
+
+                  <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+                    Publications
+                  </h3>
+
+                  <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
+                    Explore research, technical studies
+                    <br />
+                    and hydraulic engineering publications.
+                  </p>
+
+                  <span className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg group-hover:shadow-indigo-600/30">
+                    View Publications
+                    <ArrowRight
+                      size={13}
+                      className="transition-transform duration-300 group-hover:translate-x-0.5"
+                    />
+                  </span>
+                </div>
+              </Link>
             </div>
-
-            <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-600">
-              Infraplan Hydraulic Laboratory
-            </p>
-
-            <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-              Location Map
-            </h3>
-
-            <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
-              Chandkhed Village, Tal-Maval,
-              <br />
-              Dist. Pune, Maharashtra, India.
-            </p>
-
-            <a
-              href="https://www.google.com/maps/place/Infraplan+hydraulic+laboratory/@18.658261,73.652041,201102m/data=!3m1!1e3!4m6!3m5!1s0x3bc2af01a8f265f9:0x6efc32d2aa20348c!8m2!3d18.6583125!4d73.6520625!16s%2Fg%2F11px42nzr1?hl=en-US&entry=ttu&g_ep=EgoyMDI2MTAxMS4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group/map mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
-            >
-              View Location
-              <ExternalLink
-                size={13}
-                className="transition-transform duration-300 group-hover/map:translate-x-0.5"
-              />
-            </a>
           </div>
         </div>
+      </section>
 
-        <Link
-          to="/hydrolicpublications"
-className="group relative block overflow-hidden rounded-2xl border border-slate-300 bg-white p-7 shadow-md shadow-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-900/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 sm:p-8"        >
-          <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-indigo-500/5 blur-3xl transition-opacity duration-300 group-hover:bg-indigo-500/10" />
-          <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/5 blur-3xl" />
-
-          <div className="relative z-10">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition-all duration-300 group-hover:scale-105 group-hover:bg-indigo-100">
-              <FlaskConical size={20} strokeWidth={2} />
-            </div>
-
-            <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-600">
-              Hydraulic Laboratory
-            </p>
-
-            <h3 className="mt-1.5 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
-              Publications
-            </h3>
-
-            <p className="mt-2 text-sm font-medium leading-6 text-slate-600">
-              Explore research, technical studies
-              <br />
-              and hydraulic engineering publications.
-            </p>
-
-            <span className="mt-6 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-lg group-hover:shadow-indigo-600/30">
-              View Publications
-              <ArrowRight
-                size={13}
-                className="transition-transform duration-300 group-hover:translate-x-0.5"
-              />
-            </span>
-          </div>
-        </Link>
-      </div>
-    </div>
-  </div>
-</section>
-
-<ProjectMapSection/>
+      <ProjectMapSection />
       {/* Footer - Consistent with other pages */}
 
       {/* Animation Styles */}

@@ -15,7 +15,7 @@ import {
   Loader2, // Added Loader2 for the loading state
 } from "lucide-react";
 
-import publicationsHero from "../assets/darker.png";
+import publicationsHero from "../assets/p1.png";
 
 // API Base URL for assets (PDFs)
 const API_BASE_URL = "https://staging.infraplan.co.in:7052";

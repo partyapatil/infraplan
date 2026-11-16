@@ -1,8 +1,12 @@
-// components/Navigation.jsx
-
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronDown, FlaskConical, Sigma, Waves } from "lucide-react";
+import {
+  ChevronDown,
+  FlaskConical,
+  Images,
+  BookOpen,
+  LayoutDashboard,
+} from "lucide-react";
 
 const navItems = [
   {
@@ -21,25 +25,20 @@ const navItems = [
     label: "Hydraulic Laboratory",
     dropdown: true,
     subItems: [
-      {
-        label: "Overview",
-        path: "/hydrolic",
-        icon: FlaskConical,
-      },
+    {
+  label: "Overview",
+  path: "/hydrolic",
+  icon: LayoutDashboard,
+},
       {
         label: "Project Showcase",
         path: "/physical-model-studies",
-        icon: FlaskConical,
+        icon: Images,
       },
-      // {
-      //   label: "Project Showcase",
-      //   path: "/mathematical-model-studies",
-      //   icon: Sigma,
-      // },
       {
         label: "Publications",
         path: "/hydrolicpublications",
-        icon: Waves,
+        icon: BookOpen,
       },
     ],
   },

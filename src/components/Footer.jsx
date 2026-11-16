@@ -1,7 +1,9 @@
 // components/Footer.jsx
 import {
   Building2,
+  ExternalLink,
   Mail,
+  MapPin,
   Phone,
 } from "lucide-react";
 
@@ -29,6 +31,8 @@ const offices = [
         Kolhapur – 416001, Maharashtra, India.
       </>
     ),
+    mapUrl:
+      "https://www.google.com/maps?ll=16.701231,74.239337&z=10&t=m&hl=en-US&gl=US&mapclient=embed&cid=6389657255265852478",
   },
   {
     title: "Pune Office",
@@ -41,6 +45,8 @@ const offices = [
         M.I.D.C. Chinchwad, Pune – 411019.
       </>
     ),
+    mapUrl:
+      "https://www.google.com/maps?ll=18.662589,73.792738&z=10&t=m&hl=en-US&gl=US&mapclient=embed&cid=17567991279525501266",
   },
   {
     title: "Hydraulic Laboratory",
@@ -51,6 +57,8 @@ const offices = [
         Maharashtra, India.
       </>
     ),
+    mapUrl:
+      "https://www.google.com/maps/place/Infraplan+hydraulic+laboratory/@18.658261,73.652041,105615m/data=!3m1!1e3!4m6!3m5!1s0x3bc2af01a8f265f9:0x6efc32d2aa20348c!8m2!3d18.6582609!4d73.6520407!16s%2Fg%2F11px42nzr1?hl=en-US&entry=ttu&g_ep=EgoyMDI0MDkxNi4wIKXMDSoASAFQAw%3D%3D",
   },
 ];
 
@@ -105,83 +113,102 @@ export default function Footer() {
             COMPANIES + GET IN TOUCH
         ===================================================== */}
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+    <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
 
-          {/* COMPANY ENTITIES */}
-          <div className="lg:col-span-6">
-            <div className="space-y-3">
-              {companyEntities.map((company) => (
-                <div
-                  key={company}
-                  className="flex items-start gap-3 text-sm leading-relaxed text-slate-300"
-                >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
-                    <Building2 size={14} className="text-blue-400" />
-                  </div>
-                  <span className="pt-1">{company}</span>
-                </div>
-              ))}
-            </div>
+  {/* COMPANY ENTITIES */}
+  <div className="lg:col-span-6">
+
+    <h3 className="mb-5 text-xl font-bold text-white sm:text-2xl">
+      Our Companies
+    </h3>
+
+    <div className="space-y-3">
+      {companyEntities.map((company) => (
+        <div
+          key={company}
+          className="flex items-center gap-3 text-sm leading-relaxed text-slate-300"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
+            <Building2 size={16} className="text-blue-400" />
           </div>
 
-          {/* GET IN TOUCH */}
-          <div className="lg:col-span-6">
-            <h3 className="mb-5 text-xl font-bold text-white sm:text-2xl">
-              Get In Touch
-            </h3>
-
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center gap-3 text-slate-300">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
-                  <Phone size={14} className="text-blue-400" />
-                </div>
-                <a
-                  href="tel:+912312655151"
-                  className="transition-colors hover:text-white"
-                >
-                  +91-231-2655151,
-                </a>
-              </div>
-
-              <div className="flex items-center gap-3 text-slate-300">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
-                  <Phone size={14} className="text-blue-400" />
-                </div>
-                <a
-                  href="tel:+919404265151"
-                  className="transition-colors hover:text-white"
-                >
-                  +91-9404265151, +91-9421034452
-                </a>
-              </div>
-
-              <div className="flex items-center gap-3 text-slate-300">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
-                  <Mail size={14} className="text-blue-400" />
-                </div>
-                <a
-                  href="mailto:contactus@infraplan.in"
-                  className="break-all transition-colors hover:text-white"
-                >
-                  contactus@infraplan.in
-                </a>
-              </div>
-            </div>
-          </div>
-
+          <span>{company}</span>
         </div>
+      ))}
+    </div>
+  </div>
+
+  {/* GET IN TOUCH */}
+  <div className="lg:col-span-6">
+
+    <h3 className="mb-5 text-xl font-bold text-white sm:text-2xl">
+      Get In Touch
+    </h3>
+
+    <div className="space-y-3 text-sm">
+
+      <div className="flex items-center gap-3 text-slate-300">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
+          <Phone size={16} className="text-blue-400" />
+        </div>
+
+        <a
+          href="tel:+912312655151"
+          className="transition-colors hover:text-white"
+        >
+          +91-231-2655151
+        </a>
+      </div>
+
+      <div className="flex items-center gap-3 text-slate-300">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
+          <Phone size={16} className="text-blue-400" />
+        </div>
+
+        <div className="flex flex-wrap gap-x-2">
+          <a href="tel:+919404265151" className="hover:text-white">
+            +91-9404265151
+          </a>
+          <span>,</span>
+          <a href="tel:+919421034452" className="hover:text-white">
+            +91-9421034452
+          </a>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3 text-slate-300">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
+          <Mail size={16} className="text-blue-400" />
+        </div>
+
+        <a
+          href="mailto:contactus@infraplan.in"
+          className="break-all transition-colors hover:text-white"
+        >
+          contactus@infraplan.in
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
 
         {/* =====================================================
             OFFICE CARDS
         ===================================================== */}
 
-        <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {offices.map((office) => (
-            <OfficeCard key={office.title} title={office.title}>
-              {office.address}
-            </OfficeCard>
-          ))}
-        </div>
+  <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+  {offices.map((office) => (
+    <OfficeCard
+      key={office.title}
+      title={office.title}
+      mapUrl={office.mapUrl}
+    >
+      {office.address}
+    </OfficeCard>
+  ))}
+</div>
 
         {/* =====================================================
             DIVIDER
@@ -213,28 +240,48 @@ export default function Footer() {
    OFFICE CARD
 ============================================================= */
 
-function OfficeCard({ title, children }) {
+function OfficeCard({ title, children, mapUrl }) {
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-white/[0.05]">
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.025] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-white/[0.05]">
 
       {/* Hover glow */}
       <div className="pointer-events-none absolute -right-10 -top-10 h-20 w-20 rounded-full bg-blue-500/10 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
 
-      <div className="relative">
+      <div className="relative flex h-full flex-col">
+
+        {/* Title */}
         <div className="mb-3 flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
-            <Building2 size={14} className="text-blue-400" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-blue-400/15 bg-blue-500/10">
+            <Building2 size={16} className="text-blue-400" />
           </div>
+
           <h4 className="text-base font-semibold text-white">
             {title}
           </h4>
         </div>
 
-        <p className="pl-10 text-xs leading-6 text-slate-400">
-          {children}
-        </p>
-      </div>
+        {/* Address - Consistent height */}
+        <div className="min-h-[84px] pl-12">
+          <p className="text-xs leading-6 text-slate-400">
+            {children}
+          </p>
+        </div>
 
+        {/* Google Maps Link */}
+        <div className="mt-2 pl-12">
+          <a
+            href={mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-400 transition-all duration-200 hover:gap-2.5 hover:text-blue-300"
+          >
+            <MapPin size={15} />
+            View on Google Maps
+            <ExternalLink size={12} />
+          </a>
+        </div>
+
+      </div>
     </div>
   );
 }

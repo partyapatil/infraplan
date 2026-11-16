@@ -1,4 +1,5 @@
-import  { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
+
 import {
   ChevronLeft,
   ChevronRight,
@@ -10,7 +11,7 @@ import {
   Layers3,
   ArrowUpRight,
   Images,
-    Play,
+  Play,
   X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -19,32 +20,26 @@ import trenchWeir3 from "../assets/physicalModelImages/trench-weir/second.png";
 import namBeng1 from "../assets/1.png";
 import upperIntake1 from "../assets/physicalModelImages/upper-intake-structure/1.png";
 // import upperIntake1 from "../assets/physicalModelImages/upper-intake-structure/1.png";
-const b="https://res.cloudinary.com/ddpunpqre/image/upload/v1791527012/infraplan/projects/vjdptcnpx1zzltunzly4.png"
-const collageImages = [
-b,
-namBeng1,
-trenchWeir3
-];
+const c="https://res.cloudinary.com/ddpunpqre/image/upload/v1791528941/infraplan/projects/j48afemc2ju0ltuchooy.png"
+const b =
+  "https://res.cloudinary.com/ddpunpqre/image/upload/v1791537010/infraplan/projects/dn5plqqfv3csuyohpyyc.jpg";
+const collageImages = [b, c, trenchWeir3];
 const FALLBACK_IMAGE =
   "https://res.cloudinary.com/ddpunpqre/image/upload/v1793081581/Aerial_Farm_Facility_No_Preview_dkfrno.jpg";
 const parseDescription = (description = "") => {
   const text = description.replace(/\\n/g, "\n");
 
   const purposeMatch = text.match(
-    /Purpose:\s*([\s\S]*?)(?=•\s*Application:|Application:|$)/i
+    /Purpose:\s*([\s\S]*?)(?=•\s*Application:|Application:|$)/i,
   );
 
-  const applicationMatch = text.match(
-    /Application:\s*([\s\S]*)/i
-  );
+  const applicationMatch = text.match(/Application:\s*([\s\S]*)/i);
 
   return {
     purpose: purposeMatch?.[1]?.trim().replace(/^[•\t\s]+/, "") || "",
     application: applicationMatch?.[1]?.trim().replace(/^[•\t\s]+/, "") || "",
   };
 };
-
-
 
 /* ============================================================
    HELPERS
@@ -65,7 +60,7 @@ const getJson = async (path) => {
   const res = await fetch(`${API_BASE}/api${path}`);
   if (!res.ok) throw new Error(`Request failed (${res.status})`);
   const json = await res.json();
-  return Array.isArray(json) ? json : json?.result ?? json?.data ?? [];
+  return Array.isArray(json) ? json : (json?.result ?? json?.data ?? []);
 };
 
 // Flat projects -> category -> subCategory -> projects
@@ -82,7 +77,6 @@ function buildModelCategories(projects, categories, subCategories) {
         description: catInfo.get(p.categoryId)?.description ?? "",
         icon: ICONS[grouped.size % ICONS.length],
         subs: new Map(),
-
       });
     }
     const cat = grouped.get(p.categoryId);
@@ -100,8 +94,8 @@ function buildModelCategories(projects, categories, subCategories) {
       title: p.title,
       description: p.description,
       images: (p.imagePaths ?? []).map(fileUrl),
-        posters: (p.posterImagePaths ?? []).map(fileUrl),  // NEW
-  video: p.videoPath ? fileUrl(p.videoPath) : "",  
+      posters: (p.posterImagePaths ?? []).map(fileUrl), // NEW
+      video: p.videoPath ? fileUrl(p.videoPath) : "",
     });
   });
 
@@ -114,54 +108,98 @@ function buildModelCategories(projects, categories, subCategories) {
    PROJECT IMAGE CAROUSEL
 ============================================================ */
 
-
 function ProjectCarousel({ images, title }) {
   const [index, setIndex] = useState(0);
-  const [broken, setBroken] = useState({}); // { [index]: true } for failed images
+  const [broken, setBroken] = useState({});
+  const [isHovered, setIsHovered] = useState(false);
 
   const list = Array.isArray(images) ? images.filter(Boolean) : [];
+
   const hasImages = list.length > 0;
   const hasMultiple = list.length > 1;
-
-  const next = () => setIndex((prev) => (prev + 1) % list.length);
-  const prev = () => setIndex((prev) => (prev - 1 + list.length) % list.length);
 
   const showFallback = !hasImages || broken[index];
   const src = showFallback ? FALLBACK_IMAGE : list[index];
 
+  /* ============================================================
+     NEXT / PREVIOUS IMAGE
+  ============================================================ */
+
+  const next = () => {
+    setIndex((prev) => (prev + 1) % list.length);
+  };
+
+  const prev = () => {
+    setIndex((prev) => (prev - 1 + list.length) % list.length);
+  };
+
+  /* ============================================================
+     AUTO SLIDE - EVERY 4 SECONDS
+  ============================================================ */
+
+  useEffect(() => {
+    if (!hasMultiple || isHovered) return;
+
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % list.length);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [hasMultiple, isHovered, list.length]);
+
+  /* ============================================================
+     RESET BROKEN IMAGE STATE WHEN IMAGE CHANGES
+  ============================================================ */
+
+  const handleImageError = () => {
+    if (hasImages && !broken[index]) {
+      setBroken((prev) => ({
+        ...prev,
+        [index]: true,
+      }));
+    }
+  };
+
+  /* ============================================================
+     UI
+  ============================================================ */
+
   return (
-    <div className="group relative w-full overflow-hidden rounded-2xl bg-slate-100 shadow-sm lg:w-[430px] lg:shrink-0">
-      <div className="relative h-[240px] sm:h-[300px] lg:h-[320px]">
+    <div
+      className="group relative w-full overflow-hidden rounded-2xl bg-slate-100 shadow-sm lg:w-[430px] lg:shrink-0"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+        {" "}
+        {/* IMAGE */}
         <img
+          key={src}
           src={src}
-          alt={showFallback ? `${title} – no preview available` : `${title} ${index + 1}`}
+          alt={
+            showFallback
+              ? `${title} – no preview available`
+              : `${title} ${index + 1}`
+          }
           loading="lazy"
-          onError={() => {
-            // Only mark as broken if we were showing a real image (prevents loops)
-            if (hasImages && !broken[index]) {
-              setBroken((b) => ({ ...b, [index]: true }));
-            }
-          }}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          onError={handleImageError}
+          className="h-full w-full object-contain transition-transform duration-500"
         />
-
+        {/* GRADIENT OVERLAY */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent" />
-
-        {/* Counter: only for real images */}
+        {/* IMAGE COUNTER */}
         {hasImages && !showFallback && (
           <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-md">
             {index + 1} / {list.length}
           </div>
         )}
-
-        {/* Label on fallback */}
+        {/* FALLBACK LABEL */}
         {showFallback && (
           <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-md">
             No preview available
           </div>
         )}
-
-        {/* Controls: only when there are multiple real images */}
+        {/* PREVIOUS / NEXT BUTTONS */}
         {hasMultiple && (
           <>
             <button
@@ -182,6 +220,8 @@ function ProjectCarousel({ images, title }) {
               <ChevronRight size={18} />
             </button>
 
+            {/* PAGINATION DOTS */}
+
             <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
               {list.map((_, i) => (
                 <button
@@ -190,7 +230,9 @@ function ProjectCarousel({ images, title }) {
                   onClick={() => setIndex(i)}
                   aria-label={`Show image ${i + 1}`}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === index ? "w-6 bg-white" : "w-1.5 bg-white/50 hover:bg-white/80"
+                    i === index
+                      ? "w-6 bg-white"
+                      : "w-1.5 bg-white/50 hover:bg-white/80"
                   }`}
                 />
               ))}
@@ -252,7 +294,7 @@ function VideoModal({ src, title, onClose }) {
         )}
       </div>
     </div>,
-    document.body
+    document.body,
   );
 }
 const ProjectRow = memo(function ProjectRow({ project }) {
@@ -290,33 +332,28 @@ const ProjectRow = memo(function ProjectRow({ project }) {
             </p>
 
             {/* Actions */}
-       
-{hasActions && (
-  <div className="mt-6 flex flex-wrap items-center gap-2.5">
+
+           {hasActions && (
+  <div className="mt-6 flex flex-wrap items-center gap-3">
     {hasPosters && (
-     <Link
-  to={`/project-posters/${project.id}`}
-  className="group/btn inline-flex min-h-[40px] items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-blue-600/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-md hover:shadow-blue-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
->
-  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20">
-    <Images size={12} />
-  </span>
-  View Details
-  {/* <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-[10px] font-bold">
-    {project.posters.length}
-  </span> */}
-</Link>
+      <Link
+        to={`/project-posters/${project.id}`}
+        className="group/btn inline-flex min-h-[44px] items-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+      >
+        <Images size={17} />
+        View Details
+      </Link>
     )}
 
     {hasVideo && (
-  <button
-  type="button"
-  onClick={() => setVideoOpen(true)}
-  className="group/btn inline-flex min-h-[40px] items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
->
-  <Play size={12} className="fill-current" />
-  Watch Video
-</button>
+      <button
+        type="button"
+        onClick={() => setVideoOpen(true)}
+        className="group/btn inline-flex min-h-[44px] items-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-700/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+      >
+        <Play size={17} className="fill-current" />
+        Watch Video
+      </button>
     )}
   </div>
 )}
@@ -347,7 +384,6 @@ const ProjectRow = memo(function ProjectRow({ project }) {
   );
 });
 
-
 /* ============================================================
    COLLAPSE
 ============================================================ */
@@ -356,9 +392,7 @@ function Collapse({ open, children }) {
   return (
     <div
       className={`grid transition-all duration-500 ease-in-out ${
-        open
-          ? "grid-rows-[1fr] opacity-100"
-          : "grid-rows-[0fr] opacity-0"
+        open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
       }`}
     >
       <div className="overflow-hidden">{children}</div>
@@ -370,12 +404,7 @@ function Collapse({ open, children }) {
    SUB CATEGORY
 ============================================================ */
 
-function SubCategoryAccordion({
-  sub,
-  index,
-  open,
-  onToggle,
-}) {
+function SubCategoryAccordion({ sub, index, open, onToggle }) {
   return (
     <div
       className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
@@ -386,7 +415,7 @@ function SubCategoryAccordion({
     >
       <button
         type="button"
-onClick={(e) => onToggle(e.currentTarget)}
+        onClick={(e) => onToggle(e.currentTarget)}
         aria-expanded={open}
         className="flex w-full items-center gap-4 p-4 text-left sm:p-5"
       >
@@ -415,18 +444,14 @@ onClick={(e) => onToggle(e.currentTarget)}
 
             <span className="h-1 w-1 rounded-full bg-slate-300" />
 
-            <span className="text-xs text-slate-400">
-              View studies
-            </span>
+            <span className="text-xs text-slate-400">View studies</span>
           </div>
         </div>
 
         {/* Chevron */}
         <div
           className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
-            open
-              ? "bg-blue-100 text-blue-600"
-              : "bg-slate-100 text-slate-400"
+            open ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-400"
           }`}
         >
           <ChevronDown
@@ -438,91 +463,89 @@ onClick={(e) => onToggle(e.currentTarget)}
         </div>
       </button>
 
-<Collapse open={open}>
-  <div className="border-t border-slate-200/80 p-4 sm:p-6">
-    {sub.description && (() => {
-      const { purpose, application } = parseDescription(sub.description);
-      const hasBoth = purpose && application;
+      <Collapse open={open}>
+        <div className="border-t border-slate-200/80 p-4 sm:p-6">
+          {sub.description &&
+            (() => {
+              const { purpose, application } = parseDescription(
+                sub.description,
+              );
+              const hasBoth = purpose && application;
 
-      return (
-        <div
-          className={`mb-6 grid grid-cols-1 gap-4 ${
-            hasBoth ? "md:grid-cols-2" : ""
-          }`}
-        >
-          {purpose && (
-            <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/60 p-5 ring-1 ring-blue-100 transition-shadow hover:shadow-md hover:shadow-blue-100/50">
-              <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-blue-100/40 blur-2xl transition-opacity group-hover:opacity-80" />
-              <div className="relative">
-                <div className="mb-3 flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/10 ring-1 ring-blue-600/20">
-                    <svg
-                      className="h-4 w-4 text-blue-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                  </div>
-                  <h4 className="text-sm font-semibold tracking-wide text-slate-900">
-                    Purpose
-                  </h4>
-                </div>
-                <p className="whitespace-pre-line text-sm leading-relaxed text-slate-600">
-                  {purpose}
-                </p>
-              </div>
-            </div>
-          )}
+              return (
+                <div className="mb-6 flex flex-col gap-4">
+                  {purpose && (
+                    <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/60 p-5 ring-1 ring-blue-100 transition-shadow hover:shadow-md hover:shadow-blue-100/50">
+                      <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-blue-100/40 blur-2xl transition-opacity group-hover:opacity-80" />
+                      <div className="relative">
+                        <div className="mb-3 flex items-center gap-2.5">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/10 ring-1 ring-blue-600/20">
+                            <svg
+                              className="h-4 w-4 text-blue-600"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"
+                              />
+                            </svg>
+                          </div>
+                          <h4 className="text-sm font-semibold tracking-wide text-slate-900">
+                            Purpose
+                          </h4>
+                        </div>
+                        <p className="whitespace-pre-line text-sm leading-relaxed text-slate-600">
+                          {purpose}
+                        </p>
+                      </div>
+                    </div>
+                  )}
 
-          {application && (
-            <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50/60 p-5 ring-1 ring-emerald-100 transition-shadow hover:shadow-md hover:shadow-emerald-100/50">
-              <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-emerald-100/40 blur-2xl transition-opacity group-hover:opacity-80" />
-              <div className="relative">
-                <div className="mb-3 flex items-center gap-2.5">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/10 ring-1 ring-emerald-600/20">
-                    <svg
-                      className="h-4 w-4 text-emerald-600"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h4 className="text-sm font-semibold tracking-wide text-slate-900">
-                    Application
-                  </h4>
+                  {application && (
+                    <div className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50/60 p-5 ring-1 ring-emerald-100 transition-shadow hover:shadow-md hover:shadow-emerald-100/50">
+                      <div className="absolute -right-6 -top-6 h-20 w-20 rounded-full bg-emerald-100/40 blur-2xl transition-opacity group-hover:opacity-80" />
+                      <div className="relative">
+                        <div className="mb-3 flex items-center gap-2.5">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600/10 ring-1 ring-emerald-600/20">
+                            <svg
+                              className="h-4 w-4 text-emerald-600"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
+                            </svg>
+                          </div>
+                          <h4 className="text-sm font-semibold tracking-wide text-slate-900">
+                            Application
+                          </h4>
+                        </div>
+                        <p className="whitespace-pre-line text-sm leading-relaxed text-slate-600">
+                          {application}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <p className="whitespace-pre-line text-sm leading-relaxed text-slate-600">
-                  {application}
-                </p>
-              </div>
-            </div>
-          )}
+              );
+            })()}
+
+          <div className="flex flex-col gap-5">
+            {sub.projects.map((project) => (
+              <ProjectRow key={project.id} project={project} />
+            ))}
+          </div>
         </div>
-      );
-    })()}
-
-    <div className="flex flex-col gap-5">
-      {sub.projects.map((project) => (
-        <ProjectRow key={project.id} project={project} />
-      ))}
-    </div>
-  </div>
-</Collapse>
-
+      </Collapse>
     </div>
   );
 }
@@ -549,7 +572,7 @@ function CategoryAccordion({
       }`}
     >
       {/* Header */}
-            <button
+      <button
         type="button"
         onClick={(e) => onToggle(e.currentTarget)}
         aria-expanded={open}
@@ -585,9 +608,7 @@ function CategoryAccordion({
               }`}
             >
               {category.subCategories.length}{" "}
-              {category.subCategories.length === 1
-                ? "Category"
-                : "Categories"}
+              {category.subCategories.length === 1 ? "Category" : "Categories"}
             </span>
           </div>
 
@@ -630,7 +651,7 @@ function CategoryAccordion({
                 sub={sub}
                 index={index}
                 open={openSubId === sub.id}
-onToggle={(el) => onToggleSub(sub.id, el)}
+                onToggle={(el) => onToggleSub(sub.id, el)}
               />
             ))}
           </div>
@@ -644,33 +665,45 @@ onToggle={(el) => onToggleSub(sub.id, el)}
    HERO
 ============================================================ */
 
-function Hero() { return ( <section className="relative overflow-hidden bg-slate-950"> {/* Background collage */} <div className="grid grid-cols-1 sm:grid-cols-3"> {collageImages.map((src, index) => ( <div
-key={index}
-className="relative h-[180px] overflow-hidden sm:h-[260px] lg:h-[340px]"
-> <img src={src} alt="" fetchPriority={index === 0 ? "high" : "auto"} loading={index === 0 ? "eager" : "lazy"} decoding="async" className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105" />
-
-        <div className="absolute inset-0 bg-slate-950/55" />
-
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950/80" />
+function Hero() {
+  return (
+    <section className="relative overflow-hidden bg-slate-950">
+      {" "}
+      {/* Background collage */}{" "}
+      <div className="grid grid-cols-1 sm:grid-cols-3">
+        {" "}
+        {collageImages.map((src, index) => (
+          <div
+            key={index}
+            className="relative h-[180px] overflow-hidden sm:h-[260px] lg:h-[340px]"
+          >
+            {" "}
+            <img
+              src={src}
+              alt=""
+              fetchPriority={index === 0 ? "high" : "auto"}
+              loading={index === 0 ? "eager" : "lazy"}
+              decoding="async"
+              className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-slate-950/55" />
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-transparent to-slate-950/80" /> */}
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-
-  {/* Center overlay */}
-  <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-5 text-center">
-    <div className="max-w-3xl">
-      <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-2xl sm:text-5xl lg:text-6xl">
-        Project Showcase
-      </h1>
-    </div>
-  </div>
-
-  {/* Bottom fade */}
-  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-950/30 to-transparent" />
-</section>
-
-
-); }
+      {/* Center overlay */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-5 text-center">
+        <div className="max-w-3xl">
+          <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-2xl sm:text-5xl lg:text-6xl">
+            Project Showcase
+          </h1>
+        </div>
+      </div>
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-950/30 to-transparent" />
+    </section>
+  );
+}
 
 /* ============================================================
    PAGE
@@ -714,15 +747,16 @@ export default function ModelStudiesPage() {
   const [modelCategories, setModelCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [openCategoryId, setOpenCategoryId] = useState(() => readSaved().cat ?? null);
+  const [openCategoryId, setOpenCategoryId] = useState(
+    () => readSaved().cat ?? null,
+  );
   const [openSubId, setOpenSubId] = useState(() => readSaved().sub ?? null);
 
-
-    useEffect(() => {
+  useEffect(() => {
     try {
       sessionStorage.setItem(
         OPEN_KEY,
-        JSON.stringify({ cat: openCategoryId, sub: openSubId })
+        JSON.stringify({ cat: openCategoryId, sub: openSubId }),
       );
     } catch {
       /* storage unavailable, ignore */
@@ -748,38 +782,44 @@ export default function ModelStudiesPage() {
           getJson("/Category").catch(() => []),
           getJson("/SubCategory").catch(() => []),
         ]);
-        if (!cancelled) setModelCategories(buildModelCategories(projects, cats, subs));
+        if (!cancelled)
+          setModelCategories(buildModelCategories(projects, cats, subs));
       } catch (err) {
         if (!cancelled) setError(err.message);
       } finally {
         if (!cancelled) setLoading(false);
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-const toggleCategory = (id, el) => {
-  keepInPlace(el);
-  setOpenCategoryId((prev) => (prev === id ? null : id));
-  setOpenSubId(null);
-};
+  const toggleCategory = (id, el) => {
+    keepInPlace(el);
+    setOpenCategoryId((prev) => (prev === id ? null : id));
+    setOpenSubId(null);
+  };
 
-const toggleSub = (id, el) => {
-  keepInPlace(el);
-  setOpenSubId((prev) => (prev === id ? null : id));
-};
+  const toggleSub = (id, el) => {
+    keepInPlace(el);
+    setOpenSubId((prev) => (prev === id ? null : id));
+  };
 
   /* Stats */
   const totalProjects = modelCategories.reduce(
     (total, category) =>
       total +
-      category.subCategories.reduce((subTotal, sub) => subTotal + sub.projects.length, 0),
-    0
+      category.subCategories.reduce(
+        (subTotal, sub) => subTotal + sub.projects.length,
+        0,
+      ),
+    0,
   );
 
   const totalStudies = modelCategories.reduce(
     (total, category) => total + category.subCategories.length,
-    0
+    0,
   );
 
   return (
@@ -802,8 +842,8 @@ const toggleSub = (id, el) => {
               </h2>
 
               <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-                Browse physical models, mathematical simulations,
-                transient analysis and CFD studies.
+                Browse physical models, mathematical simulations, transient
+                analysis and CFD studies.
               </p>
             </div>
 
@@ -841,27 +881,38 @@ const toggleSub = (id, el) => {
       </section>
 
       {/* ACCORDION */}
-<main style={{ overflowAnchor: "none" }} className="px-4 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16">        <div className="mx-auto max-w-8xl">
-      {loading ? (
-  <p className="text-center text-sm text-slate-500">Loading projects...</p>
-) : error ? (
-  <p className="text-center text-sm text-red-600">Failed to load projects: {error}</p>
-) : modelCategories.length === 0 ? (
-  <p className="text-center text-sm text-slate-500">No projects available yet.</p>
-) : (
-  <div className="flex flex-col gap-5">
-    {modelCategories.map((category) => (
-      <CategoryAccordion
-        key={category.id}
-        category={category}
-        open={openCategoryId === category.id}
-onToggle={(el) => toggleCategory(category.id, el)}
-        openSubId={openSubId}
-        onToggleSub={toggleSub}
-      />
-    ))}
-  </div>
-)}
+      <main
+        style={{ overflowAnchor: "none" }}
+        className="px-4 py-10 sm:px-8 sm:py-14 lg:px-12 lg:py-16"
+      >
+        {" "}
+        <div className="mx-auto max-w-8xl">
+          {loading ? (
+            <p className="text-center text-sm text-slate-500">
+              Loading projects...
+            </p>
+          ) : error ? (
+            <p className="text-center text-sm text-red-600">
+              Failed to load projects: {error}
+            </p>
+          ) : modelCategories.length === 0 ? (
+            <p className="text-center text-sm text-slate-500">
+              No projects available yet.
+            </p>
+          ) : (
+            <div className="flex flex-col gap-5">
+              {modelCategories.map((category) => (
+                <CategoryAccordion
+                  key={category.id}
+                  category={category}
+                  open={openCategoryId === category.id}
+                  onToggle={(el) => toggleCategory(category.id, el)}
+                  openSubId={openSubId}
+                  onToggleSub={toggleSub}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Bottom note */}
           <div className="mt-8 flex items-center justify-center gap-2 text-xs text-slate-400">

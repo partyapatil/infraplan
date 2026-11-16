@@ -10,7 +10,8 @@ import {
   CheckCircle,
 } from "lucide-react";
 
-import aboutPage from "../assets/aboutPage.png";
+import aboutPage from "../assets/ab1.png";
+import ProjectMapSection from "../components/ProjectMapSection";
 
 export default function AboutPage() {
   return (
@@ -22,14 +23,13 @@ export default function AboutPage() {
 <div
   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
   style={{
-    backgroundImage:
-      "url('https://res.cloudinary.com/ddpunpqre/image/upload/v1793172475/aboutPage_ykh1yl.jpg')",
-  }}
+    backgroundImage: `url("${aboutPage}")`,
+     }}
 />
 
   {/* Multi-layer scrim for depth + readability */}
-  <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/60 via-black/45 to-black/70" />
-  <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+  {/* <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/60 via-black/45 to-black/70" /> */}
+  {/* <div className="absolute inset-0 z-[1] bg-gradient-to-t from-black/40 via-transparent to-transparent" /> */}
   <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/40 via-transparent to-black/30" />
 
   {/* Content */}
@@ -220,6 +220,8 @@ export default function AboutPage() {
 
         </div>
       </section>
+            <ProjectMapSection />
+      
     </div>
   );
 }

@@ -953,8 +953,6 @@
 
 
 
-
-
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import {
@@ -967,7 +965,7 @@ import {
   RotateCcw,
   RotateCw,
 } from "lucide-react";
-
+import { toBlob } from "html-to-image";
 /* ============================================================
    POSTER BUILDER - TEST COMPONENT (standalone)
 
@@ -999,7 +997,8 @@ const LINE = "#b8c4d6";
    SECTION (BLOCK) DEFINITIONS
    kind     images (default) | salient | conclusion
    fit      default fit for new images: cover (fill) | contain (whole)
-   mode     default arrangement of several images: row | col | grid
+   separate every picture gets its own bordered box (Format 2 flow pictures)
+   itemTitles optional title bar above each picture
    pad      small padding around the images
    max      max number of images
    noTitle  no title bar
@@ -1019,14 +1018,17 @@ const BLOCK_DEFS = {
 
   /* Format 2 */
   m_layout: { label: "General arrangement layout of model", title: "MODEL LAYOUT", fit: "contain", mode: "col" },
-  m_flow: { label: "Model pictures / flow conditions", title: "", fit: "cover", mode: "grid", pad: true },
-  m_pic: { label: "Model picture / flow condition (bottom left)", title: "", fit: "cover", mode: "col", pad: true },
-  m_visit: { label: "Visitors on model / model picture", title: "MODEL VISIT BY ENGINEERING TEAM", fit: "cover", mode: "col", pad: true },
+  m_f1: { label: "Model picture / flow conditions 1 (top left)", title: "", fit: "cover", mode: "row" },
+  m_f2: { label: "Model picture / flow conditions 2 (top right)", title: "", fit: "cover", mode: "row" },
+  m_f3: { label: "Model picture / flow conditions 3 (bottom left)", title: "", fit: "cover", mode: "row" },
+  m_f4: { label: "Model picture / flow conditions 4 (bottom right)", title: "", fit: "cover", mode: "row" },
+  m_pic: { label: "Model picture / flow condition (bottom left)", title: "", fit: "cover", mode: "row" },
+  m_visit: { label: "Visitors on model / model picture", title: "", fit: "cover", mode: "row" },
   m_concl: { label: "Conclusion and recommendation", kind: "conclusion", title: "CONCLUSION AND RECOMMENDATION" },
 };
 
 const FORMAT_1 = ["p_ga", "p_plan", "p_lsec", "p_csec", "p_proj", "p_model", "p_salient"];
-const FORMAT_2 = ["m_layout", "m_flow", "m_pic", "m_visit", "m_concl"];
+const FORMAT_2 = ["m_layout", "m_f1", "m_f2", "m_f3", "m_f4", "m_pic", "m_visit", "m_concl"];
 
 const makeBlocks = () =>
   Object.fromEntries(
@@ -1227,19 +1229,26 @@ function Box({ style, children }) {
   );
 }
 
-/* All images of one section, arranged automatically */
+/* All images of one section, arranged automatically:
+   1 image  -> fills the section
+   2 images -> side by side
+   3 images -> first one big on the left, 2nd and 3rd stacked on the right
+   4 images -> 2 x 2
+   5+       -> two rows                                                    */
 function ItemsArea({ block, def, flex = 1 }) {
   const items = block.items;
+  const n = items.length;
+  const gap = def.separate ? 14 : 6;
   const outer = {
     flex,
     minWidth: 0,
     minHeight: 0,
     display: "flex",
-    padding: def.pad ? 6 : 0,
-    gap: 6,
+    padding: def.pad && !def.separate ? 6 : 0,
+    gap,
   };
 
-  const cell = (it) => (
+  const area = (it) => (
     <div
       key={it.id}
       data-item={it.id}
@@ -1274,7 +1283,18 @@ function ItemsArea({ block, def, flex = 1 }) {
     </div>
   );
 
-  if (items.length === 0) {
+  /* "separate" sections draw every picture in its own bordered box */
+  const cell = (it) =>
+    def.separate ? (
+      <Box key={it.id} style={{ flex: 1 }}>
+        {def.itemTitles && (it.title || "").trim() && <Bar title={it.title} />}
+        {area(it)}
+      </Box>
+    ) : (
+      area(it)
+    );
+
+  if (n === 0) {
     return (
       <div style={outer}>
         <div
@@ -1297,22 +1317,39 @@ function ItemsArea({ block, def, flex = 1 }) {
     );
   }
 
-  if (block.mode === "grid") {
-    const cols = items.length <= 1 ? 1 : items.length <= 4 ? 2 : 3;
+  if (n <= 2) {
+    return <div style={{ ...outer, flexDirection: "row" }}>{items.map(cell)}</div>;
+  }
+
+  if (n === 3) {
     return (
-      <div style={{ ...outer, flexDirection: "column" }}>
-        {chunk(items, cols).map((row, i) => (
-          <div key={i} style={{ flex: 1, minHeight: 0, display: "flex", gap: 6 }}>
-            {row.map(cell)}
-          </div>
-        ))}
+      <div style={{ ...outer, flexDirection: "row" }}>
+        {cell(items[0])}
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap,
+          }}
+        >
+          {cell(items[1])}
+          {cell(items[2])}
+        </div>
       </div>
     );
   }
 
+  const cols = n <= 8 ? Math.ceil(n / 2) : 4;
   return (
-    <div style={{ ...outer, flexDirection: block.mode === "col" ? "column" : "row" }}>
-      {items.map(cell)}
+    <div style={{ ...outer, flexDirection: "column" }}>
+      {chunk(items, cols).map((row, i) => (
+        <div key={i} style={{ flex: 1, minHeight: 0, display: "flex", gap }}>
+          {row.map(cell)}
+        </div>
+      ))}
     </div>
   );
 }
@@ -1323,6 +1360,13 @@ function ImageBlock({ id, data, exporting, style, itemsFlex = 1, children }) {
   const b = data.blocks[id];
   const def = BLOCK_DEFS[id];
   const showItems = b.items.length > 0 || !exporting;
+  if (def.separate) {
+    return (
+      <div style={{ minWidth: 0, minHeight: 0, display: "flex", ...style }}>
+        <ItemsArea block={b} def={def} flex={1} />
+      </div>
+    );
+  }
   return (
     <Box style={style}>
       {b.title.trim() && <Bar title={b.title} />}
@@ -1531,7 +1575,9 @@ function ProjectTemplate({ data, exporting }) {
 function ModelTemplate({ data, exporting }) {
   const S = (id) => shown(data, id, exporting);
   const IB = (id, style) => <ImageBlock id={id} data={data} exporting={exporting} style={style} />;
-  const top = S("m_layout") || S("m_flow");
+  const r1 = S("m_f1") || S("m_f2");
+  const r2 = S("m_f3") || S("m_f4");
+  const top = S("m_layout") || r1 || r2;
   const bottom = S("m_pic") || S("m_visit") || S("m_concl");
 
   return (
@@ -1539,7 +1585,22 @@ function ModelTemplate({ data, exporting }) {
       {top && (
         <div style={{ flex: 70, minHeight: 0, display: "flex", gap: 14 }}>
           {IB("m_layout", { flex: 52 })}
-          {IB("m_flow", { flex: 48 })}
+          {(r1 || r2) && (
+            <div style={{ flex: 48, minWidth: 0, display: "flex", flexDirection: "column", gap: 14 }}>
+              {r1 && (
+                <div style={{ flex: 1, minHeight: 0, display: "flex", gap: 14 }}>
+                  {IB("m_f1", { flex: 1 })}
+                  {IB("m_f2", { flex: 1 })}
+                </div>
+              )}
+              {r2 && (
+                <div style={{ flex: 1, minHeight: 0, display: "flex", gap: 14 }}>
+                  {IB("m_f3", { flex: 1 })}
+                  {IB("m_f4", { flex: 1 })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
       {bottom && (
@@ -1815,6 +1876,15 @@ function ItemEditor({ item, index, total, def, bid, api, measure }) {
         </div>
       </div>
 
+      {def.itemTitles && (
+        <input
+          className={`${inputCls} mb-2`}
+          placeholder="Title bar for this picture (optional)"
+          value={item.title || ""}
+          onChange={(e) => api.patchItem(bid, item.id, { title: e.target.value })}
+        />
+      )}
+
       <Adjuster
         item={item}
         def={def}
@@ -1880,20 +1950,6 @@ function BlockEditor({ id, data, api, measure, children }) {
           />
         )}
 
-        {kind === "images" && b.items.length > 1 && (
-          <label className="flex items-center gap-2 text-xs text-slate-600">
-            Arrange images
-            <select
-              className="rounded-md border border-slate-300 px-2 py-1 text-xs"
-              value={b.mode}
-              onChange={(e) => api.setBlock(id, { mode: e.target.value })}
-            >
-              <option value="row">Side by side</option>
-              <option value="col">Stacked</option>
-              <option value="grid">Grid</option>
-            </select>
-          </label>
-        )}
 
         {kind === "images" &&
           b.items.map((it, i) => (
@@ -1908,6 +1964,13 @@ function BlockEditor({ id, data, api, measure, children }) {
               measure={measure}
             />
           ))}
+
+        {kind === "images" && def.max !== 1 && (
+          <p className="text-xs text-slate-400">
+            Arranged automatically: 1 image fills the section, 2 sit side by side, 3 = one large + two
+            stacked, 4 = 2 x 2.
+          </p>
+        )}
 
         {canAdd && (
           <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 py-3 text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600">
@@ -1967,6 +2030,7 @@ export default function PosterBuilderTest({ className = "h-full" }) {
             nw,
             nh,
             caption: "",
+            title: "",
             fit: def.fit,
             zoom: 1,
             ox: 0,
@@ -2032,30 +2096,82 @@ export default function PosterBuilderTest({ className = "h-full" }) {
     const uniq = [...new Set(names)];
     setWarnings((prev) => (prev.join("|") === uniq.join("|") ? prev : uniq));
   });
+const exportPng = async () => {
+  if (!posterRef.current || exporting) return;
 
-  const exportPng = async () => {
-    if (!posterRef.current) return;
-    setExporting(true); // hides empty sections so the layout reflows
-    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-    await new Promise((r) => setTimeout(r, 250)); // let images re-measure
-    try {
-      const url = await toPng(posterRef.current, {
-        width: W,
-        height: H,
-        pixelRatio: 1,
-        cacheBust: true,
-      });
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${(data.name || "poster").replace(/[^\w\-]+/g, "_")}.png`;
-      a.click();
-    } catch (err) {
-      alert("Export failed: " + (err?.message || err));
-    } finally {
-      setExporting(false);
+  setExporting(true);
+
+  try {
+    // Wait for React to update the poster
+    await new Promise((resolve) =>
+      requestAnimationFrame(() =>
+        requestAnimationFrame(resolve)
+      )
+    );
+
+    // Wait for fonts
+    if (document.fonts?.ready) {
+      await document.fonts.ready;
     }
-  };
 
+    // Wait for all poster images
+    const images = Array.from(
+      posterRef.current.querySelectorAll("img")
+    );
+
+    await Promise.all(
+      images.map((img) => {
+        if (img.complete) return Promise.resolve();
+
+        return new Promise((resolve) => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      })
+    );
+
+    // Generate PNG
+    const blob = await toBlob(posterRef.current, {
+      width: W,
+      height: H,
+      pixelRatio: 1,
+      cacheBust: true,
+      backgroundColor: "#ffffff",
+    });
+
+    if (!blob) {
+      throw new Error("Failed to generate poster image.");
+    }
+
+    // Download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = `${(data.name || "poster")
+      .replace(/[^\w-]+/g, "_")}.png`;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+} catch (err) {
+  console.error("Full poster export error:", err);
+  console.error("Error name:", err?.name);
+  console.error("Error message:", err?.message);
+  console.error("Error stack:", err?.stack);
+
+  alert(
+    `Poster download failed:\n${
+      err?.message || err?.toString?.() || JSON.stringify(err) || "Unknown error"
+    }`
+  );
+} finally {
+  setExporting(false);
+}
+};
   const tabCls = (active) =>
     `rounded-md px-3 py-1.5 text-sm font-medium transition ${
       active ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-700 hover:bg-slate-200"
@@ -2153,7 +2269,10 @@ export default function PosterBuilderTest({ className = "h-full" }) {
           ) : (
             <>
               {ed("m_layout")}
-              {ed("m_flow")}
+              {ed("m_f1")}
+              {ed("m_f2")}
+              {ed("m_f3")}
+              {ed("m_f4")}
               {ed("m_pic")}
               {ed("m_visit")}
               {ed(

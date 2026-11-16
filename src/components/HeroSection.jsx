@@ -13,7 +13,7 @@ import {
   VolumeX,
 } from "lucide-react";
 
-// import blueprintBg from "../assets/engineering-blueprint-bg.png";
+import blueprintBg from "../assets/h4.jpg";
 // import blueprintBg from "../assets/engineering-blueprint-bg.png";
 const heroVideo2 = "https://res.cloudinary.com/ddpunpqre/video/upload/v1791607793/hydrolicVideo_pqzp6r.mp4";
 export default function HeroSection() {
@@ -196,15 +196,15 @@ export default function HeroSection() {
 
       {!isFullscreen && (
         <>
-          <div
-            className="absolute inset-0 z-0 bg-white"
-            style={{
-  backgroundImage: `url("https://res.cloudinary.com/ddpunpqre/image/upload/v1793430036/Water_Infrastructure_Blueprint_Panorama_bw2s9p.jpg")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
+       <div
+  className="absolute inset-0 z-0 bg-white"
+  style={{
+    backgroundImage: `url("${blueprintBg}")`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  }}
+/>
 
           <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white/10 via-white/5 to-white/10" />
         </>
@@ -310,7 +310,7 @@ export default function HeroSection() {
               loop
               playsInline
               preload="auto"
-              controls={false}
+              controls={true}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onEnded={() => setIsPlaying(false)}
@@ -458,23 +458,22 @@ export default function HeroSection() {
         {/* ============================================================
             STATS GRID
         ============================================================ */}
-
-     {!isFullscreen && (
-  <div className="relative mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-3 rounded-xl border border-slate-200/60 bg-white/80 p-4 shadow-lg backdrop-blur-lg sm:grid-cols-4">
+{!isFullscreen && (
+  <div className="relative mx-auto mt-8 grid max-w-2xl grid-cols-2 gap-2 rounded-lg border border-slate-200/60 bg-white/80 p-3 shadow-md backdrop-blur-lg sm:grid-cols-4">
     {stats.map((s) => {
       const Icon = s.icon;
 
       return (
         <div key={s.label} className="group text-center">
-          <div className="mb-1.5 inline-flex rounded-lg bg-blue-50 p-1.5 text-blue-600 transition-transform group-hover:scale-110">
-            <Icon size={16} />
+          <div className="mb-1 inline-flex rounded-md bg-blue-50 p-1 text-blue-600 transition-transform group-hover:scale-110">
+            <Icon size={13} />
           </div>
 
-          <div className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          <div className="text-lg font-bold tracking-tight text-slate-900 sm:text-xl">
             {s.value}
           </div>
 
-          <div className="mt-0.5 text-[11px] text-slate-500">
+          <div className="mt-0.5 text-[10px] text-slate-500">
             {s.label}
           </div>
         </div>
