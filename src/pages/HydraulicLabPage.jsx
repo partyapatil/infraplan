@@ -623,164 +623,176 @@ export default function HydraulicLabPage() {
         </div>
       </section>
       {/* Model Studies - Accordion Style with Expandable Cards */}
-      <section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 to-blue-50/30 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
-              Model Studies Conducted at Infraplan Hydraulic Laboratory, Pune,
-              India for Various Aspects of the Design Parameters
-            </h2>
+  
+<section className="px-5 sm:px-8 lg:px-12 py-16 bg-gradient-to-br from-slate-50 to-blue-50/30 border-y border-slate-100">
+  <div className="max-w-7xl mx-auto">
+
+    <div className="text-center mb-12">
+      <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mt-2">
+        Model Studies Conducted at Infraplan Hydraulic Laboratory, Pune,
+        India for Various Aspects of the Design Parameters
+      </h2>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+
+      {/* Physical Models */}
+      <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+
+        {/* Header */}
+        <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
+          <div className="rounded-xl bg-blue-600 p-2 text-white">
+            <Waves size={20} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {/* Physical Models */}
-            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
-                <div className="rounded-xl bg-blue-600 p-2 text-white">
-                  <Waves size={20} />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">
-                  Physical Models
-                </h3>
-                <span className="rounded-full bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-700">
-                  {modelStudies.physicalModels.length}
-                </span>
-              </div>
+          <h3 className="text-lg font-bold text-slate-900">
+            Physical Models
+          </h3>
 
-              <div className="flex-1 p-3 pb-5">
-                {modelStudies.physicalModels.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`overflow-hidden rounded-xl border transition-all ${
-                      expandedCards[item.id]
-                        ? "border-blue-200 bg-blue-50/30"
-                        : "border-transparent"
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => toggleCard(item.id)}
-                      className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
-                    >
-                      {expandedCards[item.id] ? (
-                        <ChevronDown
-                          size={17}
-                          className="shrink-0 text-blue-600"
-                        />
-                      ) : (
-                        <ChevronRight
-                          size={17}
-                          className="shrink-0 text-blue-600"
-                        />
-                      )}
-                      <span className="text-sm font-semibold leading-snug text-slate-900">
-                        {item.title}
-                      </span>
-                    </button>
-
-                    {expandedCards[item.id] && (
-                      <div className="mx-3 mb-3 rounded-xl border border-blue-100 bg-white p-4 space-y-4">
-                        <div>
-                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
-                            Purpose
-                          </div>
-                          <p className="text-sm leading-relaxed text-slate-600">
-                            {item.purpose}
-                          </p>
-                        </div>
-                        <div>
-                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
-                            Application
-                          </div>
-                          <p className="text-sm leading-relaxed text-slate-600">
-                            {item.application}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
-                Select a study to explore its purpose and application details.
-              </div>
-            </div>
-
-            {/* Mathematical Models */}
-            <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-              <div className="flex items-center gap-3 border-b border-indigo-100 bg-gradient-to-r from-indigo-50 to-purple-50 px-5 py-4">
-                <div className="rounded-xl bg-indigo-600 p-2 text-white">
-                  <Calculator size={20} />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900">
-                  Mathematical Models
-                </h3>
-                <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-xs font-semibold text-indigo-700">
-                  {modelStudies.mathematicalModels.length}
-                </span>
-              </div>
-
-              <div className="flex-1 p-3 pb-5">
-                {modelStudies.mathematicalModels.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`overflow-hidden rounded-xl border transition-all ${
-                      expandedCards[item.id]
-                        ? "border-indigo-200 bg-indigo-50/30"
-                        : "border-transparent"
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => toggleCard(item.id)}
-                      className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
-                    >
-                      {expandedCards[item.id] ? (
-                        <ChevronDown
-                          size={17}
-                          className="shrink-0 text-indigo-600"
-                        />
-                      ) : (
-                        <ChevronRight
-                          size={17}
-                          className="shrink-0 text-indigo-600"
-                        />
-                      )}
-                      <span className="text-sm font-semibold leading-snug text-slate-900">
-                        {item.title}
-                      </span>
-                    </button>
-
-                    {expandedCards[item.id] && (
-                      <div className="mx-3 mb-3 rounded-xl border border-indigo-100 bg-white p-4 space-y-4">
-                        <div>
-                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-indigo-600">
-                            Purpose
-                          </div>
-                          <p className="text-sm leading-relaxed text-slate-600">
-                            {item.purpose}
-                          </p>
-                        </div>
-                        <div>
-                          <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
-                            Application
-                          </div>
-                          <p className="text-sm leading-relaxed text-slate-600">
-                            {item.application}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className="border-t border-blue-200 bg-blue-100 px-5 py-3 text-xs text-slate-900">
-                Select a study to explore its purpose and application details.
-              </div>
-            </div>
-          </div>
+          <span className="rounded-full bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-700">
+            {modelStudies.physicalModels.length}
+          </span>
         </div>
-      </section>
+
+        {/* Content */}
+        <div className="flex-1 p-3 pb-5">
+          {modelStudies.physicalModels.map((item) => (
+            <div
+              key={item.id}
+              className={`overflow-hidden rounded-xl border transition-all ${
+                expandedCards[item.id]
+                  ? "border-blue-200 bg-blue-50/30"
+                  : "border-transparent"
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => toggleCard(item.id)}
+                className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
+              >
+                {expandedCards[item.id] ? (
+                  <ChevronDown size={17} className="shrink-0 text-blue-600" />
+                ) : (
+                  <ChevronRight size={17} className="shrink-0 text-blue-600" />
+                )}
+
+                <span className="text-sm font-semibold leading-snug text-slate-900">
+                  {item.title}
+                </span>
+              </button>
+
+              {expandedCards[item.id] && (
+                <div className="mx-3 mb-3 rounded-xl border border-blue-100 bg-white p-4 space-y-4">
+                  <div>
+                    <div className="mb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
+                      Purpose
+                    </div>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {item.purpose}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Application
+                    </div>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {item.application}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-blue-100 bg-blue-50 px-5 py-3 text-xs text-slate-600">
+          Select a study to explore its purpose and application details.
+        </div>
+      </div>
+
+
+      {/* Mathematical Models */}
+      <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+
+        {/* Header */}
+        <div className="flex items-center gap-3 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-cyan-50 px-5 py-4">
+          <div className="rounded-xl bg-blue-600 p-2 text-white">
+            <Calculator size={20} />
+          </div>
+
+          <h3 className="text-lg font-bold text-slate-900">
+            Mathematical Models
+          </h3>
+
+          <span className="rounded-full bg-blue-600/10 px-3 py-1 text-xs font-semibold text-blue-700">
+            {modelStudies.mathematicalModels.length}
+          </span>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 p-3 pb-5">
+          {modelStudies.mathematicalModels.map((item) => (
+            <div
+              key={item.id}
+              className={`overflow-hidden rounded-xl border transition-all ${
+                expandedCards[item.id]
+                  ? "border-blue-200 bg-blue-50/30"
+                  : "border-transparent"
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => toggleCard(item.id)}
+                className="flex w-full items-center gap-2 px-3 py-3 text-left transition-colors hover:bg-slate-50"
+              >
+                {expandedCards[item.id] ? (
+                  <ChevronDown size={17} className="shrink-0 text-blue-600" />
+                ) : (
+                  <ChevronRight size={17} className="shrink-0 text-blue-600" />
+                )}
+
+                <span className="text-sm font-semibold leading-snug text-slate-900">
+                  {item.title}
+                </span>
+              </button>
+
+              {expandedCards[item.id] && (
+                <div className="mx-3 mb-3 rounded-xl border border-blue-100 bg-white p-4 space-y-4">
+                  <div>
+                    <div className="mb-1 text-xs font-bold uppercase tracking-wider text-blue-600">
+                      Purpose
+                    </div>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {item.purpose}
+                    </p>
+                  </div>
+
+                  <div>
+                    <div className="mb-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Application
+                    </div>
+                    <p className="text-sm leading-relaxed text-slate-600">
+                      {item.application}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-blue-100 bg-blue-50 px-5 py-3 text-xs text-slate-600">
+          Select a study to explore its purpose and application details.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
       {/* =========================================================
     PROJECT SHOWCASE
 ========================================================= */}

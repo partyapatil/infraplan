@@ -8,18 +8,17 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-<header className="sticky top-0 z-[1000] flex h-24 lg:h-28 items-center justify-between px-5 sm:px-8 lg:px-12 border-b border-slate-100 bg-white/95 backdrop-blur-sm shadow-sm">
-
+<header className="sticky top-0 z-[1000] flex h-20 lg:h-22 items-center justify-between px-5 sm:px-8 lg:px-12 border-b border-slate-100 bg-white/95 backdrop-blur-sm shadow-sm">
   <Link
     to="/"
     className="flex items-center shrink-0"
     onClick={() => setMenuOpen(false)}
   >
-    <img
-      src={se}
-      alt="Infraplan Engineering Services Pvt. Ltd."
-      className="h-20 w-auto max-w-[240px] object-contain"
-    />
+ <img
+  src={se}
+  alt="Infraplan Engineering Services Pvt. Ltd."
+  className="h-16 lg:h-[72px] w-auto max-w-[240px] object-contain"
+/>
   </Link>
 
   <Navigation
