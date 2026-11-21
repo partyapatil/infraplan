@@ -157,32 +157,34 @@ export default function TrustedBySection() {
       {/* =========================================================
           MARQUEE ANIMATION
       ========================================================== */}
-      <style>{`
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
+     <style>{`
+  @keyframes marquee {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    100% {
+      transform: translate3d(-33.333333%, 0, 0);
+    }
+  }
 
-          100% {
-            transform: translateX(-33.333333%);
-          }
-        }
+  .animate-marquee {
+    /* Slower = smoother + less raster blur.
+       ~15s per copy before → ~30s per copy now */
+    animation: marquee 90s linear infinite;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
 
-        .animate-marquee {
-          animation: marquee 45s linear infinite;
-          will-change: transform;
-        }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
 
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .animate-marquee {
-            animation: none;
-          }
-        }
-      `}</style>
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+`}</style>
     </section>
   );
 }
