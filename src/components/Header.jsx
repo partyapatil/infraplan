@@ -3,7 +3,7 @@ import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Navigation from "./Navigation";
-import se from "../assets/infraplan-logo.png";
+import se from "../assets/se4.png";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 

@@ -383,7 +383,7 @@ export default function JourneySection() {
     key={setIndex}
     className="flex items-start gap-4 pr-4 sm:gap-6 sm:pr-6 md:gap-8 md:pr-8"
   >
-    {[...journey].reverse().map((item, i) => {
+    {journey.map((item, i) => {
       const key = `${setIndex}-${i}`;
 
       return (
@@ -551,10 +551,10 @@ export default function JourneySection() {
       )}
 
    <style>{`
-  @keyframes timelineScroll {
-    0%   { transform: translateX(-33.3333%); }
-    100% { transform: translateX(0%); }
-  }
+@keyframes timelineScroll {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-33.3333%); }
+}
   .animate-timeline-scroll {
     animation: timelineScroll 35s linear infinite;
   }
@@ -568,10 +568,10 @@ export default function JourneySection() {
       animation: none;
     }
   }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.96); }
-    to   { opacity: 1; transform: scale(1); }
-  }
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
   .animate-scale-in {
     animation: scaleIn 0.2s ease-out;
   }
