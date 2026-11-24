@@ -18,7 +18,7 @@ import {
 import publicationsHero from "../assets/p1.png";
 
 // API Base URL for assets (PDFs)
-const API_BASE_URL = "https://staging.infraplan.co.in:7052";
+const API_BASE_URL = "https://staging.infraplan.co.in";
 
 export default function PublicationsPage() {
   // --- API STATE ---
@@ -41,7 +41,7 @@ export default function PublicationsPage() {
       try {
         setIsLoading(true);
         const response = await fetch(
-          "https://staging.infraplan.co.in:7052/api/publication"
+          "https://staging.infraplan.co.in/api/publication"
         );
 
         if (!response.ok) {

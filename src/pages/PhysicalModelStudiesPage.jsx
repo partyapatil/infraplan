@@ -50,7 +50,7 @@ const letter = (i) => String.fromCharCode(65 + i);
    API
 ============================================================ */
 
-const API_BASE = "https://staging.infraplan.co.in:7052";
+const API_BASE = "https://staging.infraplan.co.in";
 const ICONS = [Box, Calculator, Activity, Wind];
 
 const fileUrl = (p) =>
