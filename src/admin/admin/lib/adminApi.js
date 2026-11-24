@@ -12,7 +12,7 @@ const K = {
   token: "adm_token",
 };
 
-const BASE_URL = "https://staging.infraplan.co.in:7052/api";
+const BASE_URL = "https://staging.infraplan.co.in/api";
 
 // ------------------------------------------------------------
 // localStorage helpers (mock stores)
