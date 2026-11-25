@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import API_BASE from "../config/apiConfig";
 
 import trenchWeir3 from "../assets/physicalModelImages/trench-weir/second.png";
 import namBeng1 from "../assets/1.png";
@@ -50,7 +51,7 @@ const letter = (i) => String.fromCharCode(65 + i);
    API
 ============================================================ */
 
-const API_BASE = "https://staging.infraplan.co.in";
+// const API_BASE = "https://staging.infraplan.co.in";
 const ICONS = [Box, Calculator, Activity, Wind];
 
 const fileUrl = (p) =>

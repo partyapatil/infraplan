@@ -469,6 +469,15 @@ const [form, setForm] = useState({
     setSaving(true);
 
     try {
+      console.log("IMAGE PATHS BEFORE SAVE:", form.imagePaths);
+
+form.imagePaths.forEach((url, index) => {
+  console.log(`Image ${index}:`, url);
+  console.log("Last 5 chars:", url.slice(-5));
+  console.log("Contains %22:", url.includes("%22"));
+  console.log("Starts with quote:", url.startsWith('"'));
+  console.log("Ends with quote:", url.endsWith('"'));
+});
       await onSave({
         ...form,
           subCategoryId: form.subCategoryId || null, 

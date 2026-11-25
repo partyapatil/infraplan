@@ -14,11 +14,11 @@ import {
   Check,
   Loader2, // Added Loader2 for the loading state
 } from "lucide-react";
-
+import API_BASE from "../config/apiConfig";
 import publicationsHero from "../assets/p1.png";
 
 // API Base URL for assets (PDFs)
-const API_BASE_URL = "https://staging.infraplan.co.in";
+// const API_BASE_URL = "https://staging.infraplan.co.in";
 
 export default function PublicationsPage() {
   // --- API STATE ---
@@ -37,12 +37,12 @@ export default function PublicationsPage() {
      FETCH DATA FROM API
   ========================================================= */
   useEffect(() => {
-    const fetchPublications = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(
-          "https://staging.infraplan.co.in/api/publication"
-        );
+ const fetchPublications = async () => {
+  try {
+    setIsLoading(true);
+
+    const response = await fetch(`${API_BASE}/api/publication`);
+
 
         if (!response.ok) {
           throw new Error("Failed to fetch publications");

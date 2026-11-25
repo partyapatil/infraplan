@@ -3,21 +3,20 @@ import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Navigation from "./Navigation";
-import se from "../assets/se4.png";
+import se from "../assets/se9.png";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-<header className="sticky top-0 z-[1000] flex h-20 lg:h-22 items-center justify-between px-5 sm:px-8 lg:px-12 border-b border-slate-100 bg-white/95 backdrop-blur-sm shadow-sm">
-  <Link
+<header className="sticky top-0 z-[1000] flex h-16 sm:h-18 lg:h-20 items-center justify-between px-4 sm:px-8 lg:px-12 border-b border-slate-100 bg-white/95 backdrop-blur-sm shadow-sm">  <Link
     to="/"
     className="flex items-center shrink-0"
     onClick={() => setMenuOpen(false)}
   >
- <img
+<img
   src={se}
   alt="Infraplan Engineering Services Pvt. Ltd."
-  className="h-16 lg:h-[72px] w-auto max-w-[240px] object-contain"
+  className="h-12 sm:h-14 lg:h-16 w-auto max-w-[220px] object-contain"
 />
   </Link>
 

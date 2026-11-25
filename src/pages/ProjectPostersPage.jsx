@@ -2,8 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
-
-const API_BASE = "https://staging.infraplan.co.in";
+import API_BASE from "../config/apiConfig";
 
 const fileUrl = (p) =>
   !p ? "" : /^(https?:|data:)/.test(p) ? p : `${API_BASE}${p}`;

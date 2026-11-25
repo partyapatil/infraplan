@@ -13,7 +13,7 @@ const K = {
 };
 
 const BASE_URL = "https://staging.infraplan.co.in/api";
-
+export default BASE_URL;
 // ------------------------------------------------------------
 // localStorage helpers (mock stores)
 // ------------------------------------------------------------
