@@ -72,8 +72,7 @@ const BLOCK_DEFS = {
   m_concl: { label: "Conclusion and recommendation", kind: "conclusion", title: "CONCLUSION AND RECOMMENDATION" },
 };
 
-const FORMAT_1 = ["p_ga", "p_plan", "p_lsec", "p_csec", "p_proj", "p_model", "p_salient"];
-const FORMAT_2 = ["m_layout", "m_f1", "m_f2", "m_f3", "m_f4", "m_pic", "m_visit", "m_concl"];
+
 
 const makeBlocks = () =>
   Object.fromEntries(
