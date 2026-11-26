@@ -23,7 +23,6 @@ import ContactSection from "./components/ContactSection";
 import PosterBuilderTest from "./pages/Posterbuildertest";
 import AdminPosters from "./AdminPosters";
 import AdminPosterEditor from "./admin/admin/AdminPosterEditor";
-import DeuPortfolio from "./pages/Deu";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +39,6 @@ const router = createBrowserRouter([
       { path: "/publications", element: <PublicationsPage /> },
       { path: "/sales", element: <SalesPartnerPage /> },
       { path: "/hydrolicpublications", element: <PublicationsPage /> },
-      { path: "/deu", element: <DeuPortfolio /> },
       // { path: "/mathematical-model-studies", element: <MathematicalModelStudiesPage /> },
       { path: "/physical-model-studies", element: <PhysicalModelStudiesPage /> },
       { path: "/project-posters/:id", element: <ProjectPostersPage /> },

@@ -58,7 +58,7 @@ const fileUrl = (p) =>
   !p ? "" : /^(https?:|data:)/.test(p) ? p : `${API_BASE}${p}`;
 
 const getJson = async (path) => {
-  const res = await fetch(`${API_BASE}/api${path}`);
+  const res = await fetch(`${API_BASE}${path}`);
   if (!res.ok) throw new Error(`Request failed (${res.status})`);
   const json = await res.json();
   return Array.isArray(json) ? json : (json?.result ?? json?.data ?? []);
