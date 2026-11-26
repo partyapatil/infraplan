@@ -12,7 +12,7 @@ import {
   Pause,
 } from "lucide-react";
 
-import newcontractorshero from "../assets/con3.jpg";
+import newcontractorshero from "../assets/con4.jpg";
 import ProjectMapSection from "../components/ProjectMapSection";
 
 const contractorImages = import.meta.glob(
@@ -271,32 +271,30 @@ export default function ContractorsPage() {
       {/* =========================================================
           HERO
       ========================================================= */}
-<section className="relative flex min-h-[300px] items-center justify-center overflow-hidden px-4 py-12 sm:min-h-[360px] sm:px-8 sm:py-16 lg:min-h-[400px] lg:px-12">          <div
-          className="absolute inset-0 bg-white"
-          style={{
-            backgroundImage: `url(${newcontractorshero})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
-        <div className="absolute inset-0 bg-white/5" />
+<section className="relative flex min-h-[300px] items-center justify-center overflow-hidden px-4 py-12 sm:min-h-[360px] sm:px-8 sm:py-16 lg:min-h-[400px] lg:px-12">
 
-        <div className="relative z-10 mx-auto max-w-7xl text-center">
-       
+  <div
+    className="absolute inset-0 bg-white"
+    style={{
+      backgroundImage: `url(${newcontractorshero})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }}
+  />
 
-          <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
-            Engineering{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Contractors
-            </span>
-          </h1>
+  {/* Dark overlay for text readability */}
+  <div className="absolute inset-0 bg-black/30" />
 
-     
-
-         
-        </div>
-      </section>
+  <div className="relative z-10 mx-auto max-w-7xl text-center">
+    <h1 className="text-3xl font-bold leading-tight tracking-tight text-white drop-shadow-2xl sm:text-5xl lg:text-[3.5rem]">
+      Engineering{" "}
+      <span className="text-blue-400">
+        Contractors
+      </span>
+    </h1>
+  </div>
+</section>
 
       {/* =========================================================
           MAIN SERVICES — ALL STACKED, SLIDER + CONTENT PER SERVICE
