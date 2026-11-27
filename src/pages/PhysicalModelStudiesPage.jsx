@@ -167,84 +167,82 @@ function ProjectCarousel({ images, title }) {
      UI
   ============================================================ */
 
-  return (
-    <div
-      className="group relative w-full overflow-hidden rounded-2xl bg-slate-100 shadow-sm lg:w-[430px] lg:shrink-0"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
-        {" "}
-        {/* IMAGE */}
-        <img
-          key={src}
-          src={src}
-          alt={
-            showFallback
-              ? `${title} – no preview available`
-              : `${title} ${index + 1}`
-          }
-          loading="lazy"
-          onError={handleImageError}
-          className="h-full w-full object-contain transition-transform duration-500"
-        />
-        {/* GRADIENT OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent" />
-        {/* IMAGE COUNTER */}
-        {hasImages && !showFallback && (
-          <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-md">
-            {index + 1} / {list.length}
-          </div>
-        )}
-        {/* FALLBACK LABEL */}
-        {showFallback && (
-          <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur-md">
-            No preview available
-          </div>
-        )}
-        {/* PREVIOUS / NEXT BUTTONS */}
-        {hasMultiple && (
-          <>
-            <button
-              type="button"
-              onClick={prev}
-              aria-label="Previous image"
-              className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/65 sm:h-10 sm:w-10 lg:opacity-0 lg:group-hover:opacity-100"
-            >
-              <ChevronLeft size={18} />
-            </button>
+return (
+  <div
+    className="group relative w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm lg:w-[480px] xl:w-[520px] lg:shrink-0"
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+  >
+    <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-slate-100">
+      {/* IMAGE (full image, never cropped) */}
+      <img
+        key={src}
+        src={src}
+        alt={
+          showFallback
+            ? `${title} – no preview available`
+            : `${title} ${index + 1}`
+        }
+        loading="lazy"
+        onError={handleImageError}
+        className="h-full w-full object-contain"
+      />
 
-            <button
-              type="button"
-              onClick={next}
-              aria-label="Next image"
-              className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/65 sm:h-10 sm:w-10 lg:opacity-0 lg:group-hover:opacity-100"
-            >
-              <ChevronRight size={18} />
-            </button>
+    {/* IMAGE COUNTER */}
+{hasImages && !showFallback && (
+  <div className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-md">
+    {index + 1} / {list.length}
+  </div>
+)}
 
-            {/* PAGINATION DOTS */}
+{/* FALLBACK LABEL */}
+{showFallback && (
+  <div className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-md">
+    No preview available
+  </div>
+)}
 
-            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5">
-              {list.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setIndex(i)}
-                  aria-label={`Show image ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === index
-                      ? "w-6 bg-white"
-                      : "w-1.5 bg-white/50 hover:bg-white/80"
-                  }`}
-                />
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+      {/* PREVIOUS / NEXT BUTTONS */}
+      {hasMultiple && (
+        <>
+   <button
+  type="button"
+  onClick={prev}
+  aria-label="Previous image"
+  className="absolute left-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/70 lg:opacity-0 lg:group-hover:opacity-100"
+>
+  <ChevronLeft size={14} />
+</button>
+
+<button
+  type="button"
+  onClick={next}
+  aria-label="Next image"
+  className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/70 lg:opacity-0 lg:group-hover:opacity-100"
+>
+  <ChevronRight size={14} />
+</button>
+
+{/* PAGINATION DOTS */}
+<div className="absolute bottom-2.5 left-1/2 flex -translate-x-1/2 gap-1 rounded-full bg-black/40 px-2 py-1 backdrop-blur-md">
+  {list.map((_, i) => (
+    <button
+      key={i}
+      type="button"
+      onClick={() => setIndex(i)}
+      aria-label={`Show image ${i + 1}`}
+      className={`h-1 rounded-full transition-all duration-300 ${
+        i === index
+          ? "w-4 bg-white"
+          : "w-1 bg-white/50 hover:bg-white/80"
+      }`}
+    />
+  ))}
+</div>        </>
+      )}
     </div>
-  );
+  </div>
+);
 }
 
 /* ============================================================
@@ -370,7 +368,6 @@ return (
       </div>
 
       {/* Left accent bar on hover */}
-      <span className="pointer-events-none absolute inset-y-4 left-0 w-0.5 rounded-full bg-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
     </article>
 
     {/* Modal — portal, so it's not constrained by row layout */}

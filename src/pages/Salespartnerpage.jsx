@@ -52,16 +52,25 @@ const commissions = [
 const requirements = [
   { icon: Smartphone, text: "Smartphone & internet connection" },
   { icon: MessageCircle, text: "Communication skills in local language" },
-  { icon: Landmark, text: "Knowledge of village administration or Panchayat systems" },
+  {
+    icon: Landmark,
+    text: "Knowledge of village administration or Panchayat systems",
+  },
   { icon: Users, text: "Interest in social entrepreneurship" },
 ];
 
 const weProvide = [
   { icon: Globe, text: "Full online training & product demo access" },
-  { icon: ClipboardList, text: "Sales kit (brochures, pitch deck, pricing sheets)" },
+  {
+    icon: ClipboardList,
+    text: "Sales kit (brochures, pitch deck, pricing sheets)",
+  },
   { icon: MessageCircle, text: "WhatsApp / On call partner support" },
   { icon: Megaphone, text: "Marketing materials for local campaigns" },
-  { icon: GraduationCap, text: "Certificates and ID for authorized AquaBill Partners" },
+  {
+    icon: GraduationCap,
+    text: "Certificates and ID for authorized AquaBill Partners",
+  },
 ];
 
 const whyJoin = [
@@ -69,7 +78,10 @@ const whyJoin = [
   { icon: Landmark, text: "Supports Digital Panchayat initiatives" },
   { icon: Building2, text: "Government and NGO partnerships" },
   { icon: Globe, text: "Available on GeM Portal" },
-  { icon: Award, text: "Backed by Sigma Toolbox (Startup India-registered company)" },
+  {
+    icon: Award,
+    text: "Backed by Sigma Toolbox (Startup India-registered company)",
+  },
 ];
 
 /* ============================================================
@@ -80,7 +92,10 @@ function CheckList({ items }) {
   return (
     <ul className="space-y-3.5">
       {items.map((item) => (
-        <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
+        <li
+          key={item}
+          className="flex items-start gap-3 text-sm leading-relaxed text-slate-600"
+        >
           <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
             <CheckCircle size={14} strokeWidth={2.5} />
           </span>
@@ -95,7 +110,10 @@ function IconList({ items }) {
   return (
     <ul className="space-y-3.5">
       {items.map(({ icon: Icon, text }) => (
-        <li key={text} className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
+        <li
+          key={text}
+          className="flex items-start gap-3 text-sm leading-relaxed text-slate-600"
+        >
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 text-blue-600 ring-1 ring-blue-100">
             <Icon size={15} />
           </span>
@@ -152,34 +170,34 @@ export default function SalesPartnerPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {/* ================= HERO ================= */}
-<section
-  className="relative overflow-hidden border-b border-slate-200 bg-cover bg-center"
-  style={{
-    backgroundImage:
-      "url('https://res.cloudinary.com/ddpunpqre/image/upload/v1793168882/AquaBill_Sales_Partner_Waves_lns1gn.jpg')",
-  }}
->
-  {/* Light overlay to keep text readable */}
-  <div className="absolute inset-0 bg-white/25" aria-hidden="true" />
+      <section
+        className="relative overflow-hidden border-b border-slate-200 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://res.cloudinary.com/ddpunpqre/image/upload/v1793168882/AquaBill_Sales_Partner_Waves_lns1gn.jpg')",
+        }}
+      >
+        {/* Light overlay to keep text readable */}
+        <div className="absolute inset-0 bg-white/25" aria-hidden="true" />
 
-  <div className="relative mx-auto max-w-5xl px-6 py-20 text-center sm:py-28">
-    <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-700">
-      <Sparkles size={13} />
-      Join the AquaBill Partner Network
-    </span>
+        <div className="relative mx-auto max-w-5xl px-6 py-20 text-center sm:py-28">
+          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-700">
+            <Sparkles size={13} />
+            Join the AquaBill Partner Network
+          </span>
 
-    <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-      Sales Partner
-      <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
-        (AquaBill)
-      </span>
-    </h1>
+          <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+            Sales Partner
+            <span className="block bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent">
+              (AquaBill)
+            </span>
+          </h1>
 
-    <p className="mx-auto mt-5 max-w-2xl text-base font-medium text-slate-700 sm:text-lg">
-      Empower Villages · Earn Income · Support Digital India
-    </p>
-  </div>
-</section>
+          <p className="mx-auto mt-5 max-w-2xl text-base font-medium text-slate-700 sm:text-lg">
+            Empower Villages · Earn Income · Support Digital India
+          </p>
+        </div>
+      </section>
 
       {/* ================= ABOUT + QUICK FACTS ================= */}
       <section className="relative -mt-12 px-6 pb-14">
@@ -196,19 +214,21 @@ export default function SalesPartnerPage() {
 
             <div className="space-y-4 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
               <p>
-                <span className="font-semibold text-slate-900">AquaBill</span> by Sigma
-                InfraPlan Engineering Pvt. Ltd. under its Sigma ToolBox project, is a smart
-                water billing and collection software built specifically for Gram Panchayats,
-                Village Water &amp; Sanitation Committees (VWSCs), contractors and small
-                utility operators.
+                <span className="font-semibold text-slate-900">AquaBill</span>{" "}
+                by Sigma InfraPlan Engineering Pvt. Ltd. under its Sigma ToolBox
+                project, is a smart water billing and collection software built
+                specifically for Gram Panchayats, Village Water &amp; Sanitation
+                Committees (VWSCs), contractors and small utility operators.
               </p>
               <p>
-                It helps local bodies generate bills, track payments, and improve transparency
-                — in line with Jal Jeevan Mission and Digital India goals.
+                It helps local bodies generate bills, track payments, and
+                improve transparency — in line with Jal Jeevan Mission and
+                Digital India goals.
               </p>
               <p>
-                Now, we&apos;re expanding — and we&apos;re looking for passionate individuals
-                and organizations to join our Sales Partner Network.
+                Now, we&apos;re expanding — and we&apos;re looking for
+                passionate individuals and organizations to join our Sales
+                Partner Network.
               </p>
             </div>
 
@@ -222,7 +242,9 @@ export default function SalesPartnerPage() {
                     <Icon size={13} />
                     {label}
                   </div>
-                  <p className="mt-2 text-sm font-semibold text-slate-800">{value}</p>
+                  <p className="mt-2 text-sm font-semibold text-slate-800">
+                    {value}
+                  </p>
                 </div>
               ))}
             </div>
@@ -230,9 +252,8 @@ export default function SalesPartnerPage() {
         </div>
       </section>
 
-
-{/* ================= HERO IMAGE ONLY ================= */}
-{/* <section className="w-full overflow-hidden">
+      {/* ================= HERO IMAGE ONLY ================= */}
+      {/* <section className="w-full overflow-hidden">
   <img
     src="https://res.cloudinary.com/ddpunpqre/image/upload/v1793167829/AquaBill_Rural_Partner_Network_ewpfg9.jpg"
     alt="AquaBill Sales Partner Network"
@@ -251,7 +272,11 @@ export default function SalesPartnerPage() {
           <InfoCard icon={Users} title="Who Can Apply" accent="emerald">
             <CheckList items={whoCanApply} />
           </InfoCard>
-          <InfoCard icon={ClipboardList} title="Your Responsibilities" accent="blue">
+          <InfoCard
+            icon={ClipboardList}
+            title="Your Responsibilities"
+            accent="blue"
+          >
             <CheckList items={responsibilities} />
           </InfoCard>
         </div>
@@ -279,7 +304,9 @@ export default function SalesPartnerPage() {
             <tbody className="divide-y divide-slate-100">
               {commissions.map((row) => (
                 <tr key={row.task} className="transition hover:bg-blue-50/50">
-                  <td className="px-6 py-4 font-medium text-slate-800">{row.task}</td>
+                  <td className="px-6 py-4 font-medium text-slate-800">
+                    {row.task}
+                  </td>
                   <td className="px-6 py-4">
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-100">
                       <Percent size={11} />
@@ -304,13 +331,21 @@ export default function SalesPartnerPage() {
           subtitle="Support, tools & why this is the right time"
         />
         <div className="grid gap-6 lg:grid-cols-3">
-          <InfoCard icon={CheckCircle} title="Basic Requirements" accent="amber">
+          <InfoCard
+            icon={CheckCircle}
+            title="Basic Requirements"
+            accent="amber"
+          >
             <IconList items={requirements} />
           </InfoCard>
           <InfoCard icon={Award} title="We Provide" accent="blue">
             <IconList items={weProvide} />
           </InfoCard>
-          <InfoCard icon={TrendingUp} title="Why Join AquaBill Now" accent="emerald">
+          <InfoCard
+            icon={TrendingUp}
+            title="Why Join AquaBill Now"
+            accent="emerald"
+          >
             <IconList items={whyJoin} />
           </InfoCard>
         </div>
@@ -319,7 +354,10 @@ export default function SalesPartnerPage() {
       {/* ================= CLOSING CTA ================= */}
       <section className="mx-auto max-w-5xl px-6 pb-20">
         <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white px-6 py-14 text-center shadow-xl shadow-slate-200/60 sm:px-12">
-          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div
+            className="pointer-events-none absolute inset-0"
+            aria-hidden="true"
+          >
             <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-blue-50 blur-3xl" />
             <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-indigo-50 blur-3xl" />
           </div>
@@ -331,8 +369,8 @@ export default function SalesPartnerPage() {
             </span>
 
             <p className="mx-auto mt-5 max-w-2xl text-xl font-semibold leading-snug text-slate-900 sm:text-2xl">
-              Be part of the rural digitization revolution — where technology meets community
-              impact.
+              Be part of the rural digitization revolution — where technology
+              meets community impact.
             </p>
 
             <Link

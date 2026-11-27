@@ -3,7 +3,7 @@ import { ChevronRight, ArrowUp, Droplets, Wind, Sun } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import TrustedBySection from "../components/TrustedBySection";
-import ContactSection from "../components/ContactSection";
+import ContactSection from "../pages/ContactSection";
 import JourneySection from "../components/JourneySection";
 import HeroSection from "../components/HeroSection";
 import laboImage from "../assets/labo.png";

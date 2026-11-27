@@ -8,7 +8,7 @@ import {
   UploadCloud,
   X,
 } from "lucide-react";
-import BASE_URL from "../";
+import BASE_URL from "../config/apiConfig";
 /* ============================================================
    CONTACT SECTION
    - Semantic HTML (section, h2, form, labels, fieldset)
@@ -93,7 +93,7 @@ export default function ContactSection() {
     if (file) payload.append("Attachment", file);
 
   try {
-  const response = await fetch(`${BASE_URL}/contactus`, {
+  const response = await fetch(`${BASE_URL}/api/contactus`, {
     method: "POST",
     body: payload,
   });
