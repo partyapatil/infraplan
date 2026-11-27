@@ -168,11 +168,11 @@ function ProjectCarousel({ images, title }) {
   ============================================================ */
 
 return (
-  <div
-    className="group relative w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm lg:w-[480px] xl:w-[520px] lg:shrink-0"
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
-  >
+<div
+  className="group relative w-full self-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm lg:w-[480px] xl:w-[520px] lg:shrink-0"
+  onMouseEnter={() => setIsHovered(true)}
+  onMouseLeave={() => setIsHovered(false)}
+>
     <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-slate-100">
       {/* IMAGE (full image, never cropped) */}
       <img
